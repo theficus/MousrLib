@@ -1,2 +1,3 @@
 # MousrLib
-Library for communicating with Mousr peripheral on MacOS or iOS
+
+A description of this package.
