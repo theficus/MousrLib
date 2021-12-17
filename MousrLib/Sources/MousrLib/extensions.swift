@@ -6,31 +6,16 @@
 //
 
 import Foundation
-import SwiftUI
 import GameController
-
-extension View {
-    // Hack to fill entire screen
-    func inExpandingRectangle() -> some View {
-        ZStack {
-            Rectangle()
-                .fill(Color.clear)
-            self
-        }
-    }
-
-    // Event to capture rotation events
-    func onRotate(perform action: @escaping (UIDeviceOrientation) -> Void) -> some View {
-        self.modifier(OrientationViewModifier(action: action))
-    }
-}
 
 extension GCControllerDirectionPad {
     func getSpeed() -> Float {
         return sqrt(pow(self.xAxis.value, 2) + pow(self.yAxis.value, 2))
     }
 
+    // MARK: Get the degrees of the on-screen controller
     func getAngle() -> Float {
+        // HACK: We need to rotate the matrix by 90 degrees so "up" on the controller will match to "up" on Mousr (0 degrees)
         let radian = atan2f(-self.xAxis.value, self.yAxis.value)
         print("y=\(self.yAxis.value) x=\(self.xAxis.value) rad=\(radian) angle=\(radian * Float(180 / Float.pi))")
         return radian * Float(180 / Float.pi)
