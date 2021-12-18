@@ -1,6 +1,5 @@
 //
 //  Device.swift
-//  IOSSwiftUIPlayground
 //
 //  Created by Adam Meltzer on 12/11/2021.
 //
@@ -19,6 +18,7 @@ public protocol Device {
     func disconnect()
     func onDisconnected()
     func discover()
+    func onDiscovered(advertisementData: [String : Any], rssi RSSI: NSNumber)
     func log(_ message : String, _ messageType : LogMessageType)
 }
 

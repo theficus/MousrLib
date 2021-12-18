@@ -1,6 +1,5 @@
 //
 //  extensions.swift
-//  IOSSwiftUIPlayground
 //
 //  Created by Adam Meltzer on 12/04/2021.
 //
@@ -8,12 +7,13 @@
 import Foundation
 import GameController
 
-extension GCControllerDirectionPad {
+public extension GCControllerDirectionPad {
+    // MARK: Gets "speed" value based on how far forward the stick is pressed
     func getSpeed() -> Float {
         return sqrt(pow(self.xAxis.value, 2) + pow(self.yAxis.value, 2))
     }
 
-    // MARK: Get the degrees of the on-screen controller
+    // MARK: Get the direction of the analog stick in degrees (unlike a normal Cartesian plane where 0° == right, in this case 0° == up)
     func getAngle() -> Float {
         // HACK: We need to rotate the matrix by 90 degrees so "up" on the controller will match to "up" on Mousr (0 degrees)
         let radian = atan2f(-self.xAxis.value, self.yAxis.value)
