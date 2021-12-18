@@ -28,6 +28,12 @@ public extension Device {
         MousrMessaging.sendCommand(self, .robotPose, .stop, nil)
     }
 
+    func setVolume(volume : Int) {
+        var d = Data()
+        d += volume
+        MousrMessaging.sendCommand(self, .robotPose, .soundVolume, d)
+    }
+
     func resetHeading() {
         MousrMessaging.sendCommand(self, .robotPose, .resetHeadding, nil)
     }

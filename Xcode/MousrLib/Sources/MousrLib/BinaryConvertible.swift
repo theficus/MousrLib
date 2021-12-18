@@ -38,8 +38,10 @@ public extension BinaryConvertible {
     }
 }
 
+// Extend various primitive types to allow them to be convertible to binary
 extension UInt8 : BinaryConvertible {}
 extension UInt32 : BinaryConvertible {}
+extension Int32 : BinaryConvertible {}
 extension Float : BinaryConvertible {}
 extension Int : BinaryConvertible {}
 extension Data : BinaryConvertible {
