@@ -24,11 +24,34 @@ public protocol Device {
 
 // Wraps messages
 public extension Device {
+    // MARK: Initiate debug dump
+    func debugDump() {
+        MousrMessaging.sendCommand(self, .robotPose, .getDebugLog, nil)
+    }
+
+    // MARK: Full stop
     func stop() {
         MousrMessaging.sendCommand(self, .robotPose, .stop, nil)
     }
 
-    func setVolume(volume : Int) {
+    func setTailMode(_ tailMode : mousrTailMode) {
+        var d = Data()
+        d += tailMode.rawValue
+        MousrMessaging.sendCommand(self, .robotPose, .flickSignal, d)
+    }
+
+    // MARK: Configure driver assist
+    func setDriverAssist(_ settings : mousrDriverAssistConfiguration) {
+        var d = Data()
+        d += settings.rawValue
+        MousrMessaging.sendCommand(self, .robotPose, .configDriverAssist, d)
+    }
+
+    func setVolume(volume : UInt8) {
+        if (volume > 100) {
+            self.log("Invalid volume level: \(volume)", .error)
+        }
+
         var d = Data()
         d += volume
         MousrMessaging.sendCommand(self, .robotPose, .soundVolume, d)
@@ -39,7 +62,14 @@ public extension Device {
     }
 
     func chirp() {
-        MousrMessaging.sendCommand(self, .robotPose, .chirp, nil)
+        chirp(fx: 6 /* same thing the app does */)
+    }
+
+    func chirp(fx : Byte) {
+        var d = Data()
+        d += Byte(0)
+        d += Byte(fx)
+        MousrMessaging.sendCommand(self, .robotPose, .chirp, d)
     }
 
     func initialize() {
