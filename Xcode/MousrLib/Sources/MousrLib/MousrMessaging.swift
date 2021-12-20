@@ -21,7 +21,10 @@ public struct MousrMessaging {
             device.onBatteryEvent(battery)
             break
         case .resetTailFailInfo:
-            device.log("Unable to reset tail!", .error)
+            device.onError(data, error: "Unable to reset tail")
+            break
+        case .nack:
+            device.onError(data, error: "Mousr refused command: \(String(describing: mousrCommand.init(rawValue: data[1])))")
             break
         default:
             device.log("Unsupported command type: \(command) / \(command.rawValue) Data: 0x\(data.hexEncodedString())", .warning)

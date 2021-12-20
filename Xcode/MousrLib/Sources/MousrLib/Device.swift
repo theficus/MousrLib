@@ -18,6 +18,7 @@ public protocol Device {
     func disconnect()
     func onDisconnected()
     func discover()
+    func onError(_ data: Data?, error : String)
     func onDiscovered(advertisementData: [String : Any], rssi RSSI: NSNumber)
     func log(_ message : String, _ messageType : LogMessageType)
 }
