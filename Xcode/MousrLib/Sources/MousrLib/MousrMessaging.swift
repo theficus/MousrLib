@@ -59,10 +59,19 @@ public struct MousrMessaging {
         return mousrMessage(rawValue: data[0]) ?? .unknown
     }
 
-    // MARK: Handles the minutiae of building the message packet
-    static func sendCommand(_ device : Device, _ message : mousrMessage, _ command : mousrCommand, _ data : Data?) {
+    public static func createCommand(_ message : mousrMessage, _ command : mousrCommand, _ data : Data? = nil) -> Data {
+        var raw = createMessage(message, data, 15)
+        raw[13] = command.rawValue
+        return raw
+    }
+
+    public static func createMessage(_ message : mousrMessage, _ data : Data? = nil) -> Data {
+        return createMessage(message, data, 20)
+    }
+
+    static func createMessage(_ message : mousrMessage, _ data : Data? = nil, _ length : Int) -> Data {
         var raw = Data()
-        var requiredFillerBytes = 12
+        var requiredFillerBytes : Int = length - 1
         // First two bytes: message
         raw += message.rawValue
         if data != nil {
@@ -76,8 +85,11 @@ public struct MousrMessaging {
             requiredFillerBytes -= 1
         }
 
-        raw += command.rawValue
-        raw += Byte(0) // Command continuation byte. Always 0 in my observations
-        device.send(raw)
+        return raw
+    }
+
+    // MARK: Handles the minutiae of building the message packet
+    static func sendCommand(_ device : Device, _ message : mousrMessage, _ command : mousrCommand, _ data : Data?) {
+        device.send(createCommand(message, command, data))
     }
 }

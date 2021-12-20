@@ -11,6 +11,14 @@ import GameController
 public class VirtualController {
     public var virtualController : GCVirtualController? = nil
 
+    public var handleDPad : GCControllerDirectionPadValueChangedHandler? = nil {
+        didSet {
+            if let dpad = virtualController?.controller?.extendedGamepad?.dpad {
+                dpad.valueChangedHandler = handleDPad
+            }
+        }
+    }
+
     // MARK: Delegate for events from the left analog stick
     public var handleLeftStick : GCControllerDirectionPadValueChangedHandler? = nil {
         didSet {
@@ -50,13 +58,6 @@ public class VirtualController {
         let configuration = GCVirtualController.Configuration()
         configuration.elements = elements // elements: [GCInputLeftThumbstick, GCInputRightThumbstick]
         let virtualController = GCVirtualController(configuration: configuration)
-        /*
-        virtualController.updateConfiguration(forElement: GCInputLeftThumbstick, configuration: {
-            c in
-            // TODO: Any custom configuration goes here
-            return c
-        })
-         */
         return virtualController
     }
 }

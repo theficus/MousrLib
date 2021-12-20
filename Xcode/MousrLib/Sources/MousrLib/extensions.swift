@@ -8,17 +8,15 @@ import Foundation
 import GameController
 
 public extension GCControllerDirectionPad {
-    // MARK: Gets "speed" value based on how far forward the stick is pressed
-    func getSpeed() -> Float {
-        return sqrt(pow(self.xAxis.value, 2) + pow(self.yAxis.value, 2))
-    }
+    // MARK: Gets the direction of the controller
+    func getDirection() -> (angle : Float, speed : Float, zeroed : Bool) {
+        let speed = sqrt(pow(self.xAxis.value, 2) + pow(self.yAxis.value, 2))
 
-    // MARK: Get the direction of the analog stick in degrees (unlike a normal Cartesian plane where 0° == right, in this case 0° == up)
-    func getAngle() -> Float {
-        // HACK: We need to rotate the matrix by 90 degrees so "up" on the controller will match to "up" on Mousr (0 degrees)
         let radian = atan2f(-self.xAxis.value, self.yAxis.value)
         print("y=\(self.yAxis.value) x=\(self.xAxis.value) rad=\(radian) angle=\(radian * Float(180 / Float.pi))")
-        return radian * Float(180 / Float.pi)
+        let angle = -radian * Float(180 / Float.pi)
+
+        return (angle: angle, speed: speed, zeroed: speed == 0 && angle == 0)
     }
 }
 
