@@ -8,11 +8,17 @@ import Foundation
 
 // Represents the stubs for a device
 public protocol Device {
+    var bleMessageQueue : BleMessageQueue {
+        get
+    }
+
     func send(_ data : Data)
     func onSend(_ data : Data?, _ error : Error?)
     func onReceive(_ data : Data?, _ error : Error?)
     func onPositionEvent(_ speed : Float, _ hold : Float, _ angle : Float)
     func onBatteryEvent(_ batteryPct : UInt8)
+    //func onFirmwareVersionEvent(_ majorVersion : Byte, _ minorVersion : UInt16, _ commitNumber : UInt16, _ commitHash : UInt32, mousrVersion : Byte, _ hwVersion : UInt16, _ bootloaderVersion : UInt16)
+    //func onInitializeEvent()
     func connect()
     func onConnected(_ error : Error?)
     func disconnect()
@@ -84,16 +90,16 @@ public extension Device {
 
     func spin(angle : Float) {
         var d = Data()
-        d += Float(0.0)
-        d += Float(0.0)
+        d += Float(0.0) // speed
+        d += Float(0.0) // held
         d += angle
         MousrMessaging.sendCommand(self, .robotPose, .spin, d)
     }
 
-    func move(speed : Float, hold : Float, angle : Float) {
+    func move(speed : Float, held : Float, angle : Float) {
         var d = Data()
         d += speed
-        d += hold
+        d += held
         d += angle
         MousrMessaging.sendCommand(self, .robotPose, .move, d)
     }

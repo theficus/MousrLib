@@ -139,7 +139,7 @@ public class MousrBluetooth : NSObject, CBCentralManagerDelegate, CBPeripheralDe
 
 
     public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        self.device.onReceive(characteristic.value, error)
+        self.device.bleMessageQueue.enqueue(BleMessage(characteristic, characteristic.value, error))
     }
 
     // Start connection

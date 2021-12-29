@@ -24,6 +24,11 @@ final class MousrMessageTests : XCTestCase {
         XCTAssert(expected == self.device.sentData!.hexEncodedString())
     }
 
+    func testInitializeMessage() {
+        let actual = MousrMessaging.createInitializeCommand()
+        print(actual.hexEncodedString())
+    }
+
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.

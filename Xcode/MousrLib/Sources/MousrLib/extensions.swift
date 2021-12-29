@@ -20,6 +20,42 @@ public extension GCControllerDirectionPad {
     }
 }
 
+public extension Date {
+    static func ticks(_ date : Date) -> Int64 {
+        if date == Date.distantPast {
+            return dateConstants.ticksMinValue
+        }
+
+        if date == Date.distantFuture {
+            return dateConstants.ticksMaxValue
+        }
+
+        let seconds = Double(date.timeIntervalSince1970)
+        let ticksSince1970 = Int64(round(seconds * dateConstants.ticksPerSecond))
+        return dateConstants.ticksAt1970 + ticksSince1970
+    }
+
+    static func ticksAt1970() -> Int64 {
+        return dateConstants.ticksAt1970
+    }
+
+    static func nowTicks() -> Int64 {
+        return ticks(Date.now)
+    }
+}
+
+// Great example of a simple locking method call via: https://stackoverflow.com/a/62620203
+public extension DispatchSemaphore {
+    @discardableResult
+    func with<T>(_ block: () throws -> T) rethrows -> T {
+        wait()
+        defer {
+            signal()
+        }
+        return try block()
+    }
+}
+
 public extension Data {
     // Convert hex string into Data
     init?(hexString: String) {

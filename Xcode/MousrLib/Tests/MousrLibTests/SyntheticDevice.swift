@@ -9,6 +9,25 @@ import MousrLib
 
 // Synthetic device to use for testing the communication channel
 class SyntheticDevice : Device {
+    func onReceive(_ data: Data?, _ error: Error?) {
+    }
+
+    var bleMessageQueue : BleMessageQueue
+    var initializationComplete: Bool = true
+
+    init() {
+        self.bleMessageQueue = BleMessageQueue()
+    }
+
+    func onFirmwareVersionEvent(_ majorVersion: Byte, _ minorVersion: UInt16, _ commitNumber: UInt16, _ commitHash: UInt32, mousrVersion: Byte, _ hwVersion: UInt16, _ bootloaderVersion: UInt16) {
+    }
+
+    func onInitializeEvent() {
+    }
+
+    func onError(_ data: Data?, error: String) {
+    }
+
     func onDiscovered(advertisementData: [String : Any], rssi RSSI: NSNumber) {
     }
 
@@ -28,9 +47,6 @@ class SyntheticDevice : Device {
     func onSend(_ data: Data?, _ error: Error?) {
         self.sentData = data
         self.sentCommand = mousrCommand.init(rawValue: data![14])
-    }
-
-    func onReceive(_ data: Data?, _ error: Error?) {
     }
 
     func onConnected(_ error: Error?) {

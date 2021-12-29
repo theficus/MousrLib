@@ -1,0 +1,732 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		664450A8277D1FE8006023E7 /* MousrLib in Frameworks */ = {isa = PBXBuildFile; productRef = 664450A7277D1FE8006023E7 /* MousrLib */; };
+		664450AB277D200E006023E7 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 664450AA277D200E006023E7 /* WrappingHStack */; };
+		66E66B93277D1EC10054E346 /* ReMousrApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66B92277D1EC10054E346 /* ReMousrApp.swift */; };
+		66E66B97277D1EC30054E346 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66E66B96277D1EC30054E346 /* Assets.xcassets */; };
+		66E66B9A277D1EC30054E346 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66E66B99277D1EC30054E346 /* Preview Assets.xcassets */; };
+		66E66BA4277D1EC30054E346 /* ReMousrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BA3277D1EC30054E346 /* ReMousrTests.swift */; };
+		66E66BAE277D1EC30054E346 /* ReMousrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BAD277D1EC30054E346 /* ReMousrUITests.swift */; };
+		66E66BB0277D1EC30054E346 /* ReMousrUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BAF277D1EC30054E346 /* ReMousrUITestsLaunchTests.swift */; };
+		66E66BCA277D1F170054E346 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BBE277D1F160054E346 /* DeviceModel.swift */; };
+		66E66BCB277D1F170054E346 /* CircleSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BBF277D1F160054E346 /* CircleSliderView.swift */; };
+		66E66BCC277D1F170054E346 /* DummyDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC0277D1F160054E346 /* DummyDevice.swift */; };
+		66E66BCD277D1F170054E346 /* HeadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC1277D1F170054E346 /* HeadingView.swift */; };
+		66E66BCE277D1F170054E346 /* ConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC2277D1F170054E346 /* ConnectView.swift */; };
+		66E66BCF277D1F170054E346 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC3277D1F170054E346 /* ControlsView.swift */; };
+		66E66BD0277D1F170054E346 /* DeviceProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC4277D1F170054E346 /* DeviceProperty.swift */; };
+		66E66BD1277D1F170054E346 /* DeviceBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC5277D1F170054E346 /* DeviceBase.swift */; };
+		66E66BD2277D1F170054E346 /* ControlButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC6277D1F170054E346 /* ControlButtonStyle.swift */; };
+		66E66BD3277D1F170054E346 /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC7277D1F170054E346 /* DeviceView.swift */; };
+		66E66BD4277D1F170054E346 /* BatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC8277D1F170054E346 /* BatteryView.swift */; };
+		66E66BD5277D1F170054E346 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BC9277D1F170054E346 /* extensions.swift */; };
+		66E66BDB277D1F300054E346 /* preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BD6277D1F300054E346 /* preferences.swift */; };
+		66E66BDC277D1F300054E346 /* OrientationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BD7277D1F300054E346 /* OrientationViewModifier.swift */; };
+		66E66BDD277D1F300054E346 /* NoPortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BD8277D1F300054E346 /* NoPortraitView.swift */; };
+		66E66BDE277D1F300054E346 /* MousrDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BD9277D1F300054E346 /* MousrDevice.swift */; };
+		66E66BDF277D1F300054E346 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BDA277D1F300054E346 /* LogView.swift */; };
+		66E66BE5277D1F380054E346 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BE0277D1F380054E346 /* SettingsView.swift */; };
+		66E66BE6277D1F380054E346 /* SoundboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BE1277D1F380054E346 /* SoundboardView.swift */; };
+		66E66BE7277D1F380054E346 /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BE2277D1F380054E346 /* RadioView.swift */; };
+		66E66BE8277D1F380054E346 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BE3277D1F380054E346 /* RootView.swift */; };
+		66E66BE9277D1F380054E346 /* SensorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E66BE4277D1F380054E346 /* SensorView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		66E66BA0277D1EC30054E346 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66E66B87277D1EC10054E346 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 66E66B8E277D1EC10054E346;
+			remoteInfo = ReMousr;
+		};
+		66E66BAA277D1EC30054E346 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66E66B87277D1EC10054E346 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 66E66B8E277D1EC10054E346;
+			remoteInfo = ReMousr;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		664450AC277D20DD006023E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		66E66B8F277D1EC10054E346 /* ReMousr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReMousr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		66E66B92277D1EC10054E346 /* ReMousrApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReMousrApp.swift; sourceTree = "<group>"; };
+		66E66B96277D1EC30054E346 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		66E66B99277D1EC30054E346 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		66E66B9F277D1EC30054E346 /* ReMousrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReMousrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		66E66BA3277D1EC30054E346 /* ReMousrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReMousrTests.swift; sourceTree = "<group>"; };
+		66E66BA9277D1EC30054E346 /* ReMousrUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReMousrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		66E66BAD277D1EC30054E346 /* ReMousrUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReMousrUITests.swift; sourceTree = "<group>"; };
+		66E66BAF277D1EC30054E346 /* ReMousrUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReMousrUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		66E66BBD277D1EE70054E346 /* MousrLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MousrLib; path = ../MousrLib; sourceTree = "<group>"; };
+		66E66BBE277D1F160054E346 /* DeviceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
+		66E66BBF277D1F160054E346 /* CircleSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleSliderView.swift; sourceTree = "<group>"; };
+		66E66BC0277D1F160054E346 /* DummyDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyDevice.swift; sourceTree = "<group>"; };
+		66E66BC1277D1F170054E346 /* HeadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingView.swift; sourceTree = "<group>"; };
+		66E66BC2277D1F170054E346 /* ConnectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectView.swift; sourceTree = "<group>"; };
+		66E66BC3277D1F170054E346 /* ControlsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
+		66E66BC4277D1F170054E346 /* DeviceProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceProperty.swift; sourceTree = "<group>"; };
+		66E66BC5277D1F170054E346 /* DeviceBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceBase.swift; sourceTree = "<group>"; };
+		66E66BC6277D1F170054E346 /* ControlButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlButtonStyle.swift; sourceTree = "<group>"; };
+		66E66BC7277D1F170054E346 /* DeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
+		66E66BC8277D1F170054E346 /* BatteryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryView.swift; sourceTree = "<group>"; };
+		66E66BC9277D1F170054E346 /* extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		66E66BD6277D1F300054E346 /* preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = preferences.swift; sourceTree = "<group>"; };
+		66E66BD7277D1F300054E346 /* OrientationViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrientationViewModifier.swift; sourceTree = "<group>"; };
+		66E66BD8277D1F300054E346 /* NoPortraitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPortraitView.swift; sourceTree = "<group>"; };
+		66E66BD9277D1F300054E346 /* MousrDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MousrDevice.swift; sourceTree = "<group>"; };
+		66E66BDA277D1F300054E346 /* LogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		66E66BE0277D1F380054E346 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		66E66BE1277D1F380054E346 /* SoundboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundboardView.swift; sourceTree = "<group>"; };
+		66E66BE2277D1F380054E346 /* RadioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioView.swift; sourceTree = "<group>"; };
+		66E66BE3277D1F380054E346 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		66E66BE4277D1F380054E346 /* SensorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		66E66B8C277D1EC10054E346 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				664450AB277D200E006023E7 /* WrappingHStack in Frameworks */,
+				664450A8277D1FE8006023E7 /* MousrLib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66E66B9C277D1EC30054E346 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66E66BA6277D1EC30054E346 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		664450A6277D1FE8006023E7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		66E66B86277D1EC10054E346 = {
+			isa = PBXGroup;
+			children = (
+				66E66BBC277D1EE70054E346 /* Packages */,
+				66E66B91277D1EC10054E346 /* ReMousr */,
+				66E66BA2277D1EC30054E346 /* ReMousrTests */,
+				66E66BAC277D1EC30054E346 /* ReMousrUITests */,
+				66E66B90277D1EC10054E346 /* Products */,
+				664450A6277D1FE8006023E7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		66E66B90277D1EC10054E346 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				66E66B8F277D1EC10054E346 /* ReMousr.app */,
+				66E66B9F277D1EC30054E346 /* ReMousrTests.xctest */,
+				66E66BA9277D1EC30054E346 /* ReMousrUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		66E66B91277D1EC10054E346 /* ReMousr */ = {
+			isa = PBXGroup;
+			children = (
+				66E66B96277D1EC30054E346 /* Assets.xcassets */,
+				66E66BC8277D1F170054E346 /* BatteryView.swift */,
+				66E66BBF277D1F160054E346 /* CircleSliderView.swift */,
+				66E66BC2277D1F170054E346 /* ConnectView.swift */,
+				66E66BC6277D1F170054E346 /* ControlButtonStyle.swift */,
+				66E66BC3277D1F170054E346 /* ControlsView.swift */,
+				66E66BC5277D1F170054E346 /* DeviceBase.swift */,
+				66E66BBE277D1F160054E346 /* DeviceModel.swift */,
+				66E66BC4277D1F170054E346 /* DeviceProperty.swift */,
+				66E66BC7277D1F170054E346 /* DeviceView.swift */,
+				66E66BC0277D1F160054E346 /* DummyDevice.swift */,
+				66E66BC9277D1F170054E346 /* extensions.swift */,
+				66E66BC1277D1F170054E346 /* HeadingView.swift */,
+				664450AC277D20DD006023E7 /* Info.plist */,
+				66E66BDA277D1F300054E346 /* LogView.swift */,
+				66E66BD9277D1F300054E346 /* MousrDevice.swift */,
+				66E66BD8277D1F300054E346 /* NoPortraitView.swift */,
+				66E66BD7277D1F300054E346 /* OrientationViewModifier.swift */,
+				66E66BD6277D1F300054E346 /* preferences.swift */,
+				66E66B98277D1EC30054E346 /* Preview Content */,
+				66E66BE2277D1F380054E346 /* RadioView.swift */,
+				66E66B92277D1EC10054E346 /* ReMousrApp.swift */,
+				66E66BE3277D1F380054E346 /* RootView.swift */,
+				66E66BE4277D1F380054E346 /* SensorView.swift */,
+				66E66BE0277D1F380054E346 /* SettingsView.swift */,
+				66E66BE1277D1F380054E346 /* SoundboardView.swift */,
+			);
+			path = ReMousr;
+			sourceTree = "<group>";
+		};
+		66E66B98277D1EC30054E346 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				66E66B99277D1EC30054E346 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		66E66BA2277D1EC30054E346 /* ReMousrTests */ = {
+			isa = PBXGroup;
+			children = (
+				66E66BA3277D1EC30054E346 /* ReMousrTests.swift */,
+			);
+			path = ReMousrTests;
+			sourceTree = "<group>";
+		};
+		66E66BAC277D1EC30054E346 /* ReMousrUITests */ = {
+			isa = PBXGroup;
+			children = (
+				66E66BAD277D1EC30054E346 /* ReMousrUITests.swift */,
+				66E66BAF277D1EC30054E346 /* ReMousrUITestsLaunchTests.swift */,
+			);
+			path = ReMousrUITests;
+			sourceTree = "<group>";
+		};
+		66E66BBC277D1EE70054E346 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				66E66BBD277D1EE70054E346 /* MousrLib */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		66E66B8E277D1EC10054E346 /* ReMousr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66E66BB3277D1EC30054E346 /* Build configuration list for PBXNativeTarget "ReMousr" */;
+			buildPhases = (
+				66E66B8B277D1EC10054E346 /* Sources */,
+				66E66B8C277D1EC10054E346 /* Frameworks */,
+				66E66B8D277D1EC10054E346 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ReMousr;
+			packageProductDependencies = (
+				664450A7277D1FE8006023E7 /* MousrLib */,
+				664450AA277D200E006023E7 /* WrappingHStack */,
+			);
+			productName = ReMousr;
+			productReference = 66E66B8F277D1EC10054E346 /* ReMousr.app */;
+			productType = "com.apple.product-type.application";
+		};
+		66E66B9E277D1EC30054E346 /* ReMousrTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66E66BB6277D1EC30054E346 /* Build configuration list for PBXNativeTarget "ReMousrTests" */;
+			buildPhases = (
+				66E66B9B277D1EC30054E346 /* Sources */,
+				66E66B9C277D1EC30054E346 /* Frameworks */,
+				66E66B9D277D1EC30054E346 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				66E66BA1277D1EC30054E346 /* PBXTargetDependency */,
+			);
+			name = ReMousrTests;
+			productName = ReMousrTests;
+			productReference = 66E66B9F277D1EC30054E346 /* ReMousrTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		66E66BA8277D1EC30054E346 /* ReMousrUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66E66BB9277D1EC30054E346 /* Build configuration list for PBXNativeTarget "ReMousrUITests" */;
+			buildPhases = (
+				66E66BA5277D1EC30054E346 /* Sources */,
+				66E66BA6277D1EC30054E346 /* Frameworks */,
+				66E66BA7277D1EC30054E346 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				66E66BAB277D1EC30054E346 /* PBXTargetDependency */,
+			);
+			name = ReMousrUITests;
+			productName = ReMousrUITests;
+			productReference = 66E66BA9277D1EC30054E346 /* ReMousrUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		66E66B87277D1EC10054E346 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					66E66B8E277D1EC10054E346 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					66E66B9E277D1EC30054E346 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 66E66B8E277D1EC10054E346;
+					};
+					66E66BA8277D1EC30054E346 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 66E66B8E277D1EC10054E346;
+					};
+				};
+			};
+			buildConfigurationList = 66E66B8A277D1EC10054E346 /* Build configuration list for PBXProject "ReMousr" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 66E66B86277D1EC10054E346;
+			packageReferences = (
+				664450A9277D200E006023E7 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+			);
+			productRefGroup = 66E66B90277D1EC10054E346 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				66E66B8E277D1EC10054E346 /* ReMousr */,
+				66E66B9E277D1EC30054E346 /* ReMousrTests */,
+				66E66BA8277D1EC30054E346 /* ReMousrUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		66E66B8D277D1EC10054E346 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66E66B9A277D1EC30054E346 /* Preview Assets.xcassets in Resources */,
+				66E66B97277D1EC30054E346 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66E66B9D277D1EC30054E346 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66E66BA7277D1EC30054E346 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		66E66B8B277D1EC10054E346 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66E66BE7277D1F380054E346 /* RadioView.swift in Sources */,
+				66E66BE8277D1F380054E346 /* RootView.swift in Sources */,
+				66E66BD1277D1F170054E346 /* DeviceBase.swift in Sources */,
+				66E66BD3277D1F170054E346 /* DeviceView.swift in Sources */,
+				66E66BE6277D1F380054E346 /* SoundboardView.swift in Sources */,
+				66E66BD5277D1F170054E346 /* extensions.swift in Sources */,
+				66E66BD0277D1F170054E346 /* DeviceProperty.swift in Sources */,
+				66E66BE9277D1F380054E346 /* SensorView.swift in Sources */,
+				66E66BE5277D1F380054E346 /* SettingsView.swift in Sources */,
+				66E66BCE277D1F170054E346 /* ConnectView.swift in Sources */,
+				66E66BCD277D1F170054E346 /* HeadingView.swift in Sources */,
+				66E66BCC277D1F170054E346 /* DummyDevice.swift in Sources */,
+				66E66BDE277D1F300054E346 /* MousrDevice.swift in Sources */,
+				66E66BCF277D1F170054E346 /* ControlsView.swift in Sources */,
+				66E66BD4277D1F170054E346 /* BatteryView.swift in Sources */,
+				66E66BDD277D1F300054E346 /* NoPortraitView.swift in Sources */,
+				66E66BD2277D1F170054E346 /* ControlButtonStyle.swift in Sources */,
+				66E66BCB277D1F170054E346 /* CircleSliderView.swift in Sources */,
+				66E66BDB277D1F300054E346 /* preferences.swift in Sources */,
+				66E66B93277D1EC10054E346 /* ReMousrApp.swift in Sources */,
+				66E66BDF277D1F300054E346 /* LogView.swift in Sources */,
+				66E66BDC277D1F300054E346 /* OrientationViewModifier.swift in Sources */,
+				66E66BCA277D1F170054E346 /* DeviceModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66E66B9B277D1EC30054E346 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66E66BA4277D1EC30054E346 /* ReMousrTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66E66BA5277D1EC30054E346 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66E66BB0277D1EC30054E346 /* ReMousrUITestsLaunchTests.swift in Sources */,
+				66E66BAE277D1EC30054E346 /* ReMousrUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		66E66BA1277D1EC30054E346 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 66E66B8E277D1EC10054E346 /* ReMousr */;
+			targetProxy = 66E66BA0277D1EC30054E346 /* PBXContainerItemProxy */;
+		};
+		66E66BAB277D1EC30054E346 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 66E66B8E277D1EC10054E346 /* ReMousr */;
+			targetProxy = 66E66BAA277D1EC30054E346 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		66E66BB1277D1EC30054E346 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		66E66BB2277D1EC30054E346 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		66E66BB4277D1EC30054E346 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ReMousr/Preview Content\"";
+				DEVELOPMENT_TEAM = LAKM2JXY53;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ReMousr/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ReMousr;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ficusfactor.ReMousr;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		66E66BB5277D1EC30054E346 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ReMousr/Preview Content\"";
+				DEVELOPMENT_TEAM = LAKM2JXY53;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ReMousr/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ReMousr;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ficusfactor.ReMousr;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		66E66BB7277D1EC30054E346 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LAKM2JXY53;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ficusfactor.ReMousrTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReMousr.app/ReMousr";
+			};
+			name = Debug;
+		};
+		66E66BB8277D1EC30054E346 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LAKM2JXY53;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ficusfactor.ReMousrTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReMousr.app/ReMousr";
+			};
+			name = Release;
+		};
+		66E66BBA277D1EC30054E346 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LAKM2JXY53;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ficusfactor.ReMousrUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ReMousr;
+			};
+			name = Debug;
+		};
+		66E66BBB277D1EC30054E346 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LAKM2JXY53;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ficusfactor.ReMousrUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ReMousr;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		66E66B8A277D1EC10054E346 /* Build configuration list for PBXProject "ReMousr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66E66BB1277D1EC30054E346 /* Debug */,
+				66E66BB2277D1EC30054E346 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		66E66BB3277D1EC30054E346 /* Build configuration list for PBXNativeTarget "ReMousr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66E66BB4277D1EC30054E346 /* Debug */,
+				66E66BB5277D1EC30054E346 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		66E66BB6277D1EC30054E346 /* Build configuration list for PBXNativeTarget "ReMousrTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66E66BB7277D1EC30054E346 /* Debug */,
+				66E66BB8277D1EC30054E346 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		66E66BB9277D1EC30054E346 /* Build configuration list for PBXNativeTarget "ReMousrUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66E66BBA277D1EC30054E346 /* Debug */,
+				66E66BBB277D1EC30054E346 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		664450A9277D200E006023E7 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/WrappingHStack";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		664450A7277D1FE8006023E7 /* MousrLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MousrLib;
+		};
+		664450AA277D200E006023E7 /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 664450A9277D200E006023E7 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 66E66B87277D1EC10054E346 /* Project object */;
+}

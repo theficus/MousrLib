@@ -21,5 +21,22 @@ public enum mousrMessage : Byte {
     case robotStopped = 0x63
     case rcStuck = 0x64
     case nack = 0xff
-    case unknown = 0x0
+    case none = 0x0
+}
+
+public extension Data {
+    func getMousrMessageKind() -> mousrMessage {
+        if self.count == 0 {
+            return .none
+        }
+
+        // First byte will always contain the message kind
+        return mousrMessage.init(rawValue: self[0]) ?? .none
+    }
+
+    static func createMousrMessage(_ messageType : mousrMessage) -> Data {
+        var d : Data = Data()
+        d += messageType.rawValue
+        return d
+    }
 }
