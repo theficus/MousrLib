@@ -1,8 +1,19 @@
-#include <Print.h>
+#include <Wire.h>
+//#include <SPI.h>
 
 // OLED
 #include <U8g2lib.h>
-U8X8_SSD1306_64X32_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE); 
+static U8G2_SSD1306_128X64_NONAME_2_HW_I2C u8g2(U8G2_R0);
+
+// Glyphs
+#define ARROW_UP_FILL     0x25b2
+#define ARROW_UP_EMPTY    0x25b3
+#define ARROW_RIGHT_FILL  0x25b6
+#define ARROW_RIGHT_EMPTY 0x25b7
+#define ARROW_DOWN_FILL   0x25bc
+#define ARROW_DOWN_EMPTY  0x25bd
+#define ARROW_LEFT_FILL   0x25c0
+#define ARROW_LEFT_EMPTY  0x25c1
 
 // BLE
 #include <BLEDevice.h>
@@ -12,21 +23,19 @@ U8X8_SSD1306_64X32_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
 
 // BLE characteristics
 BLEUUID serviceUuid("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
-BLEUUID txUuid("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
-BLEUUID rxUuid("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
+BLEUUID uartWriteUuid("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+BLEUUID uartSubscribeUuid("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
 
 BLEScan* bleScan;
 BLEClient* bleClient;
-BLEAdvertisedDevice* device;
-BLERemoteCharacteristic* txCharacteristic;
-BLERemoteCharacteristic* rxCharacteristic;
+static BLEAdvertisedDevice device;
+BLERemoteCharacteristic* uartWriteCharacteristic;
+BLERemoteCharacteristic* uartSubscribeCharacteristic;
 bool isConnected = false;
 
 // Seesaw
-#include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h> // Hardware-specific library
-#include <SPI.h>
 #include "Adafruit_seesaw.h"
 
 Adafruit_seesaw ss;
@@ -35,14 +44,34 @@ Adafruit_seesaw ss;
 #define BUTTON_LEFT 9
 #define BUTTON_UP 10
 #define BUTTON_SEL 14
+#define JOYSTICK_H 2
+#define JOYSTICK_V 3
+
+// Calibration values
+#define JOYSTICK_H_CORRECTION 2
+#define JOYSTICK_V_CORRECTION 0
+
 uint32_t button_mask = (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) | 
                        (1 << BUTTON_LEFT) | (1 << BUTTON_UP) | 
                        (1 << BUTTON_SEL);
                 
-#define IRQ_PIN   14 // ESP32
+#define JOY_IRQ_PIN   14 // ESP32
 
 // Other
-SemaphoreHandle_t waitHandle = xSemaphoreCreateMutex();
+static SemaphoreHandle_t waitHandle = xSemaphoreCreateRecursiveMutex();
+
+static void semTake()
+{
+    Serial.println("Waiting for semaphore...");
+    xSemaphoreTake(waitHandle, portMAX_DELAY);
+    Serial.println("Semaphore get!");
+}
+
+static void semGive()
+{
+    Serial.println("Releasing semaphore...");
+    xSemaphoreGive(waitHandle);
+}
 
 // Callback for discovering BLE devices
 class BleScanCallback : public BLEAdvertisedDeviceCallbacks 
@@ -51,12 +80,13 @@ class BleScanCallback : public BLEAdvertisedDeviceCallbacks
     {
         Serial.printf("Discovered device: %s\n", advertisedDevice.toString().c_str());
         if (advertisedDevice.getName() == "Mousr") {
-            device = &advertisedDevice;
+            Serial.printf("Device ptr: %p\n", &advertisedDevice);
+            device = advertisedDevice;
             Serial.println("Stopping BLE scan");
+            writeOled(advertisedDevice.getAddress().toString().c_str());
             bleScan->stop();
             bleScan->clearResults();
-            
-            xSemaphoreGive(waitHandle);
+            semGive();
         }
     }
 };
@@ -65,15 +95,16 @@ class BleClientCallback : public BLEClientCallbacks
 {
     void onConnect(BLEClient* client)
     {
+        Serial.printf("Connected to client: %d\n", client->isConnected());
     }
 
     void onDisconnect(BLEClient* client) 
     {
-        isConnected = false;
+        Serial.printf("Disconnected from client: %d\n", client->isConnected());
     }
 };
 
-void txNotifyCallback(
+void bleNotifyCallback(
     BLERemoteCharacteristic* characteristic,
     uint8_t* data,
     size_t length,
@@ -87,18 +118,23 @@ void txNotifyCallback(
 void setup() 
 {
     Serial.begin(115200);
-
+    semGive();
     setupOled();
-    setupSeeSaw();
-
+    writeOled("hello world");
+    //setupSeeSaw();
     startBleScan();
+    Serial.printf("Device: %p\n", device);
+    Serial.println("Discovering...?");
     discoverDevice();
-    isConnected = setupDevice();
+    Serial.println("Setting up...");
+    setupDevice();
 }
 
 void loop() 
 {
-    readSeeSaw();
+    delay(100);
+    //delay(10);
+    //readSeeSaw();
 }
 
 void die()
@@ -114,15 +150,19 @@ void reset()
 
 void readSeeSaw()
 {
-    if (digitalRead(IRQ_PIN) == true) 
+    if (digitalRead(JOY_IRQ_PIN) == true) 
     {
+        //Serial.println("JOY_IRQ_PIN READ");
         return;
     }
+    
+    // Transform from 0...1024 to -128...127
+    int x = (ss.analogRead(JOYSTICK_H) / 4 - 128) + JOYSTICK_H_CORRECTION;
+    int y = (ss.analogRead(JOYSTICK_V) / 4 - 128) + JOYSTICK_V_CORRECTION;
 
-    int x = ss.analogRead(2);
-    int y = ss.analogRead(3);
     uint32_t buttons = ss.digitalReadBulk(button_mask);
     Serial.printf("Analog: X: %d Y: %d\n", x, y);
+    
     Serial.printf("Button: A: %d B: %d Y: %d X: %d SEL: %d\n", 
         buttons & (1 << BUTTON_RIGHT),
         buttons & (1 << BUTTON_DOWN),
@@ -147,18 +187,24 @@ bool setupSeeSaw()
     Serial.println(ss.getVersion(), HEX);
     ss.pinModeBulk(button_mask, INPUT_PULLUP);
     ss.setGPIOInterrupts(button_mask, 1);
-    pinMode(IRQ_PIN, INPUT);
+    pinMode(JOY_IRQ_PIN, INPUT);
+    //attachInterrupt(JOY_IRQ_PIN, onButtonPress, HIGH);
     return true;
+}
+
+void onButtonPress()
+{
+    Serial.println("press!");
 }
 
 void discoverDevice() 
 {
-    Serial.println("Waiting for device to be discovered...");
-    xSemaphoreTake(waitHandle, portMAX_DELAY);
-    Serial.printf("Got device: Name: %s Address: %s RSSI: %d", 
-        device->getName(), 
-        device->getAddress().toString().c_str(), 
-        device->getRSSI());
+    Serial.println("In discoverDevice()");
+    Serial.printf("Got device: Name: %s Address: %s RSSI: %d\n", 
+        device.getName().c_str(), 
+        device.getAddress().toString().c_str(), 
+        device.getRSSI());
+    Serial.println("Leaving discoverDevice()");
 }
 
 bool setupDevice() 
@@ -167,10 +213,7 @@ bool setupDevice()
     Serial.println("Connecting to device ...");
     bleClient = BLEDevice::createClient();
     bleClient->setClientCallbacks(new BleClientCallback());
-    bleClient->connect(device);
-
-    Serial.println("Waiting for device to connect...");
-    xSemaphoreTake(waitHandle, portMAX_DELAY);
+    bleClient->connect(&device);
     Serial.println("Device connected!");
     Serial.println("Getting characteristics ...");
     BLERemoteService* remoteService = bleClient->getService(serviceUuid);
@@ -181,31 +224,33 @@ bool setupDevice()
     }
 
     // TX characteristic
-    txCharacteristic = remoteService->getCharacteristic(txUuid);
-    if (txCharacteristic == nullptr)
+    uartWriteCharacteristic = remoteService->getCharacteristic(uartWriteUuid);
+    if (uartWriteCharacteristic == nullptr)
     {
-        Serial.printf("ERROR: Could not find characteristic: %s\n", txCharacteristic->toString().c_str());
+        Serial.printf("ERROR: Could not find characteristic: %s\n", uartWriteUuid.toString().c_str());
+        goto final;
+    }
+    
+    uartSubscribeCharacteristic = remoteService->getCharacteristic(uartSubscribeUuid);
+    if (uartSubscribeCharacteristic == nullptr)
+    {
+        Serial.printf("ERROR: Could not find characteristic: %s\n", uartSubscribeUuid.toString().c_str());
         goto final;
     }
 
-    if (txCharacteristic->canNotify() == false) 
+    if (uartSubscribeCharacteristic->canNotify() == true)
     {
-        Serial.printf("ERROR: Characteristic %s does not have notify capabilities!\n", txCharacteristic->toString().c_str());
+        uartSubscribeCharacteristic->registerForNotify(bleNotifyCallback);
+    }
+    else 
+    {
+        Serial.printf("ERROR: Could not subscribe to notifications from characteristic: %s\n", uartSubscribeCharacteristic->toString());
         goto final;
     }
 
-    txCharacteristic->registerForNotify(txNotifyCallback);
-
-    // RX characteristic
-    rxCharacteristic = remoteService->getCharacteristic(rxUuid);
-    if (rxCharacteristic == nullptr)
-    {
-        Serial.printf("ERROR: Could not find characteristic: %s\n", rxCharacteristic->toString().c_str());
-        goto final;
-    }
+    success = true;
 
     final:
-
     if (success == false &&
         bleClient != nullptr)
     {
@@ -218,20 +263,47 @@ bool setupDevice()
 
 void startBleScan() {
     Serial.println("Setting up BLE for scan ...");
-
     BLEDevice::init("");
     bleScan = BLEDevice::getScan();
     bleScan->setAdvertisedDeviceCallbacks(new BleScanCallback());
     bleScan->setActiveScan(true);
     bleScan->setInterval(100);
     bleScan->setWindow(99);
+    bleScan->start(30, false);
+    semTake();
+    Serial.println("startBleScan() end ...");
 }
 
 void setupOled() 
 {
     Serial.println("Setting up OLED display");
-    u8x8.begin();
-    u8x8.setPowerSave(0);
+    u8g2.begin();
+}
+
+void drawPosition()
+{
+    //u8g2.drawRBox(0, 0, 200, 100, 0);
+    u8g2.drawCircle(60, 30, 20);
+    u8g2.drawTriangle(20, 5, 27, 50, 5, 32);
+}
+
+void writeOled(const char* text)
+{
+    u8g2.firstPage();
+    do {
+        u8g2.setFont(u8g2_font_ncenB14_tf);
+        u8g2.drawStr(0, 20, text);
+
+        u8g2.setFont(u8g2_font_unifont_t_symbols);
+        
+        u8g2.drawGlyph(20, 40, ARROW_UP_FILL);
+        u8g2.drawGlyph(20, 60, ARROW_DOWN_FILL);
+        u8g2.drawGlyph(10, 50, ARROW_LEFT_FILL);
+        u8g2.drawGlyph(30, 50, ARROW_RIGHT_FILL);
+
+        drawPosition();
+    } 
+    while(u8g2.nextPage());
 }
 
 // Print the data as a hex string
@@ -240,7 +312,7 @@ void printData(uint8_t* data, size_t length)
     Serial.print("0x");
     for (int i = 0; i < length; i++) 
     {
-        Serial.printf("%x", (&data + i));
+        Serial.printf("%02x", data[i]);
     }
 
     Serial.println();
