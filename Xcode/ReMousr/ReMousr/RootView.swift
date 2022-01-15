@@ -94,6 +94,11 @@ struct RootView: View {
         // Make sure this is always up to date in case the orientation event doesn't fire
         self.orientation = UIDevice.current.orientation
 
+        if self.orientation.isLandscape == false &&
+            self.orientation.isPortrait == false {
+            return
+        }
+
         print("showController() selectedTab=\(self.selectedTab) isLandscape=\(self.orientation.isLandscape) showController=\(self.model.showController)")
         if self.orientation.isLandscape &&
             self.selectedTab == 2 &&
