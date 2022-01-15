@@ -1,15 +1,32 @@
 #ifndef MOUSR_H
 #define MOUSR_H
 
-#include <cstdio>
-#include <cstdint>
-#include <iostream>
-#include <BLEDevice.h>
-#include <BLEUtils.h>
-#include <BLEScan.h>
+#ifdef ARDUINO
 #include <BLEAdvertisedDevice.h>
+#include <BLEDevice.h>
+#include <BLEScan.h>
+#include <BLEUtils.h>
+#else
+struct BLEClient {};
+#endif
 
-enum MousrMessageType : uint8_t
+#include <cstdint>
+#include <cstdio>
+#include <iostream>
+
+enum class MousrConnectionStatus
+{
+    Unknown,
+    None,
+    Scanning,
+    Discovered,
+    Connecting,
+    Connected,
+    Disconnected,
+    Error
+};
+
+enum class MousrMessage : uint8_t
 {
     AUTO_ACK = 0x0f,
     FIRMWARE_VERSION = 0x1c,
@@ -27,9 +44,35 @@ enum MousrMessageType : uint8_t
     NACK = 0xff,
 };
 
+enum class MousrCommand : uint8_t
+{
+    STOP = 0x00,
+    SPIN = 0x01,
+    MOVE = 0x02,
+    RESET_HEADING = 0x03,
+    GET_DEBUG_LOG = 0x04,
+    SPIN_PLAN = 0x05,
+    ENTER_DFU_MODE = 0x08,
+    TURN_OFF = 0x09,
+    SLEEP = 0x0a,
+    CONFIG_AUTO_MODE = 0x0f,
+    CHIRP = 0x12,
+    SOUND_VOLUME = 0x13,
+    Flick_SIGNAL = 0x17,
+    Reverse_SIGNAL = 0x18,
+    Tail_Calib_SIGNAL = 0x19,
+    Set_Tail_SIGNAL = 0x1a,
+    INITIALIZE_DEVICE = 0x1c,
+    FLIP_ROBOT = 0x1f,
+    CFG_DRIVER_ASSIST = 0x29,
+    TUTORIAL_STEP = 0x2d,
+    CMD_SET_TIME = 0x2e,
+    INVALID = 0x64,
+};
+
 #pragma pack(push, 1)
 // 0x6218000000001815000000000000000000000000
-struct MousrBattery
+struct MousrBatteryMsg
 {
     uint8_t voltage;
     uint8_t isCharging;
@@ -40,47 +83,83 @@ struct MousrBattery
 };
 
 // 0x309f5c10bff3162ec0d71e18c100870000000000
-struct MousrMovement
+struct MousrMovementMsg
 {
     float speed;
     float held;
     float angle;
 };
 
-struct MousrData
+struct MousrMessageData
 {
-    MousrMessageType msg;
+    MousrMessage msg;
 
     // Data blob
     union
     {
-        MousrBattery battery;
-        MousrMovement movement;
+        MousrBatteryMsg battery;
+        MousrMovementMsg movement;
+        void* data;
     };
+};
 
-    // Remaining data
-    void *extra;
+struct MousrRawMessageData
+{
+    uint8_t *data;
+    size_t length;
 };
 
 #pragma pack(pop)
 
-#if 0
+// Wraps Mousr bytestream data
+class MousrData
+{
+public:
+    MousrData(uint8_t *data, size_t length)
+    {
+        raw->data = data;
+        raw->length = length;
+        cooked = (MousrMessageData *)data;
+    }
+
+    MousrRawMessageData *getRawMessageData() { return this->raw; }
+
+    MousrMessageData *getMessageData() { return this->cooked; }
+
+private:
+    MousrRawMessageData *raw{};
+    MousrMessageData *cooked{};
+};
+
 class Mousr
 {
 public:
-    static BLEUUID serviceUuid;
     Mousr();
     ~Mousr();
 
+    MousrConnectionStatus getConnectionStatus()
+    {
+        return this->connectionStatus;
+    }
+
+    void ConnectBluetooth(BLEClientCallbacks *clientCallback,
+                          void (*errorFunc)(char *),
+                          void (*notifyFunc)(BLECharacteristic *, MousrData *));
+
+    void StartScan();
+
 private:
-    const std::string serviceUuidStr = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-    const std::string uartWriteUuidStr = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-    const std::string uartSubscribeUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
-    static BLEUUID serviceUuid;
-    static BLEUUID uartWriteUuid;
-    static BLEUUID uartSubscribeUuid;
-    static BLEUUID serviceUuid;
+    const BLEUUID serviceUuid = BLEUUID("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
+    const BLEUUID uartWriteUuid = BLEUUID("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+    const BLEUUID uartSubscribeUuid = BLEUUID("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
+
+    MousrConnectionStatus connectionStatus;
+    BLEScan *bleScan;
+    BLEClient *bleClient;
+    BLEClientCallbacks *clientCallback;
+    BLEAdvertisedDevice device;
+    BLERemoteCharacteristic *uartWriteCharacteristic;
+    BLERemoteCharacteristic *uartSubscribeCharacteristic;
 };
-#endif
 
 #endif

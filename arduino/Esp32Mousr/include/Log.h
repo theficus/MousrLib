@@ -1,14 +1,16 @@
-#include <U8g2lib.h>
-
-#define U8LOG_WIDTH 16
-#define U8LOG_HEIGHT 8
+#include <stdio.h>
+#include <cinttypes>
 
 enum class LogDestination : uint8_t {
     None = 0,
     Serial = 1,
     Oled = 1 << 1,
-    All = Serial | Oled
+    Console = 1 << 2,
+    All = Serial | Oled | Console
 };
+
+static bool isOledLogEnabled = false;
+static bool isSeriaLogEnabled = false;
 
 inline LogDestination operator&(LogDestination a, LogDestination b)
 {
@@ -18,4 +20,10 @@ inline LogDestination operator&(LogDestination a, LogDestination b)
 void writeLogF(const LogDestination dest, const char* fmt, ...);
 void writeLogLn(const LogDestination dest, const char* str);
 void writeLog(const LogDestination dest, const char* str);
+
+#ifdef ARDUINO
+#include <U8g2lib.h>
+#define U8LOG_WIDTH 16
+#define U8LOG_HEIGHT 8
 void setupOledLogDisplay(U8X8 oled);
+#endif

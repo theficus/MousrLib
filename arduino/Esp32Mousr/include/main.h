@@ -1,5 +1,6 @@
 #include "Log.h"
 #include "Mousr.h"
+#include "utility.h"
 
 #include <Wire.h>
 //#include <SPI.h>

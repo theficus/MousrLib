@@ -1,3 +1,4 @@
+#ifdef ARDUINO
 #include "main.h"
 // U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8_settings = U8X8_SSD1306_128X64_NONAME_HW_I2C(U8X8_PIN_NONE); // Settings mode
 
@@ -23,7 +24,7 @@ BLERemoteCharacteristic *uartWriteCharacteristic;
 BLERemoteCharacteristic *uartSubscribeCharacteristic;
 bool isConnected = false;
 
-enum displayMode
+enum class displayMode
 {
     unknown,
     mousr,
@@ -31,7 +32,7 @@ enum displayMode
     settings
 };
 
-displayMode mode = unknown;
+displayMode mode = displayMode::unknown;
 
 // Seesaw
 Adafruit_seesaw ss;
@@ -54,36 +55,22 @@ uint32_t button_mask = (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) |
 #define JOY_IRQ_PIN 14 // ESP32
 
 // Other
-static SemaphoreHandle_t waitHandle = xSemaphoreCreateRecursiveMutex();
 
 // Print the data as a hex string
 void printData(uint8_t *data, size_t length)
 {
-    MousrData *mousr = (MousrData *)data;
-    Serial.printf("Got message type: %2x\n", mousr->msg);
+    MousrMessageData *mousr = (MousrMessageData *)data;
+    Serial.printf("Got message type: %2x\n", (uint8_t)mousr->msg);
 
     switch (mousr->msg)
     {
-    case MousrMessageType::BATTERY_VOLTAGE:
-        Serial.printf("Battery voltage: %d%%\n", mousr->battery.voltage);
+    case MousrMessage::BATTERY_VOLTAGE:
+        writeLogF(LogDestination::All, "Battery voltage: %d%%\n", mousr->battery.voltage);
         // u8x8log.printf("BATT:%d%%\n", mousr->battery.voltage);
         break;
     default:
         break;
     }
-}
-
-static void semTake()
-{
-    Serial.println("Waiting for semaphore...");
-    xSemaphoreTake(waitHandle, portMAX_DELAY);
-    Serial.println("Semaphore get!");
-}
-
-static void semGive()
-{
-    Serial.println("Releasing semaphore...");
-    xSemaphoreGive(waitHandle);
 }
 
 // Callback for discovering BLE devices
@@ -237,7 +224,7 @@ bool setupDevice()
     }
     else
     {
-        Serial.printf("ERROR: Could not subscribe to notifications from characteristic: %s\n", uartSubscribeCharacteristic->toString());
+        Serial.printf("ERROR: Could not subscribe to notifications from characteristic: %s\n", uartSubscribeCharacteristic->toString().c_str());
         goto final;
     }
 
@@ -277,6 +264,7 @@ void setupOledLogView()
 
 void setupOledMousrView()
 {
+    isOledLogEnabled = true;
     u8g2.begin();
     // writeOled("hello world");
 }
@@ -309,6 +297,7 @@ void writeOled(const char *text)
 
 void setup()
 {
+    isSeriaLogEnabled = true;
     Serial.begin(115200);
     semGive();
     // setupOled();
@@ -328,3 +317,4 @@ void loop()
     // delay(10);
     // readSeeSaw();
 }
+#endif
