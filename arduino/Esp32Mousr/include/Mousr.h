@@ -1,5 +1,6 @@
-#ifndef MOUSR_H
-#define MOUSR_H
+#pragma once
+#ifndef MOUSR_MOUSR_H
+#define MOUSR_MOUSR_H
 
 #include <BLEAdvertisedDevice.h>
 #include <BLEDevice.h>

@@ -1,15 +1,4 @@
 #include "main.h"
-// U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8_settings = U8X8_SSD1306_128X64_NONAME_HW_I2C(U8X8_PIN_NONE); // Settings mode
-
-// Glyphs
-#define ARROW_UP_FILL 0x25b2
-#define ARROW_UP_EMPTY 0x25b3
-#define ARROW_RIGHT_FILL 0x25b6
-#define ARROW_RIGHT_EMPTY 0x25b7
-#define ARROW_DOWN_FILL 0x25bc
-#define ARROW_DOWN_EMPTY 0x25bd
-#define ARROW_LEFT_FILL 0x25c0
-#define ARROW_LEFT_EMPTY 0x25c1
 
 // BLE characteristics
 BLEUUID serviceUuid("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
@@ -32,28 +21,6 @@ enum class displayMode
 };
 
 displayMode mode = displayMode::unknown;
-
-// Seesaw
-Adafruit_seesaw ss;
-#define BUTTON_RIGHT 6
-#define BUTTON_DOWN 7
-#define BUTTON_LEFT 9
-#define BUTTON_UP 10
-#define BUTTON_SEL 14
-#define JOYSTICK_H 2
-#define JOYSTICK_V 3
-
-// Calibration values
-#define JOYSTICK_H_CORRECTION 2
-#define JOYSTICK_V_CORRECTION 0
-
-uint32_t button_mask = (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) |
-                       (1 << BUTTON_LEFT) | (1 << BUTTON_UP) |
-                       (1 << BUTTON_SEL);
-
-#define JOY_IRQ_PIN 14 // ESP32
-
-// Other
 
 // Print the data as a hex string
 void printData(uint8_t *data, size_t length)
@@ -125,55 +92,6 @@ void die()
 void reset()
 {
     // TODO: Clean up and reset. Also restart scan?
-}
-
-void readSeeSaw()
-{
-    if (digitalRead(JOY_IRQ_PIN) == true)
-    {
-        // Serial.println("JOY_IRQ_PIN READ");
-        return;
-    }
-
-    // Transform from 0...1024 to -128...127
-    int x = (ss.analogRead(JOYSTICK_H) / 4 - 128) + JOYSTICK_H_CORRECTION;
-    int y = (ss.analogRead(JOYSTICK_V) / 4 - 128) + JOYSTICK_V_CORRECTION;
-
-    uint32_t buttons = ss.digitalReadBulk(button_mask);
-    Serial.printf("Analog: X: %d Y: %d\n", x, y);
-
-    Serial.printf("Button: A: %d B: %d Y: %d X: %d SEL: %d\n",
-                  buttons & (1 << BUTTON_RIGHT),
-                  buttons & (1 << BUTTON_DOWN),
-                  buttons & (1 << BUTTON_LEFT),
-                  buttons & (1 << BUTTON_UP),
-                  buttons & (1 << BUTTON_SEL));
-
-    Serial.print("Button (mask):");
-    Serial.println(buttons, BIN);
-}
-
-void onButtonPress()
-{
-    Serial.println("press!");
-}
-
-bool setupSeeSaw()
-{
-    if (ss.begin(0x49) == false)
-    {
-        Serial.println("Could not set up JoyWing!");
-        return false;
-    }
-
-    Serial.println("seesaw started");
-    Serial.print("version: ");
-    Serial.println(ss.getVersion(), HEX);
-    ss.pinModeBulk(button_mask, INPUT_PULLUP);
-    ss.setGPIOInterrupts(button_mask, 1);
-    pinMode(JOY_IRQ_PIN, INPUT);
-    attachInterrupt(JOY_IRQ_PIN, onButtonPress, FALLING);
-    return true;
 }
 
 void discoverDevice()
@@ -254,55 +172,15 @@ void startBleScan()
     Serial.println("startBleScan() end ...");
 }
 
-void setupOledLogView()
-{
-    u8x8_status.begin();
-    u8x8_status.setFont(u8x8_font_chroma48medium8_r);
-    setupOledLogDisplay(u8x8_status);
-}
-
-void setupOledMousrView()
-{
-    isOledLogEnabled = true;
-    u8g2.begin();
-    // writeOled("hello world");
-}
-
-void drawPosition()
-{
-    // u8g2.drawRBox(0, 0, 200, 100, 0);
-    u8g2.drawCircle(60, 30, 20);
-    u8g2.drawTriangle(20, 5, 27, 50, 5, 32);
-}
-
-void writeOled(const char *text)
-{
-    u8g2.firstPage();
-    do
-    {
-        u8g2.setFont(u8g2_font_ncenB14_tf);
-        u8g2.drawStr(0, 20, text);
-
-        u8g2.setFont(u8g2_font_unifont_t_symbols);
-
-        u8g2.drawGlyph(20, 40, ARROW_UP_FILL);
-        u8g2.drawGlyph(20, 60, ARROW_DOWN_FILL);
-        u8g2.drawGlyph(10, 50, ARROW_LEFT_FILL);
-        u8g2.drawGlyph(30, 50, ARROW_RIGHT_FILL);
-
-        drawPosition();
-    } while (u8g2.nextPage());
-}
 
 void setup()
 {
-    isSeriaLogEnabled = true;
     Serial.begin(115200);
     semGive();
     // setupOled();
-    setupOledLogView();
-    // writeOled("hello world");
-    setupSeeSaw();
+    //setupOledLogView();
+    OledLog.SetupOledLogDisplay();
+    setupSeesaw();
     startBleScan();
     Serial.printf("Device: %p\n", device);
     discoverDevice();

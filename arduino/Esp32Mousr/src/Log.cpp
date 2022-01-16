@@ -1,25 +1,11 @@
-#include <stdio.h>
-#include <Log.h>
+#include "Log.h"
 
-U8X8LOG u8x8log;
-uint8_t u8log_buffer[U8LOG_WIDTH * U8LOG_HEIGHT];
-
-void writeOledLog(const char *str)
-{
-    u8x8log.print(str);
-}
-
-void writeSerialLog(const char *str)
-{
-    Serial.print(str);
-}
-
-void setupOledLogDisplay(U8X8 display)
-{
-    u8x8log.begin(display, U8LOG_HEIGHT, U8LOG_WIDTH, u8log_buffer);
-    u8x8log.setRedrawMode(0);
-    u8x8log.println("hello world");
-}
+#ifdef ARDUINO
+#include "SerialLog.h"
+#include "OledLog.h"
+#else
+#include "ConsoleLog.h"
+#endif
 
 void writeLogF(const LogDestination dest, const char *fmt, ...)
 {
@@ -40,20 +26,13 @@ void writeLogLn(const LogDestination dest, const char *str)
 
 void writeLog(LogDestination dest, const char *str)
 {
-    if ((LogDestination::Console & dest) == LogDestination::Console)
+    if ((LogDestination::Serial & dest) == LogDestination::Serial)
     {
-        printf(str);
+        SerialLog.WriteLog(str);
     }
 
-    if (isSeriaLogEnabled &&
-        (LogDestination::Serial & dest) == LogDestination::Serial)
+    if ((LogDestination::Oled & dest) == LogDestination::Oled)
     {
-        writeSerialLog(str);
-    }
-
-    if (isOledLogEnabled &&
-        (LogDestination::Oled & dest) == LogDestination::Oled)
-    {
-        writeOledLog(str);
+        OledLog.WriteLog(str);
     }
 }

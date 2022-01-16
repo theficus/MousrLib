@@ -1,7 +1,10 @@
-#include "../LogTests.h"
+#include "Log.h"
+#include "ConsoleLog.h"
 
 void test_writeLogLn()
 {
+    writeLogLn("test");
+    
     writeLogLn(LogDestination::Console, "writeLogLn()");
 }
 
