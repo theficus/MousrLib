@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <Log.h>
 
-#ifdef ARDUINO
 U8X8LOG u8x8log;
 uint8_t u8log_buffer[U8LOG_WIDTH * U8LOG_HEIGHT];
 
@@ -21,7 +20,6 @@ void setupOledLogDisplay(U8X8 display)
     u8x8log.setRedrawMode(0);
     u8x8log.println("hello world");
 }
-#endif
 
 void writeLogF(const LogDestination dest, const char *fmt, ...)
 {

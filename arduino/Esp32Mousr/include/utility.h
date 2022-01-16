@@ -1,6 +1,5 @@
 #include <cstdint>
 
-#ifdef ESP32
 static SemaphoreHandle_t waitHandle = xSemaphoreCreateRecursiveMutex();
 
 static void semTake()
@@ -15,4 +14,3 @@ static void semGive()
     Serial.println("Releasing semaphore...");
     xSemaphoreGive(waitHandle);
 }
-#endif

@@ -1,14 +1,10 @@
 #ifndef MOUSR_H
 #define MOUSR_H
 
-#ifdef ARDUINO
 #include <BLEAdvertisedDevice.h>
 #include <BLEDevice.h>
 #include <BLEScan.h>
 #include <BLEUtils.h>
-#else
-struct BLEClient {};
-#endif
 
 #include <cstdint>
 #include <cstdio>

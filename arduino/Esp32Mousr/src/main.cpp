@@ -1,4 +1,3 @@
-#ifdef ARDUINO
 #include "main.h"
 // U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8_settings = U8X8_SSD1306_128X64_NONAME_HW_I2C(U8X8_PIN_NONE); // Settings mode
 
@@ -317,4 +316,3 @@ void loop()
     // delay(10);
     // readSeeSaw();
 }
-#endif
