@@ -1,11 +1,9 @@
 #include <unity.h>
-#include "LogTestsLocal.h"
+#include "tests.h"
 
 int main(int argc, char** argv)
 {
-    LogTests logTests;
+    runAll();
 
-    UNITY_BEGIN();
-    logTests.RunAll();
-    UNITY_END();
+    return 0;
 }
