@@ -1,12 +1,6 @@
 #pragma once
 #ifndef MOUSR_MOUSR_H
 #define MOUSR_MOUSR_H
-
-#include <BLEAdvertisedDevice.h>
-#include <BLEDevice.h>
-#include <BLEScan.h>
-#include <BLEUtils.h>
-
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
@@ -112,51 +106,12 @@ struct MousrRawMessageData
 class MousrData
 {
 public:
-    MousrData(uint8_t *data, size_t length)
-    {
-        raw->data = data;
-        raw->length = length;
-        cooked = (MousrMessageData *)data;
-    }
-
-    MousrRawMessageData *getRawMessageData() { return this->raw; }
-
-    MousrMessageData *getMessageData() { return this->cooked; }
-
-private:
-    MousrRawMessageData *raw{};
-    MousrMessageData *cooked{};
-};
-
-class Mousr
-{
-public:
-    Mousr();
-    ~Mousr();
-
-    MousrConnectionStatus getConnectionStatus()
-    {
-        return this->connectionStatus;
-    }
-
-    void ConnectBluetooth(BLEClientCallbacks *clientCallback,
-                          void (*errorFunc)(char *),
-                          void (*notifyFunc)(BLECharacteristic *, MousrData *));
-
-    void StartScan();
-
-private:
-    const BLEUUID serviceUuid = BLEUUID("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
-    const BLEUUID uartWriteUuid = BLEUUID("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
-    const BLEUUID uartSubscribeUuid = BLEUUID("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
-
-    MousrConnectionStatus connectionStatus;
-    BLEScan *bleScan;
-    BLEClient *bleClient;
-    BLEClientCallbacks *clientCallback;
-    BLEAdvertisedDevice device;
-    BLERemoteCharacteristic *uartWriteCharacteristic;
-    BLERemoteCharacteristic *uartSubscribeCharacteristic;
+    MousrData(const uint8_t *data, size_t length);
+    MousrData(const char* data);
+    ~MousrData();
+    MousrRawMessageData *getRawMessageData();
+    MousrMessageData *getMessageData();
+    MousrMessage getMessageKind();
 };
 
 #endif

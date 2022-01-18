@@ -1,6 +1,9 @@
 #include <cstdio>
+
+// Only include things we want to verify on native
 #include "Log.h"
 #include "ConsoleLog.h"
+#include "Mousr.h"
 
 // Unit tests will have their own main() method
 #ifndef UNIT_TEST

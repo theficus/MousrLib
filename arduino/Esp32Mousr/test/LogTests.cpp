@@ -39,12 +39,6 @@ void test_writeLogF()
     writeLogF(LogDestination::Oled, expected);
     TEST_ASSERT_EQUAL_STRING(expected, s_last_log_entry);
 
-    /*
-    expected = "[any] writeLogF() text without formatting\n";
-    g_writeLogF(expected);
-    TEST_ASSERT_EQUAL_STRING(expected, s_last_log_entry);
-    */
-    
     expected = "[serial] writeLogF() text with formatting: test -123 0.123000\n";
     writeLogF(LogDestination::Serial, consttxt("[serial] writeLogF() text with formatting: %s %d %f\n"), "test", -123, 0.123);
     TEST_ASSERT_EQUAL_STRING(expected, s_last_log_entry);
@@ -52,14 +46,23 @@ void test_writeLogF()
     expected = "[oled] writeLogF() text with formatting: test -123 0.123000\n";
     writeLogF(LogDestination::Oled, consttxt("[oled] writeLogF() text with formatting: %s %d %f\n"), "test", -123, 0.123);
     TEST_ASSERT_EQUAL_STRING(expected, s_last_log_entry);
+
+    expected = "[any] writeLogF() text with formatting: test -123 0.123000\n";
+    g_writeLogF(consttxt("[any] writeLogF() text with formatting: %s %d %f\n"), "test", -123, 0.123);
+    TEST_ASSERT_EQUAL_STRING(expected, s_last_log_entry);
 }
 
 void test_writeLog()
 {
-    const char* expected = "writeLog()\n";
+    const char* expected = "[serial] writeLog()\n";
     writeLog(LogDestination::Serial, expected);
     TEST_ASSERT_EQUAL_STRING(expected, s_last_log_entry);
 
+    expected = "[oled] writeLog()\n";
     writeLog(LogDestination::Oled, expected);
     TEST_ASSERT_EQUAL_STRING(expected, s_last_log_entry);
+
+    expected = "[any] writeLog()\n";
+    g_writeLog(expected);
+    expected = "[serial] writeLog()\n";
 }
