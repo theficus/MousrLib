@@ -18,10 +18,14 @@ void writeLogF(const LogDestination dest, const char *fmt, ...)
     writeLog(dest, str);
 }
 
+void writeLogLn(const LogDestination dest)
+{
+    writeLog(dest, "\n");
+}
+
 void writeLogLn(const LogDestination dest, const char *str)
 {
     writeLog(dest, str);
-    writeLog(dest, "\n");
 }
 
 void writeLog(LogDestination dest, const char *str)
@@ -36,3 +40,18 @@ void writeLog(LogDestination dest, const char *str)
         OledLog.WriteLog(str);
     }
 }
+
+#ifndef ARDUINO
+static char* s_lastLogEntry;
+
+char* ConsoleLog_::getLastLogEntry()
+{
+    return s_lastLogEntry;
+}
+
+void ConsoleLog_::setLastLogEntry(const char* str)
+{
+    s_lastLogEntry = (char*)malloc(sizeof(str));
+    strcpy(s_lastLogEntry, str);
+}
+#endif

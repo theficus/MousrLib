@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class ConsoleLog_ : virtual public Log
+class ConsoleLog_ : public Log
 {
 public:
     ConsoleLog_(string dest)
@@ -17,14 +17,15 @@ public:
 
     void WriteLog(const char *str)
     {
-        lastLogEntry = string(str);
+        setLastLogEntry(str);
         printf("[%s] %s", destName.c_str(), str);
     }
 
-    string lastLogEntry;
+    char* getLastLogEntry();
 
 private:
     string destName;
+    void setLastLogEntry(const char *str);
 };
 
 static ConsoleLog_ SerialLog = ConsoleLog_("Serial");

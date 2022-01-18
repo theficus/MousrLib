@@ -40,7 +40,7 @@ void printData(uint8_t *data, size_t length)
 }
 
 // Callback for discovering BLE devices
-class BleScanCallback : public BLE  AdvertisedDeviceCallbacks
+class BleScanCallback : public BLEAdvertisedDeviceCallbacks
 {
     void onResult(BLEAdvertisedDevice advertisedDevice)
     {

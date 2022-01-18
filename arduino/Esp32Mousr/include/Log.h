@@ -28,6 +28,7 @@ inline LogDestination operator&(LogDestination a, LogDestination b)
 }
 
 void writeLogF(const LogDestination dest, const char *fmt, ...);
+void writeLogLn(const LogDestination dest);
 void writeLogLn(const LogDestination dest, const char *str);
 void writeLog(const LogDestination dest, const char *str);
 //void writeLog(Log dest, const char *str);
