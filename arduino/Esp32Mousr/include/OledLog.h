@@ -16,6 +16,7 @@ class OledLog_ : public Log
 public:
     void WriteLog(const char *str)
     {
+        SAVE_LAST_LOG(str);
         s_u8x8_log_writer.print(str);
     }
 

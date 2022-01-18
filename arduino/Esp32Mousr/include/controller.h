@@ -26,10 +26,6 @@ static Adafruit_seesaw ss;
 #define JOYSTICK_H_CORRECTION 2
 #define JOYSTICK_V_CORRECTION 0
 
-static uint32_t s_button_mask = (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) |
-                       (1 << BUTTON_LEFT) | (1 << BUTTON_UP) |
-                       (1 << BUTTON_SEL);
-
 #define JOY_IRQ_PIN 14 // ESP32
 
 bool setupSeesaw();

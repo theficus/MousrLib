@@ -10,6 +10,7 @@ class SerialLog_ : public Log
 public:
     void WriteLog(const char *str)
     {
+        SAVE_LAST_LOG(str);
         Serial.print(str);
     }
 };

@@ -1,5 +1,9 @@
 #include "controller.h"
 
+static uint32_t s_button_mask = (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) |
+                       (1 << BUTTON_LEFT) | (1 << BUTTON_UP) |
+                       (1 << BUTTON_SEL);
+
 bool setupSeesaw()
 {
     if (ss.begin(0x49) == false)

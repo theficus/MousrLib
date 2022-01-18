@@ -17,15 +17,12 @@ public:
 
     void WriteLog(const char *str)
     {
-        setLastLogEntry(str);
+        SAVE_LAST_LOG(str);
         printf("[%s] %s", destName.c_str(), str);
     }
 
-    char* getLastLogEntry();
-
 private:
     string destName;
-    void setLastLogEntry(const char *str);
 };
 
 static ConsoleLog_ SerialLog = ConsoleLog_("Serial");

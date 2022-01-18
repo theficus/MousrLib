@@ -14,7 +14,6 @@ void writeLogF(const LogDestination dest, const char *fmt, ...)
     va_start(args, fmt);
     vasprintf(&str, fmt, args);
     va_end(args);
-
     writeLog(dest, str);
 }
 
@@ -40,18 +39,3 @@ void writeLog(LogDestination dest, const char *str)
         OledLog.WriteLog(str);
     }
 }
-
-#ifndef ARDUINO
-static char* s_lastLogEntry;
-
-char* ConsoleLog_::getLastLogEntry()
-{
-    return s_lastLogEntry;
-}
-
-void ConsoleLog_::setLastLogEntry(const char* str)
-{
-    s_lastLogEntry = (char*)malloc(sizeof(str));
-    strcpy(s_lastLogEntry, str);
-}
-#endif
