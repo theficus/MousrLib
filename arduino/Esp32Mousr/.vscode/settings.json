@@ -2,6 +2,23 @@
     "files.associations": {
         "string": "cpp",
         "iosfwd": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "vector": "cpp",
+        "ios": "cpp",
+        "__locale": "cpp",
+        "__string": "cpp",
+        "__threading_support": "cpp",
+        "bitset": "cpp",
+        "complex": "cpp",
+        "iterator": "cpp",
+        "istream": "cpp",
+        "locale": "cpp",
+        "memory": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "streambuf": "cpp",
+        "string_view": "cpp",
+        "type_traits": "cpp",
+        "__functional_base_03": "cpp"
     }
 }

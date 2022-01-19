@@ -1,10 +1,51 @@
 #include <unity.h>
 
+#include "Log.h"
 #include "Mousr.h"
+
+void test_mousrAlloc()
+{
+    string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+    MousrData d(data);
+    d = MousrData(data);
+}
 
 void test_ParseMessage()
 {
-    // 0x305d4e0e3f464db53e85b6923f00030000000000
-    MousrData d("0x305d4e0e3f464db53e85b6923f00030000000000");
-    TEST_ASSERT_EQUAL(MousrMessage::ROBOT_POSE, d.getMessageKind());
+    // ROBOT_POSE message
+    {
+        string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+        MousrData d(data);
+        TEST_ASSERT_EQUAL(MousrMessage::ROBOT_POSE, d.getMessageKind());
+        auto raw = d.getRawMessageData();
+        TEST_ASSERT_EQUAL(20, raw->length);
+
+        auto cooked = d.getMessageData();
+        TEST_ASSERT_EQUAL(MousrMessage::ROBOT_POSE, cooked->msg);
+        TEST_ASSERT_EQUAL_FLOAT(1.150566, cooked->movement.angle);
+        TEST_ASSERT_EQUAL_FLOAT(0.197765, cooked->movement.held);
+        TEST_ASSERT_EQUAL_FLOAT(0.543892, cooked->movement.speed);
+    }
+
+    {
+        // BATTERY_VOLTAGE
+        string data = "0x625c000000002015000000000000000000000000";
+        MousrData d = MousrData(data);
+        TEST_ASSERT_EQUAL(MousrMessage::BATTERY_VOLTAGE, d.getMessageKind());
+        auto raw = d.getRawMessageData();
+        TEST_ASSERT_EQUAL(20, raw->length);
+        
+        auto cooked = d.getMessageData();
+        TEST_ASSERT_EQUAL(MousrMessage::BATTERY_VOLTAGE, cooked->msg);
+        TEST_ASSERT_EQUAL(92, cooked->battery.voltage);
+    }
+}
+
+void test_toHexString()
+{
+    string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+    MousrData d(data);
+    auto raw = d.getRawMessageData();
+    string actual = toHexString(raw->data, raw->length);
+    TEST_ASSERT_EQUAL_STRING(data.c_str(), actual.c_str());
 }

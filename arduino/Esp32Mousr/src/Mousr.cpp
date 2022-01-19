@@ -1,22 +1,36 @@
 #include "Mousr.h"
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <string>
-#include <vector>
-#include <cstring>
-#include <cstdlib>
-#include <cstdio>
+#include "SerialLog.h"
 
 using namespace std;
 
-MousrRawMessageData *raw{};
+MousrRawMessageData *raw;
 
 void initialize(const uint8_t *data, size_t length)
 {
+    raw = (MousrRawMessageData*)malloc(sizeof(MousrRawMessageData));
     raw->data = (uint8_t*)malloc(length);
     memcpy(raw->data, data, length);
     raw->length = length;
+}
+
+void initialize(string data)
+{
+    vector<uint8_t> msg;
+
+    for(unsigned i = 0; i < data.length(); i += 2)
+    {
+        string ss = data.substr(i, 2);
+
+        if (i == 0 && (ss == "0x" || ss == "0X"))
+        {
+            continue;
+        }
+        
+        uint8_t b = strtol(ss.c_str(), nullptr, 16);
+        msg.push_back(b);
+    }
+
+    initialize(msg.data(), msg.size());
 }
 
 MousrData::MousrData(const uint8_t *data, size_t length)
@@ -26,24 +40,19 @@ MousrData::MousrData(const uint8_t *data, size_t length)
 
 MousrData::MousrData(const char* data)
 {
-    // Great and idiomatic solution adapted from https://stackoverflow.com/a/55459931
-    string sout{};
-    istringstream ss(data);
-    vector<uint8_t> msg;
-    while(ss >> std::setw(2) >> sout)
-    {
-        unsigned u;
-        istringstream byte(sout);
-        byte >> setbase(16) >> u;
-        msg.push_back((uint8_t)u);
-    }
+    initialize(string(data));
+}  
 
-    initialize(msg.data(), msg.size());
+MousrData::MousrData(string data)
+{
+    initialize(data);
 }
 
 MousrData::~MousrData()
 {
-    delete raw;
+    if (raw != nullptr) 
+    {
+    }
 }
 
 MousrMessage MousrData::getMessageKind()
@@ -58,5 +67,5 @@ MousrRawMessageData *MousrData::getRawMessageData()
 
 MousrMessageData *MousrData::getMessageData()
 {
-    return (MousrMessageData*)raw;
+    return (MousrMessageData*)raw->data;
 }

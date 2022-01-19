@@ -1,9 +1,19 @@
 #pragma once
 #ifndef MOUSR_MOUSR_H
 #define MOUSR_MOUSR_H
+
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+
+using namespace std;
 
 enum class MousrConnectionStatus
 {
@@ -90,7 +100,7 @@ struct MousrMessageData
     {
         MousrBatteryMsg battery;
         MousrMovementMsg movement;
-        void* data;
+        void *data;
     };
 };
 
@@ -107,11 +117,26 @@ class MousrData
 {
 public:
     MousrData(const uint8_t *data, size_t length);
-    MousrData(const char* data);
+    MousrData(const char *data);
+    MousrData(string data);
+
     ~MousrData();
     MousrRawMessageData *getRawMessageData();
     MousrMessageData *getMessageData();
     MousrMessage getMessageKind();
 };
+
+inline string toHexString(const uint8_t *data, size_t length)
+{
+    stringstream ss;
+    ss << "0x";
+    ss << hex << setfill('0');
+    for (int i = 0; i < length; i++)
+    {
+        ss << setw(2) << (unsigned)data[i];
+    }
+
+    return ss.str();
+}
 
 #endif

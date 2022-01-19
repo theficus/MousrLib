@@ -7,6 +7,8 @@ void test_writeLog();
 
 // Mousr tests
 void test_ParseMessage();
+void test_toHexString();
+void test_mousrAlloc();
 
 void runAll()
 {
@@ -17,6 +19,8 @@ void runAll()
     test_writeLogLn();
 
     test_ParseMessage();
+    test_toHexString();
+    test_mousrAlloc();
 
     UNITY_END();
 }
