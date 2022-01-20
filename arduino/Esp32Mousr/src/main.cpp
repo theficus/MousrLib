@@ -1,10 +1,5 @@
 #include "main.h"
 
-// BLE characteristics
-BLEUUID serviceUuid("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
-BLEUUID uartWriteUuid("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
-BLEUUID uartSubscribeUuid("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
-
 BLEScan *bleScan;
 BLEClient *bleClient;
 BLEAdvertisedDevice device;

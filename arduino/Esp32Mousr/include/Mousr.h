@@ -17,18 +17,6 @@
 
 using namespace std;
 
-enum class MousrConnectionStatus
-{
-    Unknown,
-    None,
-    Scanning,
-    Discovered,
-    Connecting,
-    Connected,
-    Disconnected,
-    Error
-};
-
 enum class MousrMessage : uint8_t
 {
     AUTO_ACK = 0x0f,
@@ -115,9 +103,7 @@ public:
     MousrData(const uint8_t *data, size_t length);
     MousrData(const char *data);
     MousrData(string data);
-
     ~MousrData();
-    //vector<uint8_t> *getRawMessageData();
     MousrMessageData *getMessageData();
     MousrMessage getMessageKind();
     size_t getMessageLength();

@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Used for testing or for native (non-embedded) use
 class ConsoleLog_ : public Log
 {
 public:
