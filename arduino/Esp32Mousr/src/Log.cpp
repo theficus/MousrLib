@@ -24,7 +24,12 @@ void writeLogLn(const LogDestination dest)
 
 void writeLogLn(const LogDestination dest, const char *str)
 {
-    writeLog(dest, str);
+    size_t l = strlen(str);
+    char* cc = (char*)malloc(l + 1);
+    strcpy(cc, str);
+    strcat(cc, "\n");
+    writeLog(dest, cc);
+    free(cc);
 }
 
 void writeLog(LogDestination dest, const char *str)

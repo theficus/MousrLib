@@ -3,20 +3,10 @@
 
 using namespace std;
 
-MousrRawMessageData *raw;
-
-void initialize(const uint8_t *data, size_t length)
-{
-    raw = (MousrRawMessageData*)malloc(sizeof(MousrRawMessageData));
-    raw->data = (uint8_t*)malloc(length);
-    memcpy(raw->data, data, length);
-    raw->length = length;
-}
+vector<uint8_t> raw;
 
 void initialize(string data)
 {
-    vector<uint8_t> msg;
-
     for(unsigned i = 0; i < data.length(); i += 2)
     {
         string ss = data.substr(i, 2);
@@ -27,15 +17,16 @@ void initialize(string data)
         }
         
         uint8_t b = strtol(ss.c_str(), nullptr, 16);
-        msg.push_back(b);
+        raw.push_back(b);
     }
-
-    initialize(msg.data(), msg.size());
 }
 
 MousrData::MousrData(const uint8_t *data, size_t length)
 {
-    initialize(data, length);
+    for(int i = 0; i < length; i++)
+    {
+        raw.push_back(data[i]);
+    }
 }
 
 MousrData::MousrData(const char* data)
@@ -50,22 +41,35 @@ MousrData::MousrData(string data)
 
 MousrData::~MousrData()
 {
-    if (raw != nullptr) 
-    {
-    }
+    raw.clear();
+}
+
+size_t MousrData::getMessageLength()
+{
+    return raw.size();
 }
 
 MousrMessage MousrData::getMessageKind()
 {
-    return (MousrMessage)raw->data[0];
+    return (MousrMessage)raw.front();
 }
 
-MousrRawMessageData *MousrData::getRawMessageData()
+string MousrData::toString()
 {
-    return raw;
+    stringstream ss;
+    ss << "0x";
+    ss << hex << setfill('0');
+    
+    size_t length = raw.size();
+    for (int i = 0; i < length; i++)
+    {
+        ss << setw(2) << (unsigned)raw[i];
+    }
+
+    return ss.str();
 }
 
 MousrMessageData *MousrData::getMessageData()
 {
-    return (MousrMessageData*)raw->data;
+    return (MousrMessageData*)raw.data();
 }

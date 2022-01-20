@@ -13,6 +13,8 @@
 #include <cstdlib>
 #include <cstdio>
 
+#include "Log.h"
+
 using namespace std;
 
 enum class MousrConnectionStatus
@@ -71,7 +73,7 @@ enum class MousrCommand : uint8_t
     INVALID = 0x64,
 };
 
-#pragma pack(push, 1)
+#pragma pack(push, 1) // Very important to make sure we align properly
 // 0x6218000000001815000000000000000000000000
 struct MousrBatteryMsg
 {
@@ -104,12 +106,6 @@ struct MousrMessageData
     };
 };
 
-struct MousrRawMessageData
-{
-    uint8_t *data;
-    size_t length;
-};
-
 #pragma pack(pop)
 
 // Wraps Mousr bytestream data
@@ -121,22 +117,11 @@ public:
     MousrData(string data);
 
     ~MousrData();
-    MousrRawMessageData *getRawMessageData();
+    //vector<uint8_t> *getRawMessageData();
     MousrMessageData *getMessageData();
     MousrMessage getMessageKind();
+    size_t getMessageLength();
+    string toString();
 };
-
-inline string toHexString(const uint8_t *data, size_t length)
-{
-    stringstream ss;
-    ss << "0x";
-    ss << hex << setfill('0');
-    for (int i = 0; i < length; i++)
-    {
-        ss << setw(2) << (unsigned)data[i];
-    }
-
-    return ss.str();
-}
 
 #endif

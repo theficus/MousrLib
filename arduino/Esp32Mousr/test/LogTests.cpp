@@ -15,7 +15,7 @@ using namespace std;
 void test_writeLogLn()
 {
     const char* txt = "writeLogLn()";
-    const char* expected = "writeLogLn()";
+    const char* expected = "writeLogLn()\n";
     writeLogLn(LogDestination::Serial, txt);
     TEST_ASSERT_EQUAL_STRING(expected, s_last_log_entry);
 

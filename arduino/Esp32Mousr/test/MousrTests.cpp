@@ -5,8 +5,11 @@
 
 void test_mousrAlloc()
 {
+    s_writeLogLn("test_mousrAlloc()");
     string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
+    d = MousrData(data);
+    d = MousrData(data);
     d = MousrData(data);
 }
 
@@ -17,8 +20,7 @@ void test_ParseMessage()
         string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
         MousrData d(data);
         TEST_ASSERT_EQUAL(MousrMessage::ROBOT_POSE, d.getMessageKind());
-        auto raw = d.getRawMessageData();
-        TEST_ASSERT_EQUAL(20, raw->length);
+        TEST_ASSERT_EQUAL(20, d.getMessageLength());
 
         auto cooked = d.getMessageData();
         TEST_ASSERT_EQUAL(MousrMessage::ROBOT_POSE, cooked->msg);
@@ -32,8 +34,7 @@ void test_ParseMessage()
         string data = "0x625c000000002015000000000000000000000000";
         MousrData d = MousrData(data);
         TEST_ASSERT_EQUAL(MousrMessage::BATTERY_VOLTAGE, d.getMessageKind());
-        auto raw = d.getRawMessageData();
-        TEST_ASSERT_EQUAL(20, raw->length);
+        TEST_ASSERT_EQUAL(20, d.getMessageLength());
         
         auto cooked = d.getMessageData();
         TEST_ASSERT_EQUAL(MousrMessage::BATTERY_VOLTAGE, cooked->msg);
@@ -45,7 +46,6 @@ void test_toHexString()
 {
     string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
-    auto raw = d.getRawMessageData();
-    string actual = toHexString(raw->data, raw->length);
+    string actual = d.toString();
     TEST_ASSERT_EQUAL_STRING(data.c_str(), actual.c_str());
 }
