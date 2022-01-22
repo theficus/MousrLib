@@ -59,7 +59,6 @@ private:
     MousrBluetooth *ble;
 };
 
-mousr_notify_callback _mousr_notify_callback;
 void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
                             uint8_t *data,
                             size_t length,
@@ -70,10 +69,9 @@ void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
         return;
     }
 
-    debugLogF("Got notification from characteristic: %s\n", characteristic->getUUID().toString().c_str());
+    debugLogF("[MousrBluetooth->internalNotifyCallback] Got notification from characteristic: %s\n", characteristic->getUUID().toString().c_str());
     MousrData d(data, length);
-    debugLogF("Message: %s\n", d.toString().c_str());
-    _mousr_notify_callback(characteristic, &d);
+    debugLogF("[MousrBluetooth->internalNotifyCallback] Message: %s\n", d.toString().c_str());
 }
 
 MousrBluetooth::MousrBluetooth()
@@ -83,8 +81,7 @@ MousrBluetooth::MousrBluetooth()
     this->bleClient->setClientCallbacks(new MousrBluetoothClientCallback(this));
 }
 
-void MousrBluetooth::ConnectBluetooth(BLEClientCallbacks *clientCallback,
-                                      mousr_notify_callback notificationCallback)
+void MousrBluetooth::ConnectBluetooth()
 {
     bool success = false;
 
@@ -100,7 +97,6 @@ void MousrBluetooth::ConnectBluetooth(BLEClientCallbacks *clientCallback,
     s_writeLogF("Connecting to device: %s", this->device.toString());
     this->setConnectionStatus(MousrConnectionStatus::Connecting);
     this->bleClient->connect(&this->device);
-    _mousr_notify_callback = notificationCallback;
     s_writeLogLn("Device connected");
     s_writeLogLn("Getting characteristics ...");
 
@@ -127,7 +123,7 @@ void MousrBluetooth::ConnectBluetooth(BLEClientCallbacks *clientCallback,
 
     if (uartSubscribeCharacteristic->canNotify() == true)
     {
-        uartSubscribeCharacteristic->registerForNotify(internalNotifyCallback);
+        uartSubscribeCharacteristic->registerForNotify(MousrBluetooth::internalNotifyCallback);
     }
 
 final:
@@ -148,11 +144,12 @@ final:
     this->setConnectionStatus(MousrConnectionStatus::Connected);
 }
 
-void MousrBluetooth::SendMessage(MousrData *data)
+void MousrBluetooth::SendMessage(MousrData data)
 {
+    debugLogF("Sending message to %s: %s", this->uartWriteCharacteristic->getUUID().toString().c_str(), data.toString().c_str());
     uint8_t *raw;
     size_t length = 0;
-    data->getRawMessageData(&raw, length);
+    data.getRawMessageData(&raw, length);
     this->uartWriteCharacteristic->writeValue(raw, length);
     this->incrementPacketsSent();
 }

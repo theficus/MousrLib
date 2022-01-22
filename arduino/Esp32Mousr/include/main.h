@@ -10,4 +10,10 @@
 #include "OledLog.h"
 #include "SerialLog.h"
 #include "utility.h"
+
+MousrBluetooth mb;
+
+static void onBluetoothStatusChange(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus);
+static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData data);
+
 #endif
