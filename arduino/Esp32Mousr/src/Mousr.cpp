@@ -11,7 +11,8 @@ void initialize(string data)
     {
         string ss = data.substr(i, 2);
 
-        if (i == 0 && (ss == "0x" || ss == "0X"))
+        if (i == 0 &&
+            (ss == "0x" || ss == "0X"))
         {
             continue;
         }
@@ -69,13 +70,14 @@ string MousrData::toString()
     return ss.str();
 }
 
+void MousrData::getRawMessageData(uint8_t** data, size_t& length)
+{
+    length = raw.size();
+    *data = (uint8_t*)malloc(length);
+    memcpy(*data, raw.data(), length);
+}
+
 MousrMessageData *MousrData::getMessageData()
 {
     return (MousrMessageData *)raw.data();
-}
-
-void MousrData::sendMessage(BLERemoteCharacteristic *characteristic)
-{
-    debugLogF("Sending: %s", this->toString().c_str());
-    characteristic->writeValue(raw.data(), raw.size());
 }

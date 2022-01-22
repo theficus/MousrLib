@@ -8,6 +8,7 @@
 #include <BLEScan.h>
 #include <BLEUtils.h>
 #include <functional>
+#include <atomic>
 
 using namespace std;
 
@@ -45,6 +46,16 @@ public:
         return this->connectionStatus;
     }
 
+    unsigned long getPacketsSent()
+    {
+        return this->packetsSent;
+    }
+
+    unsigned long getPacketsReceived()
+    {
+        return this->packetsReceived;
+    }
+
     void ConnectBluetooth(BLEClientCallbacks *clientCallback,
                           mousr_notify_callback);
 
@@ -59,6 +70,18 @@ private:
         this->connectionStatus = status;
     }
 
+    void incrementPacketsSent()
+    {
+        this->packetsSent.fetch_add(1);
+    }
+
+    void incrementPacketsReceived()
+    {
+        this->packetsReceived.fetch_add(1);
+    }
+
+    atomic_ulong packetsSent;
+    atomic_ulong packetsReceived; 
     MousrConnectionStatus connectionStatus;
     BLEScan *bleScan;
     BLEClient *bleClient;

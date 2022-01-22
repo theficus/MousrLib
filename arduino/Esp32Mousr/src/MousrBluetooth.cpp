@@ -148,6 +148,15 @@ final:
     this->setConnectionStatus(MousrConnectionStatus::Connected);
 }
 
+void MousrBluetooth::SendMessage(MousrData *data)
+{
+    uint8_t *raw;
+    size_t length = 0;
+    data->getRawMessageData(&raw, length);
+    this->uartWriteCharacteristic->writeValue(raw, length);
+    this->incrementPacketsSent();
+}
+
 void MousrBluetooth::StartScan()
 {
     this->setConnectionStatus(MousrConnectionStatus::ScanStopped);
