@@ -22,6 +22,24 @@ void initialize(string data)
     }
 }
 
+MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, vector<uint8_t> data)
+{
+    raw.push_back((uint8_t)msg);
+    int length = data.size();
+    if (length < 12) 
+    {
+        length = 12;
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        raw.push_back(data[i]);
+    }
+
+    raw.push_back((uint8_t)cmd);
+    raw.push_back(0);
+}
+
 MousrData::MousrData(const uint8_t *data, size_t length)
 {
     for (int i = 0; i < length; i++)
@@ -57,23 +75,13 @@ MousrMessage MousrData::getMessageKind()
 
 string MousrData::toString()
 {
-    stringstream ss;
-    ss << "0x";
-    ss << hex << setfill('0');
-
-    size_t length = raw.size();
-    for (int i = 0; i < length; i++)
-    {
-        ss << setw(2) << (unsigned)raw[i];
-    }
-
-    return ss.str();
+    return MousrData::toString(raw.data(), raw.size());
 }
 
-void MousrData::getRawMessageData(uint8_t** data, size_t& length)
+void MousrData::getRawMessageData(uint8_t **data, size_t &length)
 {
     length = raw.size();
-    *data = (uint8_t*)malloc(length);
+    *data = (uint8_t *)malloc(length);
     memcpy(*data, raw.data(), length);
 }
 

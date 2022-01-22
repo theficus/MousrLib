@@ -12,6 +12,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
+#include <iterator>
+#include <algorithm>
 
 #include "Log.h"
 
@@ -102,15 +104,72 @@ class MousrData
 public:
     MousrData(const uint8_t *data, size_t length);
     MousrData(const char *data);
-    MousrData(const MousrMessage m, ...);
+    MousrData(const MousrMessage msg, const MousrCommand cmd, vector<uint8_t> data);
     MousrData(string data);
     ~MousrData();
 
     MousrMessageData *getMessageData();
-    void getRawMessageData(uint8_t** data, size_t& length);
+    void getRawMessageData(uint8_t **data, size_t &length);
     MousrMessage getMessageKind();
     size_t getMessageLength();
     string toString();
+
+    // Simple conversion from T -> array of bytes
+    template <typename T>
+    static uint8_t *toBytes(T v)
+    {
+        size_t sz = sizeof(T);
+        uint8_t *p = (uint8_t *)malloc(sz);
+        memcpy(p, &v, sz);
+        return p;
+    }
+
+    // Simple conversion of array of bytes -> T
+    template <typename T>
+    static void fromBytes(uint8_t *data, T &v, size_t sz = sizeof(T))
+    {
+        v = *(T *)malloc(sz);
+        memcpy(&v, data, sz);
+    }
+
+    template <typename T>
+    static void append(vector<uint8_t> &vec, T v, size_t length = sizeof(T))
+    {
+        uint8_t *raw = toBytes(v);
+        //vec.insert(vec.end(), length, raw);
+        for (unsigned i = 0; i < length; i++)
+        {
+            vec.push_back(raw[i]);
+        }
+        
+        free(raw);
+    }
+
+    // Converts a vector of bytes to a hex string
+    static string toString(vector<uint8_t> data, bool addSignifier = true)
+    {
+        return toString(data.data(), data.size(), addSignifier);
+    }
+
+    // Converts an array of bytes to a hex string
+    static string toString(uint8_t *data, size_t length, bool addSignifier = true)
+    {
+        stringstream ss;
+
+        if (addSignifier == true)
+        {
+            ss << "0x";
+        }
+
+        ss << hex << setfill('0');
+
+        for (int i = 0; i < length; i++)
+        {
+            ss << setw(2) << (unsigned)data[i];
+        }
+
+        return ss.str();
+    }
 };
 
 #endif

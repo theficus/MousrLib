@@ -1,6 +1,9 @@
 #include "MousrBluetooth.h"
 #include "Log.h"
 
+mousr_status_change_callback statusChangeCallback;
+mousr_notify_callback notifyCallback;
+
 // Scan callback
 class MousrBluetoothScanCallback : public BLEAdvertisedDeviceCallbacks
 {
@@ -69,16 +72,41 @@ void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
         return;
     }
 
-    debugLogF("[MousrBluetooth->internalNotifyCallback] Got notification from characteristic: %s\n", characteristic->getUUID().toString().c_str());
+    debugLogF("Got notification from characteristic: %s\n", characteristic->getUUID().toString().c_str());
     MousrData d(data, length);
-    debugLogF("[MousrBluetooth->internalNotifyCallback] Message: %s\n", d.toString().c_str());
+    debugLogF("Message: %s\n", d.toString().c_str());
+
+    if (notifyCallback != nullptr)
+    {
+        notifyCallback(characteristic, d);
+    }
 }
 
 MousrBluetooth::MousrBluetooth()
 {
-    this->connectionStatus = MousrConnectionStatus::Disconnected;
+    this->setConnectionStatus(MousrConnectionStatus::Disconnected);
     this->bleClient = BLEDevice::createClient();
     this->bleClient->setClientCallbacks(new MousrBluetoothClientCallback(this));
+}
+
+MousrBluetooth::~MousrBluetooth()
+{
+    debugLogLn("~MousrBluetooth: Cleaning up...");
+
+    if (this->bleScan != nullptr)
+    {
+        this->bleScan->stop();
+        this->bleScan->clearResults();
+        delete this->bleScan;
+    }
+
+    if (this->bleClient != nullptr)
+    {
+        this->bleClient->disconnect();
+        delete this->bleClient;
+    }
+
+    this->setConnectionStatus(MousrConnectionStatus::Unknown);
 }
 
 void MousrBluetooth::ConnectBluetooth()
@@ -123,7 +151,7 @@ void MousrBluetooth::ConnectBluetooth()
 
     if (uartSubscribeCharacteristic->canNotify() == true)
     {
-        uartSubscribeCharacteristic->registerForNotify(MousrBluetooth::internalNotifyCallback);
+        uartSubscribeCharacteristic->registerForNotify(internalNotifyCallback);
     }
 
 final:
@@ -165,4 +193,26 @@ void MousrBluetooth::StopScan()
     this->bleScan->stop();
     this->bleScan->clearResults();
     this->setConnectionStatus(MousrConnectionStatus::ScanStopped);
+}
+
+void MousrBluetooth::setMousrNotificationCallback(mousr_notify_callback callback)
+{
+    notifyCallback = callback;
+}
+
+void MousrBluetooth::setConnectionStatusChangeCallback(mousr_status_change_callback callback)
+{
+    statusChangeCallback = callback;
+}
+
+void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
+{
+    MousrConnectionStatus oldStatus = this->connectionStatus;
+    s_writeLogF("Changing connection status from '%d' to '%d'", oldStatus, status);
+    this->connectionStatus = status;
+
+    if (statusChangeCallback != nullptr)
+    {
+        statusChangeCallback(oldStatus, status);
+    }
 }

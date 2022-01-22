@@ -62,28 +62,11 @@ public:
     void StopScan();
     void SendMessage(MousrData msg);
 
-    static void setMousrNotificationCallback(mousr_notify_callback callback)
-    {
-        MousrBluetooth::notifyCallback = callback;
-    }
-
-    static void setConnectionStatusChangeCallback(mousr_status_change_callback callback)
-    {
-        MousrBluetooth::statusChangeCallback = callback;
-    }
+    void setMousrNotificationCallback(mousr_notify_callback callback);
+    void setConnectionStatusChangeCallback(mousr_status_change_callback callback);
 
 private:
-    void setConnectionStatus(MousrConnectionStatus status)
-    {
-        MousrConnectionStatus oldStatus = this->connectionStatus;
-        s_writeLogF("Changing connection status from '%d' to '%d'", oldStatus, status);
-        this->connectionStatus = status;
-
-        if (MousrBluetooth::statusChangeCallback != nullptr)
-        {
-            MousrBluetooth::statusChangeCallback(oldStatus, status);
-        }
-    }
+    void setConnectionStatus(MousrConnectionStatus status);
 
     void incrementPacketsSent()
     {
@@ -94,29 +77,6 @@ private:
     {
         this->packetsReceived.fetch_add(1);
     }
-
-    static void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
-                                       uint8_t *data,
-                                       size_t length,
-                                       bool isNotify)
-    {
-        if (isNotify == false)
-        {
-            return;
-        }
-
-        debugLogF("Got notification from characteristic: %s\n", characteristic->getUUID().toString().c_str());
-        MousrData d(data, length);
-        debugLogF("Message: %s\n", d.toString().c_str());
-
-        if (MousrBluetooth::notifyCallback != nullptr)
-        {
-            MousrBluetooth::notifyCallback(characteristic, d);
-        }
-    }
-
-    static mousr_status_change_callback statusChangeCallback;
-    static mousr_notify_callback notifyCallback;
 
     atomic_ulong packetsSent;
     atomic_ulong packetsReceived;
