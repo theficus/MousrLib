@@ -13,7 +13,6 @@ public:
     void onResult(BLEAdvertisedDevice advertisedDevice)
     {
         s_writeLogF("Discovered device: %s\n", advertisedDevice.toString());
-
         if (advertisedDevice.haveName() == false ||
             advertisedDevice.haveServiceUUID() == false)
         {
@@ -60,6 +59,23 @@ private:
     MousrBluetooth *ble;
 };
 
+mousr_notify_callback _mousr_notify_callback;
+void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
+                            uint8_t *data,
+                            size_t length,
+                            bool isNotify)
+{
+    if (isNotify == false)
+    {
+        return;
+    }
+
+    debugLogF("Got notification from characteristic: %s\n", characteristic->getUUID().toString().c_str());
+    MousrData d(data, length);
+    debugLogF("Message: %s\n", d.toString().c_str());
+    _mousr_notify_callback(characteristic, &d);
+}
+
 MousrBluetooth::MousrBluetooth()
 {
     this->connectionStatus = MousrConnectionStatus::Disconnected;
@@ -68,8 +84,7 @@ MousrBluetooth::MousrBluetooth()
 }
 
 void MousrBluetooth::ConnectBluetooth(BLEClientCallbacks *clientCallback,
-                                      void (*errorFunc)(char *),
-                                      void (*notifyFunc)(BLECharacteristic *, MousrData *))
+                                      mousr_notify_callback notificationCallback)
 {
     bool success = false;
 
@@ -85,6 +100,7 @@ void MousrBluetooth::ConnectBluetooth(BLEClientCallbacks *clientCallback,
     s_writeLogF("Connecting to device: %s", this->device.toString());
     this->setConnectionStatus(MousrConnectionStatus::Connecting);
     this->bleClient->connect(&this->device);
+    _mousr_notify_callback = notificationCallback;
     s_writeLogLn("Device connected");
     s_writeLogLn("Getting characteristics ...");
 
@@ -111,7 +127,7 @@ void MousrBluetooth::ConnectBluetooth(BLEClientCallbacks *clientCallback,
 
     if (uartSubscribeCharacteristic->canNotify() == true)
     {
-        uartSubscribeCharacteristic->registerForNotify(notifyCallback);
+        uartSubscribeCharacteristic->registerForNotify(internalNotifyCallback);
     }
 
 final:

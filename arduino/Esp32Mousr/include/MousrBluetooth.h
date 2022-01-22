@@ -15,6 +15,8 @@ static BLEUUID serviceUuid = BLEUUID("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
 static BLEUUID uartWriteUuid = BLEUUID("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 static BLEUUID uartSubscribeUuid = BLEUUID("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
 
+typedef function<void(BLERemoteCharacteristic *characteristic, MousrData *message)> mousr_notify_callback;
+
 enum class MousrConnectionStatus
 {
     Unknown,
@@ -44,12 +46,11 @@ public:
     }
 
     void ConnectBluetooth(BLEClientCallbacks *clientCallback,
-                          void (*errorFunc)(char *),
-                          void (*notifyFunc)(BLECharacteristic *, MousrData *));
+                          mousr_notify_callback);
 
     void StartScan();
-
     void StopScan();
+    void SendMessage(MousrData* msg);
 
 private:
     void setConnectionStatus(MousrConnectionStatus status)
@@ -58,12 +59,6 @@ private:
         this->connectionStatus = status;
     }
 
-    void notifyCallback(BLERemoteCharacteristic *characteristic,
-                        uint8_t *data,
-                        size_t length,
-                        bool isNotify);
-
-    function<void (BLECharacteristic, MousrData)> notifyCallbackFunc;
     MousrConnectionStatus connectionStatus;
     BLEScan *bleScan;
     BLEClient *bleClient;

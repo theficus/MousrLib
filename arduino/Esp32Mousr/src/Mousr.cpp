@@ -7,7 +7,7 @@ vector<uint8_t> raw;
 
 void initialize(string data)
 {
-    for(unsigned i = 0; i < data.length(); i += 2)
+    for (unsigned i = 0; i < data.length(); i += 2)
     {
         string ss = data.substr(i, 2);
 
@@ -15,7 +15,7 @@ void initialize(string data)
         {
             continue;
         }
-        
+
         uint8_t b = strtol(ss.c_str(), nullptr, 16);
         raw.push_back(b);
     }
@@ -23,16 +23,16 @@ void initialize(string data)
 
 MousrData::MousrData(const uint8_t *data, size_t length)
 {
-    for(int i = 0; i < length; i++)
+    for (int i = 0; i < length; i++)
     {
         raw.push_back(data[i]);
     }
 }
 
-MousrData::MousrData(const char* data)
+MousrData::MousrData(const char *data)
 {
     initialize(string(data));
-}  
+}
 
 MousrData::MousrData(string data)
 {
@@ -59,7 +59,7 @@ string MousrData::toString()
     stringstream ss;
     ss << "0x";
     ss << hex << setfill('0');
-    
+
     size_t length = raw.size();
     for (int i = 0; i < length; i++)
     {
@@ -71,5 +71,11 @@ string MousrData::toString()
 
 MousrMessageData *MousrData::getMessageData()
 {
-    return (MousrMessageData*)raw.data();
+    return (MousrMessageData *)raw.data();
+}
+
+void MousrData::sendMessage(BLERemoteCharacteristic *characteristic)
+{
+    debugLogF("Sending: %s", this->toString().c_str());
+    characteristic->writeValue(raw.data(), raw.size());
 }

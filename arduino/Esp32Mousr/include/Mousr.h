@@ -13,6 +13,12 @@
 #include <cstdlib>
 #include <cstdio>
 
+#if ARDUINO
+#include <BLEDevice.h>
+#else
+#include "fakes.h"
+#endif
+
 #include "Log.h"
 
 using namespace std;
@@ -102,12 +108,15 @@ class MousrData
 public:
     MousrData(const uint8_t *data, size_t length);
     MousrData(const char *data);
+    MousrData(const MousrMessage m, ...);
     MousrData(string data);
     ~MousrData();
+
     MousrMessageData *getMessageData();
     MousrMessage getMessageKind();
     size_t getMessageLength();
     string toString();
+    void sendMessage(BLERemoteCharacteristic* characteristic);
 };
 
 #endif

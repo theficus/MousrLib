@@ -19,6 +19,7 @@
         "streambuf": "cpp",
         "string_view": "cpp",
         "type_traits": "cpp",
-        "__functional_base_03": "cpp"
+        "__functional_base_03": "cpp",
+        "functional": "cpp"
     }
 }
