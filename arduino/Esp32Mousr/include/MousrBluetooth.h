@@ -75,7 +75,7 @@ private:
 
     atomic_ulong packetsSent;
     atomic_ulong packetsReceived;
-    MousrConnectionStatus connectionStatus;
+    MousrConnectionStatus connectionStatus = MousrConnectionStatus::Unknown;
     SemaphoreHandle_t waitHandle;
 
     BLEScan *bleScan;

@@ -35,6 +35,9 @@ void setup()
 
 void loop()
 {
+    s_writeLogF("Free heap: %d/%d (%x)\n", ESP.getFreeHeap(), ESP.getHeapSize(), ESP.getFreeHeap());
+    s_writeLogF("Free SRAM: %d (%x)\n", ESP.getFreePsram(), ESP.getFreePsram());
+    sleep(1);
 }
 
 // TODO: Add timeout

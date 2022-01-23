@@ -75,9 +75,9 @@ void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
         return;
     }
 
-    debugLogF("Got notification from characteristic: %s\n", characteristic->getUUID().toString().c_str());
+    debugLogF("Got notification from characteristic: %s. Length: %zu\n", characteristic->getUUID().toString().c_str(), length);
     MousrData d(data, length);
-    debugLogF("Message: %s\n", d.toString().c_str());
+    //debugLogF("Message: %s\n", d.toString().c_str());
 
     if (notifyCallback != nullptr)
     {
@@ -88,7 +88,8 @@ void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
 MousrBluetooth::MousrBluetooth()
 {
     s_writeLogLn("MousrBluetooth::MousrBluetooth()");
-    this->setConnectionStatus(MousrConnectionStatus::Disconnected);
+    // Do not use the helper function for this since things may not be initialized yet.
+    this->connectionStatus = MousrConnectionStatus::Disconnected;
 }
 
 MousrBluetooth::~MousrBluetooth()
@@ -139,6 +140,7 @@ bool MousrBluetooth::DiscoverCapabilities()
         goto final;
     }
 
+    s_writeLogF("Getting characteristic: %s\n", uartWriteUuid.toString().c_str());
     uartWriteCharacteristic = service->getCharacteristic(uartWriteUuid);
     if (uartWriteCharacteristic == nullptr)
     {
@@ -146,6 +148,7 @@ bool MousrBluetooth::DiscoverCapabilities()
         goto final;
     }
 
+    s_writeLogF("Getting characteristic: %s\n", uartWriteUuid.toString().c_str());
     uartSubscribeCharacteristic = service->getCharacteristic(uartSubscribeUuid);
     if (uartSubscribeCharacteristic == nullptr)
     {
@@ -157,6 +160,13 @@ bool MousrBluetooth::DiscoverCapabilities()
     {
         uartSubscribeCharacteristic->registerForNotify(internalNotifyCallback);
     }
+    else
+    {
+        s_writeLogF("ERROR: Cannot register for notifications from characteristic: %s", uartSubscribeCharacteristic->getUUID().toString().c_str());
+        goto final;
+    }
+
+    success = true;
 
 final:
     if (success == false)
@@ -234,6 +244,12 @@ void MousrBluetooth::setConnectionStatusChangeCallback(mousr_status_change_callb
 void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
 {
     MousrConnectionStatus oldStatus = this->connectionStatus;
+    if (oldStatus > MousrConnectionStatus::Max)
+    {
+        s_writeLogF("Invalid connection status %d\n", oldStatus);
+        oldStatus = MousrConnectionStatus::Unknown;
+    }
+
     this->connectionStatus = status;
 
     string oldStatusStr = getMousrConnectionStatusString(oldStatus);
