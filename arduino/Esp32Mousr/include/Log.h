@@ -29,6 +29,11 @@ inline LogDestination operator&(LogDestination a, LogDestination b)
     return static_cast<LogDestination>(static_cast<int>(a) & static_cast<int>(b));
 }
 
+void writeLogF(const LogDestination dest, const char *fmt, ...);
+void writeLogLn(const LogDestination dest);
+void writeLogLn(const LogDestination dest, const char *str);
+void writeLog(const LogDestination dest, const char *str);
+
 // Shortcuts to log to all destinations
 #define g_writeLogF(fmt, ...) writeLogF(LogDestination::All, fmt, __VA_ARGS__)
 #define g_writeLogLn(str) writeLogLn(LogDestination::All, str)
@@ -53,11 +58,6 @@ inline LogDestination operator&(LogDestination a, LogDestination b)
 //#define debugLogLn(str)
 //#define debugLog(str)
 //#endif
-
-void writeLogF(const LogDestination dest, const char *fmt, ...);
-void writeLogLn(const LogDestination dest);
-void writeLogLn(const LogDestination dest, const char *str);
-void writeLog(const LogDestination dest, const char *str);
 
 // Hooks for unit testing to validate proper logging API behavior
 #ifdef UNIT_TEST

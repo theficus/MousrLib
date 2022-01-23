@@ -17,33 +17,6 @@ static BLEUUID serviceUuid = BLEUUID("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
 static BLEUUID uartWriteUuid = BLEUUID("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 static BLEUUID uartSubscribeUuid = BLEUUID("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
 
-enum class MousrConnectionStatus
-{
-    Unknown,
-    None,
-    Scanning,
-    ScanStopped,
-    Discovered,
-    Connecting,
-    Connected,
-    Ready,
-    Disconnected,
-    Error
-};
-
-static std::map<MousrConnectionStatus, string> MousrConnectionStatusToStringMap = {
-    {MousrConnectionStatus::Unknown, "Unknown"},
-    {MousrConnectionStatus::None, "None"},
-    {MousrConnectionStatus::Scanning, "Scanning"},
-    {MousrConnectionStatus::ScanStopped, "ScanStopped"},
-    {MousrConnectionStatus::Discovered, "Discovered"},
-    {MousrConnectionStatus::Connecting, "Connecting"},
-    {MousrConnectionStatus::Connected, "Connected"},
-    {MousrConnectionStatus::Ready, "Ready"},
-    {MousrConnectionStatus::Disconnected, "Disconnected"},
-    {MousrConnectionStatus::Error, "Error"},
-};
-
 typedef function<void(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus)> mousr_status_change_callback;
 typedef function<void(BLERemoteCharacteristic *characteristic, MousrData message)> mousr_notify_callback;
 

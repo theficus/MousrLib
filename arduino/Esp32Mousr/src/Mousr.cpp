@@ -1,5 +1,4 @@
 #include "Mousr.h"
-#include "SerialLog.h"
 
 using namespace std;
 
@@ -26,7 +25,7 @@ MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, vector<uint
 {
     raw.push_back((uint8_t)msg);
     int length = data.size();
-    if (length < 12) 
+    if (length < 12)
     {
         length = 12;
     }

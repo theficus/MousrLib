@@ -3,11 +3,29 @@
 #include "Log.h"
 #include "Mousr.h"
 
+void test_connectionStatusMap()
+{
+    string expected = "Unknown";
+    string actual = s_MousrConnectionStatusToStringMap[MousrConnectionStatus::Unknown];
+    TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
+
+    int count = 0;
+
+    // Add 1 to max to get an invalid value and make sure it's handled gracefully
+    for (; count <= (int)MousrConnectionStatus::Max + 1; count++)
+    {
+        actual = getMousrConnectionStatusString((MousrConnectionStatus)count);
+        s_writeLogF("%d -> %s\n", count, actual.c_str());
+    }
+
+    TEST_ASSERT_EQUAL_INT32((int)MousrConnectionStatus::Max, count - 2);
+}
+
 void test_convertToBytes()
 {
     float f = 174.9593;
     string expected = "0x95f52e43";
-    uint8_t* b = MousrData::toBytes(f);
+    uint8_t *b = MousrData::toBytes(f);
     string actual = MousrData::toString(b, sizeof(f));
     s_writeLogF("%f -> %s\n", f, actual.c_str());
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
@@ -60,7 +78,7 @@ void test_getRawData()
     s_writeLogLn("test_getRawData()");
     string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
-    uint8_t* raw;
+    uint8_t *raw;
     size_t length;
     d.getRawMessageData(&raw, length);
     TEST_ASSERT_EQUAL(d.getMessageLength(), length);
@@ -75,7 +93,7 @@ void test_createFromRaw()
     float f2 = 0.0;
     float f3 = 93.02859;
 
-    // 30bdcd6c3e00000000a40eba420200 
+    // 30bdcd6c3e00000000a40eba420200
     // 30becd6c3e00000000a30eba420200
 
     string expected = "0x30becd6c3e00000000a30eba420200";
@@ -115,7 +133,7 @@ void test_ParseMessage()
         MousrData d = MousrData(data);
         TEST_ASSERT_EQUAL(MousrMessage::BATTERY_VOLTAGE, d.getMessageKind());
         TEST_ASSERT_EQUAL(20, d.getMessageLength());
-        
+
         auto cooked = d.getMessageData();
         TEST_ASSERT_EQUAL(MousrMessage::BATTERY_VOLTAGE, cooked->msg);
         TEST_ASSERT_EQUAL(92, cooked->battery.voltage);

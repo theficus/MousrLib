@@ -40,11 +40,13 @@ void loop()
 // TODO: Add timeout
 void waitForStatus(MousrConnectionStatus status)
 {
-    s_writeLogF("Waiting for status: %s\n", MousrConnectionStatusToStringMap[status].c_str());
+    string expectedStatus = getMousrConnectionStatusString(status);
+    s_writeLogF("Waiting for status: %s\n", expectedStatus.c_str());
     MousrConnectionStatus s;
     while ((s = mb.getConnectionStatus()) != status)
     {
-        s_writeLogF("Status: %s ...", MousrConnectionStatusToStringMap[status].c_str());
+        string actualStatus = getMousrConnectionStatusString(s);
+        s_writeLogF("Status: %s ...\n", actualStatus.c_str());
         sleep(1);
     }
 

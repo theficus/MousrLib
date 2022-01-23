@@ -234,8 +234,11 @@ void MousrBluetooth::setConnectionStatusChangeCallback(mousr_status_change_callb
 void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
 {
     MousrConnectionStatus oldStatus = this->connectionStatus;
-    s_writeLogF("Changing connection status from '%s' to '%s'\n", MousrConnectionStatusToStringMap[oldStatus].c_str(), MousrConnectionStatusToStringMap[status].c_str());
     this->connectionStatus = status;
+
+    string oldStatusStr = getMousrConnectionStatusString(oldStatus);
+    string newStatusStr = getMousrConnectionStatusString(status);
+    s_writeLogF("Changing connection status from '%s' to '%s'\n", oldStatusStr.c_str(), newStatusStr.c_str());
 
     if (statusChangeCallback != nullptr)
     {

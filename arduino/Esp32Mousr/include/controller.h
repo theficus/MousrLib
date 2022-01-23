@@ -3,7 +3,7 @@
 #define MOUSR_CONTROLLER_H
 
 #ifndef ARDUINO
-#include <ArduinoFake.h>
+//#include <ArduinoFake.h>
 #else
 #include <Wire.h>
 //#include <SPI.h>

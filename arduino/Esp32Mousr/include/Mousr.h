@@ -14,10 +14,51 @@
 #include <cstdio>
 #include <iterator>
 #include <algorithm>
+#include <map>
 
 #include "Log.h"
 
 using namespace std;
+
+enum class MousrConnectionStatus : uint8_t
+{
+    Unknown,
+    None,
+    Scanning,
+    ScanStopped,
+    Discovered,
+    Connecting,
+    Connected,
+    Ready,
+    Disconnected,
+    Error,
+    Max = Error, // Match whatever the last value is
+};
+
+static std::map<MousrConnectionStatus, string> s_MousrConnectionStatusToStringMap = {
+    {MousrConnectionStatus::Unknown, "Unknown"},
+    {MousrConnectionStatus::None, "None"},
+    {MousrConnectionStatus::Scanning, "Scanning"},
+    {MousrConnectionStatus::ScanStopped, "ScanStopped"},
+    {MousrConnectionStatus::Discovered, "Discovered"},
+    {MousrConnectionStatus::Connecting, "Connecting"},
+    {MousrConnectionStatus::Connected, "Connected"},
+    {MousrConnectionStatus::Ready, "Ready"},
+    {MousrConnectionStatus::Disconnected, "Disconnected"},
+    {MousrConnectionStatus::Error, "Error"},
+};
+
+static string getMousrConnectionStatusString(MousrConnectionStatus status)
+{
+    uint8_t v = (uint8_t)status;
+    if (v > (uint8_t)MousrConnectionStatus::Max)
+    {
+        s_writeLogF("Could not map unknown status value %d. Returning \"Unknown\"\n", v);
+        v = (uint8_t)MousrConnectionStatus::Unknown;
+    }
+
+    return s_MousrConnectionStatusToStringMap[(MousrConnectionStatus)v];
+}
 
 enum class MousrMessage : uint8_t
 {
@@ -137,12 +178,12 @@ public:
     static void append(vector<uint8_t> &vec, T v, size_t length = sizeof(T))
     {
         uint8_t *raw = toBytes(v);
-        //vec.insert(vec.end(), length, raw);
+        // vec.insert(vec.end(), length, raw);
         for (unsigned i = 0; i < length; i++)
         {
             vec.push_back(raw[i]);
         }
-        
+
         free(raw);
     }
 

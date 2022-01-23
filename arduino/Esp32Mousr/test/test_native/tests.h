@@ -12,3 +12,7 @@ void test_mousrAlloc();
 void test_getRawData();
 void test_convertToBytes();
 void test_createFromRaw();
+void test_connectionStatusMap();
+
+// Settings tests
+void test_writeUChar();

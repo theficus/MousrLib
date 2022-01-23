@@ -17,6 +17,10 @@ int main(int argc, char** argv)
     test_getRawData();
     test_convertToBytes();
     test_createFromRaw();
+    test_connectionStatusMap();
+
+    // Settings
+    test_writeUChar();
 
     UNITY_END();
 

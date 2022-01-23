@@ -4,6 +4,7 @@
 #include "Log.h"
 #include "ConsoleLog.h"
 #include "Mousr.h"
+#include "Settings.h"
 
 // Unit tests will have their own main() method
 #ifndef UNIT_TEST
