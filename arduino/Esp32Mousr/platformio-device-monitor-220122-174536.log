@@ -1,0 +1,144 @@
+Connecting to device: ���?
+Changing connection status from '4' to '5'
+[main] Got status change: 4 -> 5
+Changing connection status from '5' to '6'
+[main] Got status change: 5 -> 6
+Connected to client: 1
+Device connected
+Getting characteristics ...
+[E][BLERemoteCharacteristic.cpp:287] retrieveDescriptors(): esp_ble_gattc_get_all_descr: Unknown
+[ERROR] Connection failed.
+Changing connection status from '6' to '8'
+[main] Got status change: 6 -> 8
+~MousrBluetooth: Cleaning up...
+Changing connection status from '8' to '0'
+[main] Got status change: 8 -> 0
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:1044
+load:0x40078000,len:10124
+load:0x40080400,len:5828
+entry 0x400806a8
+MousrBluetooth::MousrBluetooth()
+Changing connection status from '-1515870811' to '7'
+MousrBluetooth::MousrBluetooth(): BLEDevice::createClient()
+Setting callback to 0x3ffc8c9c
+MousrBluetooth::MousrBluetooth(): BLEDevice::getScan()
+MousrBluetoothScanCallback(): 0x3ffc8ca0setup()...
+Starting scan ...
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Found device
+Stopping BLE scan
+Changing connection status from '7' to '3'
+Changing connection status from '7' to '2'
+[main] Got status change: 7 -> 3
+[main] Got status change: 7 -> 2
+Changing connection status from '2' to '4'
+Connection status: 2
+[main] Got status change: 2 -> 4
+Connecting to device: X��?
+Changing connection status from '4' to '5'
+[main] Got status change: 4 -> 5
+Changing connection status from '5' to '6'
+[main] Got status change: 5 -> 6
+Connected to client: 1
+Device connected
+Getting characteristics ...
+[E][BLERemoteCharacteristic.cpp:287] retrieveDescriptors(): esp_ble_gattc_get_all_descr: Unknown
+[ERROR] Connection failed.
+Changing connection status from '6' to '8'
+[main] Got status change: 6 -> 8
+~MousrBluetooth: Cleaning up...
+Changing connection status from '8' to '0'
+[main] Got status change: 8 -> 0
+Changing connection status from '0' to '7'
+[main] Got status change: 0 -> 7
+Disconnected from client: 110
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+Core 0 register dump:
+PC      : 0x400d5380  PS      : 0x00060830  A0      : 0x800d5c94  A1      : 0x3ffceda0  
+A2      : 0x3ffddbe0  A3      : 0x00000029  A4      : 0x00000004  A5      : 0x3ffceeb0  
+A6      : 0xbaad5678  A7      : 0xffffffff  A8      : 0x800d514d  A9      : 0x3ffced80  
+A10     : 0x3ffbbe58  A11     : 0x3ffddac8  A12     : 0x3ffc4088  A13     : 0x3ffc4088  
+A14     : 0x00000000  A15     : 0x3ffcee68  SAR     : 0x00000004  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0xbaad56a0  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffff8  
+
+ELF file SHA256: 0000000000000000
+
+Backtrace: 0x400d5380:0x3ffceda0 0x400d5c91:0x3ffcee50 0x400f6ad5:0x3ffceea0 0x400ef496:0x3ffceef0 0x400908e2:0x3ffcef20
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:1044
+load:0x40078000,len:10124
+load:0x40080400,len:5828
+entry 0x400806a8
+MousrBluetooth::MousrBluetooth()
+Changing connection status from '-1515870811' to '7'
+MousrBluetooth::MousrBluetooth(): BLEDevice::createClient()
+Setting callback to 0x3ffc8c9c
+MousrBluetooth::MousrBluetooth(): BLEDevice::getScan()
+MousrBluetoothScanCallback(): 0x3ffc8ca0setup()...
+Starting scan ...
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Found device
+Stopping BLE scan
+Changing connection status from '7' to '3'
+Changing connection status from '7' to '2'
+[main] Got status change: 7 -> 3
+[main] Got status change: 7 -> 2
+Connection status: 2
+Changing connection status from '2' to '4'
+[main] Got status change: 2 -> 4
+Connecting to device: ���?
+Changing connection status from '4' to '5'
+[main] Got status change: 4 -> 5
+Changing connection status from '5' to '6'
+[main] Got status change: 5 -> 6
+Connected to client: 1
+Device connected
+Getting characteristics ...
+ERROR: Could not find service: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+[ERROR] Connection failed.
+Changing connection status from '6' to '7'
+Changing connection status from '6' to '8'
+[main] Got status change: 6 -> 7
+[main] Got status change: 6 -> 8
+Disconnected from client: 0
+~MousrBluetooth: Cleaning up...
+Changing connection status from '8' to '0'
+[main] Got status change: 8 -> 0

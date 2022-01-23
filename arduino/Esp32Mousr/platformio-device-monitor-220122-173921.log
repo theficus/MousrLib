@@ -1,0 +1,1192 @@
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:1044
+load:0x40078000,len:10124
+load:0x40080400,len:5828
+entry 0x400806a8
+MousrBluetooth::MousrBluetooth()
+Changing connection status from '-1515870811' to '7'
+MousrBluetooth::MousrBluetooth(): BLEDevice::createClient()
+Setting callback to 0x3ffc8c6c
+MousrBluetooth::MousrBluetooth(): BLEDevice::getScan()
+MousrBluetoothScanCallback(): 0x3ffc8c70setup()...
+Starting scan ...
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Changing connection status from '7' to '2'
+[main] Got status change: 7 -> 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Guru Meditation Error: Core  1 panic'ed (LoadProhibited). Exception was unhandled.
+Core 1 register dump:
+PC      : 0x400014dc  PS      : 0x00060530  A0      : 0x800d97b0  A1      : 0x3ffc8bf0  
+A2      : 0x800da831  A3      : 0x800da82d  A4      : 0x000000ff  A5      : 0x0000ff00  
+A6      : 0x00ff0000  A7      : 0xff000000  A8      : 0x800e70c8  A9      : 0x3ffc8830  
+A10     : 0x3ffba5b4  A11     : 0x3ffde8b4  A12     : 0x00000060  A13     : 0x3ffbc600  
+A14     : 0x00000000  A15     : 0x3ffc6e60  SAR     : 0x00000018  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x800da831  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xffffffff  
+
+ELF file SHA256: 0000000000000000
+
+Backtrace: 0x400014dc:0x3ffc8bf0 0x400d97ad:0x3ffc8c00 0x400d97cd:0x3ffc8c20 0x400d1763:0x3ffc8c40 0x400d179f:0x3ffc8c60 0x400d2b41:0x3ffc8cb0 0x400da82e:0x3ffc8da0 0x400908e2:0x3ffc8dc0
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:1044
+load:0x40078000,len:10124
+load:0x40080400,len:5828
+entry 0x400806a8
+MousrBluetooth::MousrBluetooth()
+Changing connection status from '-1515870811' to '7'
+MousrBluetooth::MousrBluetooth(): BLEDevice::createClient()
+Setting callback to 0x3ffc8c6c
+MousrBluetooth::MousrBluetooth(): BLEDevice::getScan()
+MousrBluetoothScanCallback(): 0x3ffc8c70setup()...
+Starting scan ...
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: Becan-2KT
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:2b, manufacturer data: 7b03807e3fd4eef0d3d83e0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: MEATER+, Address: b8:1f:5e:08:be:21, manufacturer data: 7b03800b458be65240d32a0000000000000000000000, serviceUUID: 0000180a-0000-1000-8000-00805f9b34fb, serviceUUID: a75cc7fc-c956-488f-ac2a-2dbc08b63a04, txPower: 2
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: LE-Heavy Metal Poet, Address: 2c:41:a1:4b:72:a4, manufacturer data: 010941022af871a2d3, serviceUUID: 0000febe-0000-1000-8000-00805f9b34fb, serviceUUID: 0000fe26-0000-1000-8000-00805f9b34fb, serviceUUID: 0000fe03-0000-1000-8000-00805f9b34fb, txPower: -10
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Sense, Address: c5:25:5c:ee:a2:dd, serviceUUID: abbaff00-e56a-484c-b832-8b17cf6cbfe8
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: LE-Heavy Metal Poet, Address: 2c:41:a1:4b:72:a4, manufacturer data: 010941022af871a2d3, serviceUUID: 0000febe-0000-1000-8000-00805f9b34fb, serviceUUID: 0000fe26-0000-1000-8000-00805f9b34fb, serviceUUID: 0000fe03-0000-1000-8000-00805f9b34fb, txPower: -10
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Changing connection status from '7' to '2'
+[main] Got status change: 7 -> 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+Connection status: 2
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0018,len:4
+load:0x3fff001c,len:1044
+load:0x40078000,len:10124
+load:0x40080400,len:5828
+entry 0x400806a8
+MousrBluetooth::MousrBluetooth()
+Changing connection status from '-1515870811' to '7'
+MousrBluetooth::MousrBluetooth(): BLEDevice::createClient()
+Setting callback to 0x3ffc8c6c
+MousrBluetooth::MousrBluetooth(): BLEDevice::getScan()
+MousrBluetoothScanCallback(): 0x3ffc8c70setup()...
+Starting scan ...
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Becan-2KT
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: Mousr, Address: e8:47:0d:bb:9c:18, manufacturer data: dc05189cbb0d47e8, serviceUUID: 6e400001-b5a3-f393-e0a9-e50e24dcca9e
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: [LG] webOS TV OLED55C1AUB, Address: 41:f9:49:d4:c2:a0, manufacturer data: c4000334151317fd80, serviceUUID: 0000feb9-0000-1000-8000-00805f9b34fb, txPower: -44
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: G1B-US-NNA3610A, Address: c8:ff:77:17:8d:c0, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0
+Device seen: Name: E2B-US-NKA1512A, Address: c8:ff:77:20:e0:4e, serviceUUID: 2dd10010-1c37-452d-8979-d1b4a787d0a4, txPower: 0

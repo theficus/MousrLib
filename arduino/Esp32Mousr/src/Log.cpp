@@ -29,7 +29,7 @@ void writeLogLn(const LogDestination dest, const char *str)
     strcpy(cc, str);
     strcat(cc, "\n");
     writeLog(dest, cc);
-    free(cc);
+    //free(cc);
 }
 
 void writeLog(LogDestination dest, const char *str)

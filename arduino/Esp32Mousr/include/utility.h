@@ -5,17 +5,24 @@
 
 #ifdef ESP32
 
-static SemaphoreHandle_t waitHandle = xSemaphoreCreateRecursiveMutex();
-
-static void semTake()
+static void semTake(SemaphoreHandle_t waitHandle)
 {
+    if (waitHandle == nullptr)
+    {
+        return;
+    }
+
     Serial.println("Waiting for semaphore...");
     xSemaphoreTake(waitHandle, portMAX_DELAY);
     Serial.println("Semaphore get!");
 }
 
-static void semGive()
+static void semGive(SemaphoreHandle_t waitHandle)
 {
+    if (waitHandle == nullptr)
+    {
+        return;
+    }
     Serial.println("Releasing semaphore...");
     xSemaphoreGive(waitHandle);
 

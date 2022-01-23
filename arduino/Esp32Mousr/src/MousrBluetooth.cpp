@@ -10,21 +10,23 @@ class MousrBluetoothScanCallback : public BLEAdvertisedDeviceCallbacks
 public:
     MousrBluetoothScanCallback(MousrBluetooth *ble)
     {
+        s_writeLogF("MousrBluetoothScanCallback(): %p", &ble);
         this->ble = ble;
     }
 
     void onResult(BLEAdvertisedDevice advertisedDevice)
     {
-        s_writeLogF("Discovered device: %s\n", advertisedDevice.toString());
         if (advertisedDevice.haveName() == false ||
             advertisedDevice.haveServiceUUID() == false)
         {
-            s_writeLogLn("Skipping device as it doesn't have enough data.");
+            // s_writeLogLn("Skipping device as it doesn't have enough data.");
             return;
         }
 
+        s_writeLogF("Device seen: %s\n", advertisedDevice.toString().c_str());
+
         if (advertisedDevice.getName() == "Mousr" &&
-            advertisedDevice.getServiceUUID().getNative() == serviceUuid.getNative())
+            advertisedDevice.getServiceUUID().toString() == serviceUuid.toString())
         {
             s_writeLogLn("Found device");
             ble->device = advertisedDevice;
@@ -43,6 +45,7 @@ class MousrBluetoothClientCallback : public BLEClientCallbacks
 public:
     MousrBluetoothClientCallback(MousrBluetooth *ble)
     {
+        s_writeLogF("Setting callback to %p\n", &ble);
         this->ble = ble;
     }
 
@@ -84,9 +87,8 @@ void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
 
 MousrBluetooth::MousrBluetooth()
 {
+    s_writeLogLn("MousrBluetooth::MousrBluetooth()");
     this->setConnectionStatus(MousrConnectionStatus::Disconnected);
-    this->bleClient = BLEDevice::createClient();
-    this->bleClient->setClientCallbacks(new MousrBluetoothClientCallback(this));
 }
 
 MousrBluetooth::~MousrBluetooth()
@@ -109,23 +111,25 @@ MousrBluetooth::~MousrBluetooth()
     this->setConnectionStatus(MousrConnectionStatus::Unknown);
 }
 
-void MousrBluetooth::ConnectBluetooth()
+void MousrBluetooth::Init()
 {
-    bool success = false;
-
-    if (&this->device == nullptr ||
-        this->getConnectionStatus() != MousrConnectionStatus::Discovered)
+    if (BLEDevice::getInitialized() == false)
     {
-        s_writeLogF("[ERROR] No device was discovered. Cannot connect. Device: %p Status: %d\n",
-                    this->device,
-                    this->getConnectionStatus());
-        return;
+        BLEDevice::init("");
     }
 
-    s_writeLogF("Connecting to device: %s", this->device.toString());
-    this->setConnectionStatus(MousrConnectionStatus::Connecting);
-    this->bleClient->connect(&this->device);
-    s_writeLogLn("Device connected");
+    s_writeLogLn("MousrBluetooth::MousrBluetooth(): BLEDevice::createClient()");
+    this->bleClient = BLEDevice::createClient();
+    this->bleClient->setClientCallbacks(new MousrBluetoothClientCallback(this));
+
+    s_writeLogLn("MousrBluetooth::MousrBluetooth(): BLEDevice::getScan()");
+    this->bleScan = BLEDevice::getScan();
+    this->bleScan->setAdvertisedDeviceCallbacks(new MousrBluetoothScanCallback(this));
+}
+
+bool MousrBluetooth::DiscoverCapabilities()
+{
+    bool success = false;
     s_writeLogLn("Getting characteristics ...");
 
     BLERemoteService *service = bleClient->getService(serviceUuid);
@@ -166,10 +170,27 @@ final:
             bleClient->disconnect();
         }
 
+        return false;
+    }
+
+    this->setConnectionStatus(MousrConnectionStatus::Ready);
+    return true;
+}
+
+void MousrBluetooth::Connect()
+{
+    if (&this->device == nullptr ||
+        this->getConnectionStatus() != MousrConnectionStatus::Discovered)
+    {
+        s_writeLogF("[ERROR] No device was discovered. Cannot connect. Device: %p Status: %d\n",
+                    this->device,
+                    this->getConnectionStatus());
         return;
     }
 
-    this->setConnectionStatus(MousrConnectionStatus::Connected);
+    s_writeLogF("Connecting to device: %s\n", this->device.toString().c_str());
+    this->setConnectionStatus(MousrConnectionStatus::Connecting);
+    this->bleClient->connect(&this->device);
 }
 
 void MousrBluetooth::SendMessage(MousrData data)
@@ -184,7 +205,12 @@ void MousrBluetooth::SendMessage(MousrData data)
 
 void MousrBluetooth::StartScan()
 {
-    this->setConnectionStatus(MousrConnectionStatus::ScanStopped);
+    s_writeLogLn("Starting scan ...");
+    this->bleScan->setActiveScan(true);
+    this->bleScan->setInterval(100);
+    this->bleScan->setWindow(99);
+    this->bleScan->start(30, false);
+    this->setConnectionStatus(MousrConnectionStatus::Scanning);
 }
 
 void MousrBluetooth::StopScan()
@@ -208,7 +234,7 @@ void MousrBluetooth::setConnectionStatusChangeCallback(mousr_status_change_callb
 void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
 {
     MousrConnectionStatus oldStatus = this->connectionStatus;
-    s_writeLogF("Changing connection status from '%d' to '%d'", oldStatus, status);
+    s_writeLogF("Changing connection status from '%s' to '%s'\n", MousrConnectionStatusToStringMap[oldStatus].c_str(), MousrConnectionStatusToStringMap[status].c_str());
     this->connectionStatus = status;
 
     if (statusChangeCallback != nullptr)

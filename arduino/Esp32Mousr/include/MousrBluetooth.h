@@ -9,6 +9,7 @@
 #include <BLEUtils.h>
 #include <functional>
 #include <atomic>
+#include <map>
 
 using namespace std;
 
@@ -25,8 +26,22 @@ enum class MousrConnectionStatus
     Discovered,
     Connecting,
     Connected,
+    Ready,
     Disconnected,
     Error
+};
+
+static std::map<MousrConnectionStatus, string> MousrConnectionStatusToStringMap = {
+    {MousrConnectionStatus::Unknown, "Unknown"},
+    {MousrConnectionStatus::None, "None"},
+    {MousrConnectionStatus::Scanning, "Scanning"},
+    {MousrConnectionStatus::ScanStopped, "ScanStopped"},
+    {MousrConnectionStatus::Discovered, "Discovered"},
+    {MousrConnectionStatus::Connecting, "Connecting"},
+    {MousrConnectionStatus::Connected, "Connected"},
+    {MousrConnectionStatus::Ready, "Ready"},
+    {MousrConnectionStatus::Disconnected, "Disconnected"},
+    {MousrConnectionStatus::Error, "Error"},
 };
 
 typedef function<void(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus)> mousr_status_change_callback;
@@ -57,10 +72,17 @@ public:
         return this->packetsReceived;
     }
 
-    void ConnectBluetooth();
+    void Init();
+    void Connect();
+    bool DiscoverCapabilities();
     void StartScan();
     void StopScan();
     void SendMessage(MousrData msg);
+
+    void setSynchronizationHandle(SemaphoreHandle_t semaphore)
+    {
+        this->waitHandle = semaphore;
+    }
 
     void setMousrNotificationCallback(mousr_notify_callback callback);
     void setConnectionStatusChangeCallback(mousr_status_change_callback callback);
@@ -81,6 +103,7 @@ private:
     atomic_ulong packetsSent;
     atomic_ulong packetsReceived;
     MousrConnectionStatus connectionStatus;
+    SemaphoreHandle_t waitHandle;
 
     BLEScan *bleScan;
     BLEClient *bleClient;

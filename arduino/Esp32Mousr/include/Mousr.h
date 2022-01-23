@@ -126,12 +126,13 @@ public:
 
     // Simple conversion of array of bytes -> T
     template <typename T>
-    static void fromBytes(uint8_t *data, T &v, size_t sz = sizeof(T))
+    static void fromBytes(const uint8_t *data, T &v, size_t sz = sizeof(T))
     {
         v = *(T *)malloc(sz);
         memcpy(&v, data, sz);
     }
 
+    // Converts T to bytes and appends to the vector
     template <typename T>
     static void append(vector<uint8_t> &vec, T v, size_t length = sizeof(T))
     {
@@ -146,13 +147,13 @@ public:
     }
 
     // Converts a vector of bytes to a hex string
-    static string toString(vector<uint8_t> data, bool addSignifier = true)
+    static string toString(const vector<uint8_t> data, bool addSignifier = true)
     {
         return toString(data.data(), data.size(), addSignifier);
     }
 
     // Converts an array of bytes to a hex string
-    static string toString(uint8_t *data, size_t length, bool addSignifier = true)
+    static string toString(const uint8_t *data, size_t length, bool addSignifier = true)
     {
         stringstream ss;
 

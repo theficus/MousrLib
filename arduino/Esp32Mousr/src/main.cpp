@@ -18,15 +18,37 @@ void die()
 void setup()
 {
     Serial.begin(115200);
-
+    s_writeLogLn("setup()...");
     // Set up Bluetooth
+    mb.Init();
     mb.setConnectionStatusChangeCallback(onBluetoothStatusChange);
     mb.setMousrNotificationCallback(onBluetoothNotify);
-    mb.ConnectBluetooth();
+    mb.StartScan();
+    waitForStatus(MousrConnectionStatus::Discovered);
+    mb.Connect();
+    waitForStatus(MousrConnectionStatus::Connected);
+    if (mb.DiscoverCapabilities() == false)
+    {
+        die();
+    }
 }
 
 void loop()
 {
+}
+
+// TODO: Add timeout
+void waitForStatus(MousrConnectionStatus status)
+{
+    s_writeLogF("Waiting for status: %s\n", MousrConnectionStatusToStringMap[status].c_str());
+    MousrConnectionStatus s;
+    while ((s = mb.getConnectionStatus()) != status)
+    {
+        s_writeLogF("Status: %s ...", MousrConnectionStatusToStringMap[status].c_str());
+        sleep(1);
+    }
+
+    s_writeLogLn("Done!");
 }
 
 static void onBluetoothStatusChange(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus)
@@ -36,5 +58,5 @@ static void onBluetoothStatusChange(MousrConnectionStatus oldStatus, MousrConnec
 
 static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData data)
 {
-    s_writeLogF("[main] Got Bluetooth notification for %s: %s", characteristic->getUUID().toString().c_str(), data.toString().c_str());
+    s_writeLogF("[main] Got Bluetooth notification for %s: %s\n", characteristic->getUUID().toString().c_str(), data.toString().c_str());
 }
