@@ -20,14 +20,14 @@ void setup()
     Serial.begin(115200);
     s_writeLogLn("setup()...");
     // Set up Bluetooth
-    mb.Init();
+    mb.init();
     mb.setConnectionStatusChangeCallback(onBluetoothStatusChange);
     mb.setMousrNotificationCallback(onBluetoothNotify);
-    mb.StartScan();
+    mb.startScan();
     waitForStatus(MousrConnectionStatus::Discovered);
-    mb.Connect();
+    mb.connect();
     waitForStatus(MousrConnectionStatus::Connected);
-    if (mb.DiscoverCapabilities() == false)
+    if (mb.discoverCapabilities() == false)
     {
         die();
     }
@@ -35,8 +35,7 @@ void setup()
 
 void loop()
 {
-    s_writeLogF("Free heap: %d/%d (%x)\n", ESP.getFreeHeap(), ESP.getHeapSize(), ESP.getFreeHeap());
-    s_writeLogF("Free SRAM: %d (%x)\n", ESP.getFreePsram(), ESP.getFreePsram());
+    logMemory();
     sleep(1);
 }
 
@@ -61,7 +60,7 @@ static void onBluetoothStatusChange(MousrConnectionStatus oldStatus, MousrConnec
     s_writeLogF("[main] Got status change: %d -> %d\n", oldStatus, newStatus);
 }
 
-static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData data)
+static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData& data)
 {
     s_writeLogF("[main] Got Bluetooth notification for %s: %s\n", characteristic->getUUID().toString().c_str(), data.toString().c_str());
 }

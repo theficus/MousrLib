@@ -212,6 +212,8 @@ public:
 
         return ss.str();
     }
+
+private:
 };
 
 #endif

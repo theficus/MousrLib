@@ -1,9 +1,6 @@
 #include "MousrBluetooth.h"
 #include "Log.h"
 
-mousr_status_change_callback statusChangeCallback;
-mousr_notify_callback notifyCallback;
-
 // Scan callback
 class MousrBluetoothScanCallback : public BLEAdvertisedDeviceCallbacks
 {
@@ -30,7 +27,7 @@ public:
         {
             s_writeLogLn("Found device");
             ble->device = advertisedDevice;
-            ble->StopScan();
+            advertisedDevice.getScan()->stop();
             ble->setConnectionStatus(MousrConnectionStatus::Discovered);
         }
     }
@@ -65,26 +62,6 @@ private:
     MousrBluetooth *ble;
 };
 
-void internalNotifyCallback(BLERemoteCharacteristic *characteristic,
-                            uint8_t *data,
-                            size_t length,
-                            bool isNotify)
-{
-    if (isNotify == false)
-    {
-        return;
-    }
-
-    debugLogF("Got notification from characteristic: %s. Length: %zu\n", characteristic->getUUID().toString().c_str(), length);
-    MousrData d(data, length);
-    //debugLogF("Message: %s\n", d.toString().c_str());
-
-    if (notifyCallback != nullptr)
-    {
-        notifyCallback(characteristic, d);
-    }
-}
-
 MousrBluetooth::MousrBluetooth()
 {
     s_writeLogLn("MousrBluetooth::MousrBluetooth()");
@@ -112,7 +89,7 @@ MousrBluetooth::~MousrBluetooth()
     this->setConnectionStatus(MousrConnectionStatus::Unknown);
 }
 
-void MousrBluetooth::Init()
+void MousrBluetooth::init()
 {
     if (BLEDevice::getInitialized() == false)
     {
@@ -128,7 +105,7 @@ void MousrBluetooth::Init()
     this->bleScan->setAdvertisedDeviceCallbacks(new MousrBluetoothScanCallback(this));
 }
 
-bool MousrBluetooth::DiscoverCapabilities()
+bool MousrBluetooth::discoverCapabilities()
 {
     bool success = false;
     s_writeLogLn("Getting characteristics ...");
@@ -158,7 +135,7 @@ bool MousrBluetooth::DiscoverCapabilities()
 
     if (uartSubscribeCharacteristic->canNotify() == true)
     {
-        uartSubscribeCharacteristic->registerForNotify(internalNotifyCallback);
+        uartSubscribeCharacteristic->registerForNotify(this->bleNotificationCallback);
     }
     else
     {
@@ -187,7 +164,7 @@ final:
     return true;
 }
 
-void MousrBluetooth::Connect()
+void MousrBluetooth::connect()
 {
     if (&this->device == nullptr ||
         this->getConnectionStatus() != MousrConnectionStatus::Discovered)
@@ -203,7 +180,7 @@ void MousrBluetooth::Connect()
     this->bleClient->connect(&this->device);
 }
 
-void MousrBluetooth::SendMessage(MousrData data)
+void MousrBluetooth::sendMessage(MousrData &data)
 {
     debugLogF("Sending message to %s: %s", this->uartWriteCharacteristic->getUUID().toString().c_str(), data.toString().c_str());
     uint8_t *raw;
@@ -211,19 +188,20 @@ void MousrBluetooth::SendMessage(MousrData data)
     data.getRawMessageData(&raw, length);
     this->uartWriteCharacteristic->writeValue(raw, length);
     this->incrementPacketsSent();
+    free(raw);
 }
 
-void MousrBluetooth::StartScan()
+void MousrBluetooth::startScan()
 {
     s_writeLogLn("Starting scan ...");
     this->bleScan->setActiveScan(true);
     this->bleScan->setInterval(100);
     this->bleScan->setWindow(99);
-    this->bleScan->start(30, false);
+    this->bleScan->start(30);
     this->setConnectionStatus(MousrConnectionStatus::Scanning);
 }
 
-void MousrBluetooth::StopScan()
+void MousrBluetooth::stopScan()
 {
     s_writeLogLn("Stopping BLE scan");
     this->bleScan->stop();
@@ -233,12 +211,12 @@ void MousrBluetooth::StopScan()
 
 void MousrBluetooth::setMousrNotificationCallback(mousr_notify_callback callback)
 {
-    notifyCallback = callback;
+    this->mousrNotificationCallback = callback;
 }
 
 void MousrBluetooth::setConnectionStatusChangeCallback(mousr_status_change_callback callback)
 {
-    statusChangeCallback = callback;
+    this->statusChangeCallback = callback;
 }
 
 void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
@@ -259,5 +237,33 @@ void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
     if (statusChangeCallback != nullptr)
     {
         statusChangeCallback(oldStatus, status);
+    }
+}
+
+void MousrBluetooth::incrementPacketsSent()
+{
+    this->packetsSent.fetch_add(1);
+}
+
+void MousrBluetooth::incrementPacketsReceived()
+{
+    this->packetsReceived.fetch_add(1);
+}
+
+void MousrBluetooth::onNotify(BLERemoteCharacteristic *characteristic,
+                            uint8_t *data,
+                            size_t length,
+                            bool isNotify)
+{
+    if (isNotify == false)
+    {
+        return;
+    }
+
+    debugLogF("Got notification from characteristic: %s. Length: %zu\n", characteristic->getUUID().toString().c_str(), length);
+    MousrData d(data, length);
+    if (this->mousrNotificationCallback != nullptr)
+    {
+        this->mousrNotificationCallback(characteristic, d);
     }
 }

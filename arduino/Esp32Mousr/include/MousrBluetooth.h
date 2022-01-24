@@ -18,7 +18,7 @@ static BLEUUID uartWriteUuid = BLEUUID("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 static BLEUUID uartSubscribeUuid = BLEUUID("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
 
 typedef function<void(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus)> mousr_status_change_callback;
-typedef function<void(BLERemoteCharacteristic *characteristic, MousrData message)> mousr_notify_callback;
+typedef function<void(BLERemoteCharacteristic *characteristic, MousrData &message)> mousr_notify_callback;
 
 class MousrBluetooth
 {
@@ -45,39 +45,31 @@ public:
         return this->packetsReceived;
     }
 
-    void Init();
-    void Connect();
-    bool DiscoverCapabilities();
-    void StartScan();
-    void StopScan();
-    void SendMessage(MousrData msg);
-
-    void setSynchronizationHandle(SemaphoreHandle_t semaphore)
-    {
-        this->waitHandle = semaphore;
-    }
-
+    void init();
+    void connect();
+    bool discoverCapabilities();
+    void startScan();
+    void stopScan();
+    void sendMessage(MousrData &msg);
     void setMousrNotificationCallback(mousr_notify_callback callback);
     void setConnectionStatusChangeCallback(mousr_status_change_callback callback);
 
 private:
     void setConnectionStatus(MousrConnectionStatus status);
+    void incrementPacketsSent();
+    void incrementPacketsReceived();
+    void onNotify(BLERemoteCharacteristic *pBLERemoteCharacteristic, uint8_t *pData, size_t length, bool isNotify);
 
-    void incrementPacketsSent()
+    notify_callback bleNotificationCallback = [=](BLERemoteCharacteristic *pBLERemoteCharacteristic, uint8_t *pData, size_t length, bool isNotify)
     {
-        this->packetsSent.fetch_add(1);
-    }
+        this->onNotify(pBLERemoteCharacteristic, pData, length, isNotify);
+    };
 
-    void incrementPacketsReceived()
-    {
-        this->packetsReceived.fetch_add(1);
-    }
-
+    mousr_status_change_callback statusChangeCallback;
+    mousr_notify_callback mousrNotificationCallback;
     atomic_ulong packetsSent;
     atomic_ulong packetsReceived;
     MousrConnectionStatus connectionStatus = MousrConnectionStatus::Unknown;
-    SemaphoreHandle_t waitHandle;
-
     BLEScan *bleScan;
     BLEClient *bleClient;
     BLEClientCallbacks *clientCallback;

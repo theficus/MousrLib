@@ -14,6 +14,6 @@
 MousrBluetooth mb;
 void waitForStatus(MousrConnectionStatus);
 static void onBluetoothStatusChange(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus);
-static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData data);
+static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData& data);
 
 #endif

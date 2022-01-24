@@ -59,7 +59,8 @@ MousrData::MousrData(string data)
 
 MousrData::~MousrData()
 {
-    raw.clear();
+    raw.resize(0);
+    s_writeLogLn("MousrData: deallocating");
 }
 
 size_t MousrData::getMessageLength()
