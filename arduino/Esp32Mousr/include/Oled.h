@@ -1,5 +1,7 @@
 #pragma once
 #ifndef MOUSR_OLED_H
+#define MOUSR_OLED_H
+#ifdef ARDUINO
 
 #include <cstdint>
 #include <cstdio>
@@ -18,4 +20,5 @@
 #define ARROW_LEFT_FILL 0x25c0
 #define ARROW_LEFT_EMPTY 0x25c1
 
-#endif
+#endif // ARDUINO
+#endif // MOUSR_OLED_H

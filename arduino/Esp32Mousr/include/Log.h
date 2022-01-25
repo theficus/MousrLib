@@ -10,7 +10,7 @@ class Log
 {
 public:
     virtual ~Log() {}
-    virtual void WriteLog(const char *str) = 0;
+    virtual void writeLog(const char *str) = 0;
 };
 
 enum class LogDestination : uint8_t
@@ -18,7 +18,6 @@ enum class LogDestination : uint8_t
     None = 0,
     Serial = 1,
     Oled = 1 << 1,
-
     All = Serial | Oled,
     Console = Serial
 };
@@ -65,6 +64,6 @@ static char* s_last_log_entry;
 #define SAVE_LAST_LOG(str) s_last_log_entry = (char*)str;
 #else
 #define SAVE_LAST_LOG(str) {}
-#endif
+#endif // UNIT_TEST
 
-#endif
+#endif // MOUSR_LOG_H

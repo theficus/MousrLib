@@ -212,8 +212,6 @@ public:
 
         return ss.str();
     }
-
-private:
 };
 
-#endif
+#endif // MOUSR_MOUSR_H

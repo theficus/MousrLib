@@ -1,6 +1,7 @@
 #pragma once
 #ifndef MOUSR_CONSOLELOG_H
 #define MOUSR_CONSOLELOG_H
+#ifndef ARDUINO
 
 #include <string>
 #include "Log.h"
@@ -16,7 +17,7 @@ public:
         this->destName = dest;
     }
 
-    void WriteLog(const char *str)
+    void writeLog(const char *str)
     {
         SAVE_LAST_LOG(str);
         printf("[%s] %s", destName.c_str(), str);
@@ -29,4 +30,5 @@ private:
 static ConsoleLog_ SerialLog = ConsoleLog_("Serial");
 static ConsoleLog_ OledLog = ConsoleLog_("Oled");
 static ConsoleLog_ ConsoleLog = SerialLog; // Default
-#endif
+#endif // ARDUINO
+#endif // MOUSR_CONSOLELOG_H

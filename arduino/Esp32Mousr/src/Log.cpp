@@ -29,18 +29,18 @@ void writeLogLn(const LogDestination dest, const char *str)
     strcpy(cc, str);
     strcat(cc, "\n");
     writeLog(dest, cc);
-    //free(cc);
+    free(cc);
 }
 
 void writeLog(LogDestination dest, const char *str)
 {
     if ((LogDestination::Serial & dest) == LogDestination::Serial)
     {
-        SerialLog.WriteLog(str);
+        SerialLog.writeLog(str);
     }
 
     if ((LogDestination::Oled & dest) == LogDestination::Oled)
     {
-        OledLog.WriteLog(str);
+        OledLog.writeLog(str);
     }
 }

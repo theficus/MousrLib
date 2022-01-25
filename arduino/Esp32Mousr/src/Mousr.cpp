@@ -60,7 +60,7 @@ MousrData::MousrData(string data)
 MousrData::~MousrData()
 {
     raw.resize(0);
-    s_writeLogLn("MousrData: deallocating");
+    //s_writeLogLn("MousrData: deallocating");
 }
 
 size_t MousrData::getMessageLength()
@@ -75,6 +75,7 @@ MousrMessage MousrData::getMessageKind()
 
 string MousrData::toString()
 {
+    //s_writeLogF("MousrData::toString: %p (%zu)\n", raw.data(), raw.size());
     return MousrData::toString(raw.data(), raw.size());
 }
 

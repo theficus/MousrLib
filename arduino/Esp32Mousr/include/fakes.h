@@ -1,7 +1,7 @@
 // Fakes for mocking out functionality when not using an embedded device
-#ifndef _MOUSR_FAKES_H
-#define _MOUSR_FAKES_H
-
+#pragma once
+#ifndef MOUSR_FAKES_H
+#define MOUSR_FAKES_H
 #ifndef ARDUINO
 
 #include "ConsoleLog.h"
@@ -67,6 +67,5 @@ private:
 
 #define Preferences MockPreferences
 
-#endif
-
-#endif
+#endif // ARDUINO
+#endif // MOUSR_FAKES_H

@@ -1,6 +1,7 @@
 #pragma once
 #ifndef MOUSR_MOUSR_BLUETOOTH_H
 #define MOUSR_MOUSR_BLUETOOTH_H
+#ifdef ARDUINO_ARCH_ESP32
 
 #include "Mousr.h"
 #include <BLEAdvertisedDevice.h>
@@ -78,4 +79,5 @@ private:
     BLERemoteCharacteristic *uartSubscribeCharacteristic;
 };
 
-#endif
+#endif // ARDUINO_ARCH_ESP32
+#endif // MOUSR_MOUSR_BLUETOOTH_H

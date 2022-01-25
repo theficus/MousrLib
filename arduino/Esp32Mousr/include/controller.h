@@ -2,11 +2,8 @@
 #ifndef MOUSR_CONTROLLER_H
 #define MOUSR_CONTROLLER_H
 
-#ifndef ARDUINO
-//#include <ArduinoFake.h>
-#else
+#ifdef ARDUINO
 #include <Wire.h>
-//#include <SPI.h>
 
 // seesaw includes
 #include <Adafruit_ST7735.h> // Hardware-specific library
@@ -32,6 +29,5 @@ bool setupSeesaw();
 void onButtonPress();
 void readSeesaw();
 
-#endif
-
-#endif
+#endif // ARDUINO
+#endif // MOUSR_CONTROLLER_H

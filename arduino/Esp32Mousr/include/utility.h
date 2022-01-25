@@ -1,10 +1,9 @@
 #pragma once
 #ifndef MOUSR_UTILITY_H
+#ifdef ARDUINO_ARCH_ESP32
 
 #include <cstdint>
 #include "Log.h"
-
-#ifdef ESP32
 
 static void logMemory()
 {
@@ -38,9 +37,5 @@ static void semGive(SemaphoreHandle_t waitHandle)
 }
 */
 
-#else
-static void semTake() { }
-static void semGive() { }
-#endif
-
-#endif
+#endif // ARDUINO_ARCH_ESP32
+#endif // MOUSR_UTILITY_H

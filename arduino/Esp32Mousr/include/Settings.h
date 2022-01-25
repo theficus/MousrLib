@@ -1,11 +1,12 @@
-#ifndef _MOUSR_SETTINGS_H
-#define _MOUSR_SETTINGS_H
+#pragma once
+#ifndef MOUSR_SETTINGS_H
+#define MOUSR_SETTINGS_H
 
-#ifdef ARDUINO
+#ifdef ARDUINO_ARCH_ESP32
 #include <Preferences.h>
 #else
 #include "fakes.h"
-#endif
+#endif // ARDUINO_ARCH_ESP32
 
 #include "Log.h"
 
@@ -22,47 +23,10 @@ public:
         p.end();
     }
 
-    uint8_t getVolume()
-    {
-        uint8_t v = (uint8_t)p.getUChar(volumeKey);
-        if (v > 100)
-        {
-            return 100;
-        }
-
-        return v;
-    }
-
-    void setVolume(uint8_t v)
-    {
-        if (v > 100)
-        {
-            v = 100;
-        }
-
-        p.putUChar(volumeKey, v);
-    }
-
-    uint8_t getMaxSpeed()
-    {
-        uint8_t v = (uint8_t)p.getUChar(speedKey);
-        if (v > 100)
-        {
-            return 100;
-        }
-
-        return v;
-    }
-
-    void setMaxSpeed(uint8_t v)
-    {
-        if (v > 100)
-        {
-            v = 100;
-        }
-
-        p.putUChar(speedKey, v);
-    }
+    uint8_t getVolume();
+    void setVolume(uint8_t v);
+    uint8_t getMaxSpeed();
+    void setMaxSpeed(uint8_t v);
 
 private:
     // Preference names
@@ -72,4 +36,4 @@ private:
     Preferences p;
 };
 
-#endif
+#endif // MOUSR_SETTINGS_H
