@@ -6,8 +6,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
-#include "Log.h"
-
+#include <map>
 #include <U8g2lib.h>
 
 // Glyphs
@@ -19,6 +18,29 @@
 #define ARROW_DOWN_EMPTY 0x25bd
 #define ARROW_LEFT_FILL 0x25c0
 #define ARROW_LEFT_EMPTY 0x25c1
+
+enum class OledView
+{
+    None,
+    Robot,
+    Log,
+    Settings,
+    Diagnostic
+};
+
+class Oled
+{
+public:
+    OledView getOledView()
+    {
+        return this->view;
+    }
+
+private:
+    OledView view;
+};
+
+static void registerView(Oled& view);
 
 #endif // ARDUINO
 #endif // MOUSR_OLED_H

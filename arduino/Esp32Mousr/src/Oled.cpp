@@ -1,5 +1,4 @@
 #include "Oled.h"
-#include "Log.h"
 
 // OLED views
 static U8G2 u8g2 = U8G2_SSD1306_128X64_NONAME_2_HW_I2C(U8G2_R0);           // Graphical mode

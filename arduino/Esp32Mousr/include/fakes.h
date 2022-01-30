@@ -2,16 +2,16 @@
 #pragma once
 #ifndef MOUSR_FAKES_H
 #define MOUSR_FAKES_H
+
+#include "common.h"
+
 #ifndef ARDUINO
 
-#include "ConsoleLog.h"
 #include <iostream>
 #include <map>
 #include <any>
 
 #define uchar unsigned char
-
-using namespace std;
 
 class BLERemoteCharacteristic
 {
@@ -54,10 +54,10 @@ public:
     template <typename T>
     T getValue(const char* name)
     {
-        any v = valueStore[name];
-        auto retVal = any_cast<T>(v);
-        s_writeLogF("Got value '%s' from store. ", name);
-        cout << "Actual value: " << retVal << "\n";
+        std::any v = valueStore[name];
+        auto retVal = std::any_cast<T>(v);
+        s_printf("Got value '%s' from store.\n", name);
+        std::cout << "Actual value: " << retVal << "\n";
         return retVal;
     }
 
@@ -67,5 +67,5 @@ private:
 
 #define Preferences MockPreferences
 
-#endif // ARDUINO
+#endif // !ARDUINO
 #endif // MOUSR_FAKES_H

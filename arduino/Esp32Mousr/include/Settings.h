@@ -8,8 +8,6 @@
 #include "fakes.h"
 #endif // ARDUINO_ARCH_ESP32
 
-#include "Log.h"
-
 class Settings
 {
 public:

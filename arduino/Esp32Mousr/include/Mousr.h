@@ -2,6 +2,7 @@
 #ifndef MOUSR_MOUSR_H
 #define MOUSR_MOUSR_H
 
+#include "common.h"
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
@@ -15,10 +16,6 @@
 #include <iterator>
 #include <algorithm>
 #include <map>
-
-#include "Log.h"
-
-using namespace std;
 
 enum class MousrConnectionStatus : uint8_t
 {
@@ -35,7 +32,7 @@ enum class MousrConnectionStatus : uint8_t
     Max = Error, // Match whatever the last value is
 };
 
-static std::map<MousrConnectionStatus, string> s_MousrConnectionStatusToStringMap = {
+static std::map<MousrConnectionStatus, std::string> s_MousrConnectionStatusToStringMap = {
     {MousrConnectionStatus::Unknown, "Unknown"},
     {MousrConnectionStatus::None, "None"},
     {MousrConnectionStatus::Scanning, "Scanning"},
@@ -48,12 +45,12 @@ static std::map<MousrConnectionStatus, string> s_MousrConnectionStatusToStringMa
     {MousrConnectionStatus::Error, "Error"},
 };
 
-static string getMousrConnectionStatusString(MousrConnectionStatus status)
+static std::string getMousrConnectionStatusString(MousrConnectionStatus status)
 {
     uint8_t v = (uint8_t)status;
     if (v > (uint8_t)MousrConnectionStatus::Max)
     {
-        s_writeLogF("Could not map unknown status value %d. Returning \"Unknown\"\n", v);
+        //Serial.printf("Could not map unknown status value %d. Returning \"Unknown\"\n", v);
         v = (uint8_t)MousrConnectionStatus::Unknown;
     }
 
@@ -145,15 +142,15 @@ class MousrData
 public:
     MousrData(const uint8_t *data, size_t length);
     MousrData(const char *data);
-    MousrData(const MousrMessage msg, const MousrCommand cmd, vector<uint8_t> data);
-    MousrData(string data);
+    MousrData(const MousrMessage msg, const MousrCommand cmd, std::vector<uint8_t> data);
+    MousrData(std::string data);
     ~MousrData();
 
     MousrMessageData *getMessageData();
     void getRawMessageData(uint8_t **data, size_t &length);
     MousrMessage getMessageKind();
     size_t getMessageLength();
-    string toString();
+    std::string toString();
 
     // Simple conversion from T -> array of bytes
     template <typename T>
@@ -175,7 +172,7 @@ public:
 
     // Converts T to bytes and appends to the vector
     template <typename T>
-    static void append(vector<uint8_t> &vec, T v, size_t length = sizeof(T))
+    static void append(std::vector<uint8_t> &vec, T v, size_t length = sizeof(T))
     {
         uint8_t *raw = toBytes(v);
         // vec.insert(vec.end(), length, raw);
@@ -188,26 +185,26 @@ public:
     }
 
     // Converts a vector of bytes to a hex string
-    static string toString(const vector<uint8_t> data, bool addSignifier = true)
+    static std::string toString(const std::vector<uint8_t> data, bool addSignifier = true)
     {
         return toString(data.data(), data.size(), addSignifier);
     }
 
     // Converts an array of bytes to a hex string
-    static string toString(const uint8_t *data, size_t length, bool addSignifier = true)
+    static std::string toString(const uint8_t *data, size_t length, bool addSignifier = true)
     {
-        stringstream ss;
+        std::stringstream ss;
 
         if (addSignifier == true)
         {
             ss << "0x";
         }
 
-        ss << hex << setfill('0');
+        ss << std::hex << std::setfill('0');
 
         for (int i = 0; i < length; i++)
         {
-            ss << setw(2) << (unsigned)data[i];
+            ss << std::setw(2) << (unsigned)data[i];
         }
 
         return ss.str();

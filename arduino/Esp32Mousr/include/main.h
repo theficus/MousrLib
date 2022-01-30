@@ -2,6 +2,8 @@
 #ifndef MOUSR_MAIN_H
 #define MOUSR_MAIN_H
 
+#include "common.h"
+
 #ifdef ARDUINO
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
@@ -11,9 +13,6 @@
 #include "MousrBluetooth.h"
 #include "controller.h"
 #include "Oled.h"
-#include "Log.h"
-#include "OledLog.h"
-#include "SerialLog.h"
 #include "utility.h"
 
 MousrBluetooth mb;

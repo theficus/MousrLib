@@ -1,14 +1,13 @@
 #include "Mousr.h"
+#include <cstring>
+#include <vector>
+std::vector<uint8_t> raw;
 
-using namespace std;
-
-vector<uint8_t> raw;
-
-void initialize(string data)
+void initialize(std::string data)
 {
     for (unsigned i = 0; i < data.length(); i += 2)
     {
-        string ss = data.substr(i, 2);
+        std::string ss = data.substr(i, 2);
 
         if (i == 0 &&
             (ss == "0x" || ss == "0X"))
@@ -21,7 +20,7 @@ void initialize(string data)
     }
 }
 
-MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, vector<uint8_t> data)
+MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, std::vector<uint8_t> data)
 {
     raw.push_back((uint8_t)msg);
     int length = data.size();
@@ -49,10 +48,10 @@ MousrData::MousrData(const uint8_t *data, size_t length)
 
 MousrData::MousrData(const char *data)
 {
-    initialize(string(data));
+    initialize(std::string(data));
 }
 
-MousrData::MousrData(string data)
+MousrData::MousrData(std::string data)
 {
     initialize(data);
 }
@@ -73,7 +72,7 @@ MousrMessage MousrData::getMessageKind()
     return (MousrMessage)raw.front();
 }
 
-string MousrData::toString()
+std::string MousrData::toString()
 {
     //s_writeLogF("MousrData::toString: %p (%zu)\n", raw.data(), raw.size());
     return MousrData::toString(raw.data(), raw.size());

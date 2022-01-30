@@ -1,15 +1,16 @@
 #pragma once
 #ifndef MOUSR_UTILITY_H
-#ifdef ARDUINO_ARCH_ESP32
+#define MOUSR_UTILITY_H
 
 #include <cstdint>
-#include "Log.h"
+
+#ifdef ARDUINO_ARCH_ESP32
 
 static void logMemory()
 {
     uint32_t total = ESP.getHeapSize();
     uint32_t used = ESP.getFreeHeap();
-    s_writeLogF("Heap usage: %d/%d (%3.1f%%)\n", total - used, total, (used / total) * 100);
+    s_printf("Heap usage: %d/%d (%d%%)\n", total - used, total, (used / total) * 100);
 }
 
 /*
@@ -37,5 +38,7 @@ static void semGive(SemaphoreHandle_t waitHandle)
 }
 */
 
-#endif // ARDUINO_ARCH_ESP32
+#else // ARDUINO_ARCH_ESP32
+static void logMemory() {}
+#endif
 #endif // MOUSR_UTILITY_H

@@ -1,12 +1,12 @@
+#include "common.h"
 #include <unity.h>
-
-#include "Log.h"
+#include <cstring>
 #include "Mousr.h"
 
 void test_connectionStatusMap()
 {
-    string expected = "Unknown";
-    string actual = s_MousrConnectionStatusToStringMap[MousrConnectionStatus::Unknown];
+    std::string expected = "Unknown";
+    std::string actual = s_MousrConnectionStatusToStringMap[MousrConnectionStatus::Unknown];
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
 
     int count = 0;
@@ -15,7 +15,7 @@ void test_connectionStatusMap()
     for (; count <= (int)MousrConnectionStatus::Max + 1; count++)
     {
         actual = getMousrConnectionStatusString((MousrConnectionStatus)count);
-        s_writeLogF("%d -> %s\n", count, actual.c_str());
+        s_printf("%d -> %s\n", count, actual.c_str());
     }
 
     TEST_ASSERT_EQUAL_INT32((int)MousrConnectionStatus::Max, count - 2);
@@ -24,15 +24,15 @@ void test_connectionStatusMap()
 void test_convertToBytes()
 {
     float f = 174.9593;
-    string expected = "0x95f52e43";
+    std::string expected = "0x95f52e43";
     uint8_t *b = MousrData::toBytes(f);
-    string actual = MousrData::toString(b, sizeof(f));
-    s_writeLogF("%f -> %s\n", f, actual.c_str());
+    std::string actual = MousrData::toString(b, sizeof(f));
+    s_printf("%f -> %s\n", f, actual.c_str());
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
 
     float ff;
     MousrData::fromBytes(b, ff);
-    s_writeLogF("%f -> %f\n", f, ff);
+    s_printf("%f -> %f\n", f, ff);
     TEST_ASSERT_EQUAL(f, ff);
     free(b);
 
@@ -40,12 +40,12 @@ void test_convertToBytes()
     expected = "0x155fd0ac4b9bb601";
     b = MousrData::toBytes(l);
     actual = MousrData::toString(b, sizeof(l));
-    s_writeLogF("%llu -> %s\n", l, actual.c_str());
+    s_printf("%lu -> %s\n", l, actual.c_str());
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
 
     unsigned long ll;
     MousrData::fromBytes(b, ll);
-    s_writeLogF("%llu -> %llu\n", l, ll);
+    s_printf("%lu -> %lu\n", l, ll);
     TEST_ASSERT_EQUAL(l, ll);
     free(b);
 
@@ -53,20 +53,20 @@ void test_convertToBytes()
     expected = "0xc01dfeff";
     b = MousrData::toBytes(i);
     actual = MousrData::toString(b, sizeof(i));
-    s_writeLogF("%d -> %s\n", i, actual.c_str());
+    s_printf("%d -> %s\n", i, actual.c_str());
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
 
     int ii;
     MousrData::fromBytes(b, ii);
-    s_writeLogF("%d -> %d\n", i, ii);
+    s_printf("%d -> %d\n", i, ii);
     TEST_ASSERT_EQUAL(i, ii);
     free(b);
 }
 
 void test_mousrAlloc()
 {
-    s_writeLogLn("test_mousrAlloc()");
-    string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+    s_println("test_mousrAlloc()");
+    std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
     d = MousrData(data);
     d = MousrData(data);
@@ -75,14 +75,14 @@ void test_mousrAlloc()
 
 void test_getRawData()
 {
-    s_writeLogLn("test_getRawData()");
-    string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+    s_println("test_getRawData()");
+    std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
     uint8_t *raw;
     size_t length;
     d.getRawMessageData(&raw, length);
     TEST_ASSERT_EQUAL(d.getMessageLength(), length);
-    s_writeLogF("Output: %s\n", MousrData::toString(raw, length).c_str());
+    s_printf("Output: %s\n", MousrData::toString(raw, length).c_str());
     TEST_ASSERT_EQUAL_STRING(d.toString().c_str(), MousrData::toString(raw, length).c_str());
     free(raw);
 }
@@ -96,8 +96,8 @@ void test_createFromRaw()
     // 30bdcd6c3e00000000a40eba420200
     // 30becd6c3e00000000a30eba420200
 
-    string expected = "0x30becd6c3e00000000a30eba420200";
-    vector<uint8_t> data;
+    std::string expected = "0x30becd6c3e00000000a30eba420200";
+    std::vector<uint8_t> data;
     MousrData::append(data, (uint8_t)MousrMessage::ROBOT_POSE);
     MousrData::append(data, f1);
     MousrData::append(data, f2);
@@ -106,8 +106,8 @@ void test_createFromRaw()
     MousrData::append(data, false);
 
     TEST_ASSERT_EQUAL(15, data.size());
-    string actual = MousrData::toString(data);
-    s_writeLogF("Expected: %s Actual: %s\n", expected.c_str(), actual.c_str());
+    std::string actual = MousrData::toString(data);
+    s_printf("Expected: %s Actual: %s\n", expected.c_str(), actual.c_str());
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
 }
 
@@ -115,7 +115,7 @@ void test_ParseMessage()
 {
     // ROBOT_POSE message
     {
-        string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+        std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
         MousrData d(data);
         TEST_ASSERT_EQUAL(MousrMessage::ROBOT_POSE, d.getMessageKind());
         TEST_ASSERT_EQUAL(20, d.getMessageLength());
@@ -129,7 +129,7 @@ void test_ParseMessage()
 
     {
         // BATTERY_VOLTAGE
-        string data = "0x625c000000002015000000000000000000000000";
+        std::string data = "0x625c000000002015000000000000000000000000";
         MousrData d = MousrData(data);
         TEST_ASSERT_EQUAL(MousrMessage::BATTERY_VOLTAGE, d.getMessageKind());
         TEST_ASSERT_EQUAL(20, d.getMessageLength());
@@ -142,8 +142,8 @@ void test_ParseMessage()
 
 void test_toHexString()
 {
-    string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+    std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
-    string actual = d.toString();
+    std::string actual = d.toString();
     TEST_ASSERT_EQUAL_STRING(data.c_str(), actual.c_str());
 }

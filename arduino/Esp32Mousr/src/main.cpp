@@ -1,3 +1,5 @@
+#ifdef ARDUINO
+
 #include "main.h"
 
 enum class displayMode
@@ -18,7 +20,7 @@ void die()
 void setup()
 {
     Serial.begin(115200);
-    s_writeLogLn("setup()...");
+    
     // Set up Bluetooth
     mb.init();
     mb.setConnectionStatusChangeCallback(onBluetoothStatusChange);
@@ -43,24 +45,24 @@ void loop()
 void waitForStatus(MousrConnectionStatus status)
 {
     string expectedStatus = getMousrConnectionStatusString(status);
-    s_writeLogF("Waiting for status: %s\n", expectedStatus.c_str());
+    Serial.printf("Waiting for status: %s\n", expectedStatus.c_str());
     MousrConnectionStatus s;
     while ((s = mb.getConnectionStatus()) != status)
     {
         string actualStatus = getMousrConnectionStatusString(s);
-        s_writeLogF("Status: %s ...\n", actualStatus.c_str());
+        Serial.printf("Status: %s ...\n", actualStatus.c_str());
         sleep(1);
     }
-
-    s_writeLogLn("Done!");
 }
 
 static void onBluetoothStatusChange(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus)
 {
-    s_writeLogF("[main] Got status change: %d -> %d\n", oldStatus, newStatus);
+    Serial.printf("[main] Got status change: %d -> %d\n", (int)oldStatus, (int)newStatus);
 }
 
 static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData& data)
 {
-    s_writeLogF("[main] Got Bluetooth notification for %s: %s\n", characteristic->getUUID().toString().c_str(), data.toString().c_str());
+    Serial.printf("[main] Got Bluetooth notification for %s: %s\n", characteristic->getUUID().toString().c_str(), data.toString().c_str());
 }
+
+#endif // ARDUINO

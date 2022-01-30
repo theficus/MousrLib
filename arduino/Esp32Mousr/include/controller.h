@@ -2,6 +2,8 @@
 #ifndef MOUSR_CONTROLLER_H
 #define MOUSR_CONTROLLER_H
 
+#include "common.h"
+
 #ifdef ARDUINO
 #include <Wire.h>
 
