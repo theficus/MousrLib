@@ -10,7 +10,8 @@ static void logMemory()
 {
     uint32_t total = ESP.getHeapSize();
     uint32_t used = ESP.getFreeHeap();
-    s_printf("Heap usage: %d/%d (%d%%)\n", total - used, total, (used / total) * 100);
+    uint32_t avail = total - used;
+    s_printf("Heap usage: %u/%u (%f%%)\n", avail, total, (avail / total) * 100);
 }
 
 /*

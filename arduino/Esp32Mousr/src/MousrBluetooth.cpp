@@ -1,5 +1,8 @@
 #include "MousrBluetooth.h"
 
+// Synchronize status changes
+static portMUX_TYPE bleStatusMutex = portMUX_INITIALIZER_UNLOCKED;
+
 // Scan callback
 class MousrBluetoothScanCallback : public BLEAdvertisedDeviceCallbacks
 {
@@ -26,7 +29,8 @@ public:
         {
             s_println("Found device");
             ble->device = advertisedDevice;
-            advertisedDevice.getScan()->stop();
+            //advertisedDevice.getScan()->stop();
+            ble->stopScan();
             ble->setConnectionStatus(MousrConnectionStatus::Discovered);
         }
     }
@@ -46,11 +50,13 @@ public:
 
     void onConnect(BLEClient *client)
     {
+        s_println("MousrBluetoothClientCallback::onConnect()");
         this->ble->setConnectionStatus(MousrConnectionStatus::Connected);
     }
 
     void onDisconnect(BLEClient *client)
     {
+        s_println("MousrBluetoothClientCallback::onDisconnect()");
         this->ble->setConnectionStatus(MousrConnectionStatus::Disconnected);
     }
 
@@ -158,8 +164,8 @@ void MousrBluetooth::connect()
         this->getConnectionStatus() != MousrConnectionStatus::Discovered)
     {
         s_printf("[ERROR] No device was discovered. Cannot connect. Device: %p Status: %d\n",
-                    this->device,
-                    (int)this->getConnectionStatus());
+                 this->device,
+                 (int)this->getConnectionStatus());
         return;
     }
 
@@ -170,7 +176,7 @@ void MousrBluetooth::connect()
 
 void MousrBluetooth::sendMessage(MousrData &data)
 {
-    //Serial.printf("Sending message to %s: %s", this->uartWriteCharacteristic->getUUID().toString().c_str(), data.toString().c_str());
+    // Serial.printf("Sending message to %s: %s", this->uartWriteCharacteristic->getUUID().toString().c_str(), data.toString().c_str());
     uint8_t *raw;
     size_t length = 0;
     data.getRawMessageData(&raw, length);
@@ -207,6 +213,7 @@ void MousrBluetooth::setConnectionStatusChangeCallback(mousr_status_change_callb
 
 void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
 {
+    portENTER_CRITICAL(&bleStatusMutex);
     MousrConnectionStatus oldStatus = this->connectionStatus;
     if (oldStatus > MousrConnectionStatus::Max)
     {
@@ -215,10 +222,15 @@ void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
     }
 
     this->connectionStatus = status;
+    portEXIT_CRITICAL(&bleStatusMutex);
 
-    string oldStatusStr = getMousrConnectionStatusString(oldStatus);
-    string newStatusStr = getMousrConnectionStatusString(status);
-    s_printf("Changing connection status from '%s' to '%s'\n", oldStatusStr.c_str(), newStatusStr.c_str());
+    std::string oldStatusStr = getMousrConnectionStatusString(oldStatus);
+    std::string newStatusStr = getMousrConnectionStatusString(status);
+    s_printf("Changing connection status from '%s' (0x%x) to '%s' (0x%x)\n",
+             oldStatusStr.c_str(),
+             (uint8_t)oldStatus,
+             newStatusStr.c_str(),
+             (uint8_t)status);
 
     if (statusChangeCallback != nullptr)
     {
@@ -237,16 +249,16 @@ void MousrBluetooth::incrementPacketsReceived()
 }
 
 void MousrBluetooth::onNotify(BLERemoteCharacteristic *characteristic,
-                            uint8_t *data,
-                            size_t length,
-                            bool isNotify)
+                              uint8_t *data,
+                              size_t length,
+                              bool isNotify)
 {
     if (isNotify == false)
     {
         return;
     }
 
-    //debugLogF("Got notification from characteristic: %s. Length: %zu\n", characteristic->getUUID().toString().c_str(), length);
+    // debugLogF("Got notification from characteristic: %s. Length: %zu\n", characteristic->getUUID().toString().c_str(), length);
     MousrData d(data, length);
     if (this->mousrNotificationCallback != nullptr)
     {

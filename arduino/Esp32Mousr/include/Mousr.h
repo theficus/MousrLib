@@ -142,7 +142,7 @@ class MousrData
 public:
     MousrData(const uint8_t *data, size_t length);
     MousrData(const char *data);
-    MousrData(const MousrMessage msg, const MousrCommand cmd, std::vector<uint8_t> data);
+    MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8_t* data, const size_t length = 12);
     MousrData(std::string data);
     ~MousrData();
 
@@ -180,8 +180,6 @@ public:
         {
             vec.push_back(raw[i]);
         }
-
-        free(raw);
     }
 
     // Converts a vector of bytes to a hex string
@@ -191,6 +189,7 @@ public:
     }
 
     // Converts an array of bytes to a hex string
+    // TODO: Use C char type instead
     static std::string toString(const uint8_t *data, size_t length, bool addSignifier = true)
     {
         std::stringstream ss;

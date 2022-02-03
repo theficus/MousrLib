@@ -12,14 +12,12 @@
 #include <atomic>
 #include <map>
 
-using namespace std;
-
 static BLEUUID serviceUuid = BLEUUID("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
 static BLEUUID uartWriteUuid = BLEUUID("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
 static BLEUUID uartSubscribeUuid = BLEUUID("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
 
-typedef function<void(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus)> mousr_status_change_callback;
-typedef function<void(BLERemoteCharacteristic *characteristic, MousrData &message)> mousr_notify_callback;
+typedef std::function<void(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus)> mousr_status_change_callback;
+typedef std::function<void(BLERemoteCharacteristic *characteristic, MousrData &message)> mousr_notify_callback;
 
 class MousrBluetooth
 {
@@ -68,8 +66,8 @@ private:
 
     mousr_status_change_callback statusChangeCallback;
     mousr_notify_callback mousrNotificationCallback;
-    atomic_ulong packetsSent;
-    atomic_ulong packetsReceived;
+    std::atomic_ulong packetsSent;
+    std::atomic_ulong packetsReceived;
     MousrConnectionStatus connectionStatus = MousrConnectionStatus::Unknown;
     BLEScan *bleScan;
     BLEClient *bleClient;

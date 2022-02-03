@@ -1,7 +1,8 @@
+#include <cstring>
 #include "common.h"
 #include <unity.h>
-#include <cstring>
 #include "Mousr.h"
+#include "MousrTests.h"
 
 void test_connectionStatusMap()
 {
@@ -66,7 +67,7 @@ void test_convertToBytes()
 void test_mousrAlloc()
 {
     s_println("test_mousrAlloc()");
-    std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+    char data[] = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
     d = MousrData(data);
     d = MousrData(data);
@@ -76,7 +77,7 @@ void test_mousrAlloc()
 void test_getRawData()
 {
     s_println("test_getRawData()");
-    std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
+    char data[] = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
     uint8_t *raw;
     size_t length;
@@ -140,10 +141,43 @@ void test_ParseMessage()
     }
 }
 
+/*
 void test_toHexString()
 {
     std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
     std::string actual = d.toString();
     TEST_ASSERT_EQUAL_STRING(data.c_str(), actual.c_str());
+}
+*/
+
+void test_messageCtor()
+{
+    std::string expected = "0x30becd6c3e00000000a30eba420200";
+    float f1 = 0.2312536;
+    float f2 = 0.0;
+    float f3 = 93.02859;
+    std::vector<uint8_t> data;
+    MousrData::append(data, f1);
+    MousrData::append(data, f2);
+    MousrData::append(data, f3);
+    MousrData d(MousrMessage::ROBOT_POSE, MousrCommand::MOVE, data.data(), data.size());
+    std::string actual = d.toString();
+    s_printf("%s\n", actual.c_str());
+    TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
+}
+
+void runMousrTests()
+{
+    /*
+    test_ParseMessage();
+    test_toHexString();
+    test_mousrAlloc();
+    test_getRawData();
+    test_convertToBytes();
+    test_createFromRaw();
+    test_connectionStatusMap();
+    */
+
+   test_messageCtor();
 }

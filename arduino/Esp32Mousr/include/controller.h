@@ -12,7 +12,6 @@
 #include <Adafruit_seesaw.h>
 
 // Seesaw
-static Adafruit_seesaw ss;
 #define BUTTON_RIGHT 6
 #define BUTTON_DOWN 7
 #define BUTTON_LEFT 9

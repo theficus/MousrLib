@@ -1,91 +1,66 @@
 #include "Mousr.h"
 #include <cstring>
 #include <vector>
-std::vector<uint8_t> raw;
 
-void initialize(std::string data)
+uint8_t *raw;
+size_t rawLength;
+
+MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length)
 {
-    for (unsigned i = 0; i < data.length(); i += 2)
-    {
-        std::string ss = data.substr(i, 2);
-
-        if (i == 0 &&
-            (ss == "0x" || ss == "0X"))
-        {
-            continue;
-        }
-
-        uint8_t b = strtol(ss.c_str(), nullptr, 16);
-        raw.push_back(b);
-    }
-}
-
-MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, std::vector<uint8_t> data)
-{
-    raw.push_back((uint8_t)msg);
-    int length = data.size();
-    if (length < 12)
-    {
-        length = 12;
-    }
-
-    for (int i = 0; i < length; i++)
-    {
-        raw.push_back(data[i]);
-    }
-
-    raw.push_back((uint8_t)cmd);
-    raw.push_back(0);
+    rawLength = length + 3; // +1 for msg, +1 for cmd, +1 for trailing byte
+    raw = (uint8_t *)malloc(rawLength);
+    clearmem(raw, length + 3);
+    memcpy(&raw[0], &msg, 1);
+    memcpy(&raw[1], data, length);
+    memcpy(&raw[length + 1], &cmd, 1);
 }
 
 MousrData::MousrData(const uint8_t *data, size_t length)
 {
-    for (int i = 0; i < length; i++)
-    {
-        raw.push_back(data[i]);
-    }
+    raw = (uint8_t*)malloc(length);
+    rawLength = length;
+    memcpy(raw, data, length);
 }
 
+// TODO: Convert to binary 
 MousrData::MousrData(const char *data)
 {
-    initialize(std::string(data));
-}
-
-MousrData::MousrData(std::string data)
-{
-    initialize(data);
+    rawLength = strlen(data);
+    raw = (uint8_t*)malloc(rawLength);
+    memcpy(raw, data, rawLength);
 }
 
 MousrData::~MousrData()
 {
-    raw.resize(0);
-    //s_writeLogLn("MousrData: deallocating");
+    if (raw != nullptr)
+    {
+        free(raw);
+    }
 }
 
 size_t MousrData::getMessageLength()
 {
-    return raw.size();
+    return rawLength;
 }
 
 MousrMessage MousrData::getMessageKind()
 {
-    return (MousrMessage)raw.front();
+    return (MousrMessage)raw[0];
 }
 
 std::string MousrData::toString()
 {
-    //s_writeLogF("MousrData::toString: %p (%zu)\n", raw.data(), raw.size());
-    return MousrData::toString(raw.data(), raw.size());
+    // s_writeLogF("MousrData::toString: %p (%zu)\n", raw.data(), raw.size());
+    return MousrData::toString(raw, rawLength);
 }
 
 void MousrData::getRawMessageData(uint8_t **data, size_t &length)
 {
-    length = raw.size();
-    *data = (uint8_t *)malloc(length);
-    memcpy(*data, raw.data(), length);
+    *data = (uint8_t *)malloc(rawLength);
+    memcpy(*data, raw, length);
 }
 
 MousrMessageData *MousrData::getMessageData()
 {
-    return (MousrMessageData *)raw.data();
+    return (MousrMessageData *)raw;
 }
