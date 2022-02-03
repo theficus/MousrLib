@@ -5,6 +5,7 @@
 #include <cstdint>
 
 #ifdef ARDUINO_ARCH_ESP32
+#include "common.h"
 
 static void logMemory()
 {

@@ -1,5 +1,5 @@
 #include "Adafruit_seesaw.h"
-
+#include "utility.h"
 #define BUTTON_RIGHT 6
 #define BUTTON_DOWN 7
 #define BUTTON_LEFT 9
@@ -40,10 +40,7 @@ void joyTaskConsumer(void* p)
         Serial.printf("q=%zu\n", i);
         xQueueReceive(joyQueue, &element, portMAX_DELAY);
         uint32_t v = 0;
-        
-        portENTER_CRITICAL(&joyReadMutex);
         v = ss.digitalReadBulk(s_button_mask);
-        portEXIT_CRITICAL(&joyReadMutex);
         Serial.println(v, BIN);
         i++;
     }
@@ -78,5 +75,6 @@ void setup()
 
 void loop()
 {
-    ;
+    logMemory();
+    sleep(1);
 }
