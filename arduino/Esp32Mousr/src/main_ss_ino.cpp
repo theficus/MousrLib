@@ -3,17 +3,14 @@
 // alert the sketch that a controller button has been pressed. This sketch demonstrates one possible workaround for this by
 // using Queues (see also: https://www.freertos.org/Embedded-RTOS-Queues.html)
 
-#ifndef ADAFRUIT_THREADSAFE_I2C
-//#define ADAFRUIT_THREADSAFE_I2C
-#endif
-
-#define DEBUG_SERIAL Serial
+//#define DEBUG_SERIAL Serial
 
 #if !defined(ESP8266) && !defined(ESP32)
 #error This sketch only supports ESP32 and ESP8266
 #endif // ESP2866 / ESP32
 
 #include "Adafruit_seesaw.h"
+#include "utility.h"
 
 // This sketch requires that one of the optional interrupt pins on the Joy Featherwing is soldered closed. This value should match the
 // GPIO pin on the ESP device. See: https://learn.adafruit.com/joy-featherwing/pinouts
@@ -39,16 +36,17 @@ Adafruit_seesaw ss;
 #define STICK_V_DRIFT 5
 
 uint32_t button_mask = (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) |
-                       (1 << BUTTON_LEFT)  | (1 << BUTTON_UP)   | (1 << BUTTON_SEL);
+                       (1 << BUTTON_LEFT) | (1 << BUTTON_UP) | (1 << BUTTON_SEL);
 
 QueueHandle_t buttonPressQueue; // Queue for notifying of button press changes
+SemaphoreHandle_t i2cSem = xSemaphoreCreateBinary();
 
 // ISR that gets triggered when a button is pressed.
 void IRAM_ATTR onButtonPress()
 {
+    int v = 0; // Value doesn't really matter here. We just need to push something to the queue.
     // The ISR just sends a signal to the queue
-    int i = 0;
-    if (!xQueueSend(buttonPressQueue, &i, (TickType_t)0))
+    if (!xQueueSend(buttonPressQueue, &v, (TickType_t)0))
     {
         Serial.println("WARNING: Could not queue message because queue is full.");
     }
@@ -70,38 +68,84 @@ void outputPressedButtons(uint32_t mask)
 
     if (!(mask & (1 << BUTTON_RIGHT)))
     {
-        Serial.println("Button A pressed");
+        Serial.println(F("Button A pressed"));
     }
     if (!(mask & (1 << BUTTON_DOWN)))
     {
-        Serial.println("Button B pressed");
+        Serial.println(F("Button B pressed"));
     }
     if (!(mask & (1 << BUTTON_LEFT)))
     {
-        Serial.println("Button Y pressed");
+        Serial.println(F("Button Y pressed"));
     }
     if (!(mask & (1 << BUTTON_UP)))
     {
-        Serial.println("Button X pressed");
+        Serial.println(F("Button X pressed"));
     }
     if (!(mask & (1 << BUTTON_SEL)))
     {
-        Serial.println("Button SEL pressed");
+        Serial.println(F("Button SEL pressed"));
     }
 }
 
 // Queue consumer for responding to button presses
 void buttonPressConsumer(void *)
 {
-    Serial.println("buttonPressConsumer() begin");
+    Serial.println(F("buttonPressConsumer() begin"));
+    uint32_t last = 0;
     while (true)
     {
-        int i = 0;
+        void *p;
         // This will yield until the queue gets signalled
-        xQueueReceive(buttonPressQueue, &i, portMAX_DELAY);
-        uint32_t v = 0;
-        v = ss.digitalReadBulk(button_mask);
-        outputPressedButtons(v);
+        xQueueReceive(buttonPressQueue, &p, portMAX_DELAY);
+        xSemaphoreTake(i2cSem, portMAX_DELAY);
+        uint32_t v = ss.digitalReadBulk(button_mask);
+        if (last != v)
+        {
+            outputPressedButtons(v);
+            last = v;
+        }
+        xSemaphoreGive(i2cSem);
+    }
+
+    vTaskDelete(NULL);
+}
+
+// Task that watches for analog stick changes
+void analogStickTask(void *)
+{
+    Serial.println("analogStickTask() begin");
+
+    int x = -1;
+    int y = -1;
+
+    while (true)
+    {
+        // if (ss.busy() == false)
+        {
+            xSemaphoreTake(i2cSem, portMAX_DELAY);
+            int new_x = -1;
+            int new_y = -1;
+
+            new_x = ss.analogRead(STICK_H) + STICK_H_CORRECTION;
+            new_y = ss.analogRead(STICK_V) + STICK_V_CORRECTION;
+            xSemaphoreGive(i2cSem);
+
+            // Only log something if the position has actually changed
+            if (new_x <= x - STICK_H_DRIFT ||
+                new_x >= x + STICK_H_DRIFT ||
+                new_y <= y - STICK_V_DRIFT ||
+                new_y >= y + STICK_V_DRIFT)
+            {
+                x = new_x;
+                y = new_y;
+                Serial.printf("Analog stick position change!\n\tPosition: X=%d Y=%d\n\tAngle: X=%f Y=%f\n",
+                              x, y,
+                              (double)x / 4 - 128, (double)y / 4 - 128);
+            }
+        }
+
+        delay(100);
     }
 
     vTaskDelete(NULL);
@@ -110,6 +154,7 @@ void buttonPressConsumer(void *)
 void setup()
 {
     Serial.begin(115200);
+    xSemaphoreGive(i2cSem);
 
     while (!Serial)
     {
@@ -143,9 +188,18 @@ void setup()
     xTaskCreate(
         buttonPressConsumer,
         "ButtonPressConsumer",
-        1000,
+        10000,
         NULL,
         1,
+        NULL);
+
+    // Task for watching the analog stick
+    xTaskCreate(
+        analogStickTask,
+        "AnalogStickTask",
+        10000,
+        NULL,
+        2,
         NULL);
 
     attachInterrupt(IRQ_PIN, onButtonPress, FALLING);
@@ -153,6 +207,6 @@ void setup()
 
 void loop()
 {
-    // Do nothing. Everything we're doing here is in a Task
-    delay(10000);
+    // logMemory();
+    sleep(1);
 }
