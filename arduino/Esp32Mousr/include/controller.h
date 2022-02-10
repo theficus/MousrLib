@@ -12,22 +12,27 @@
 #include <Adafruit_seesaw.h>
 
 // Seesaw
-#define BUTTON_RIGHT 6
-#define BUTTON_DOWN 7
-#define BUTTON_LEFT 9
-#define BUTTON_UP 10
-#define BUTTON_SEL 14
-#define JOYSTICK_H 2
-#define JOYSTICK_V 3
+#define BUTTON_RIGHT 6 // A
+#define BUTTON_DOWN 7  // B
+#define BUTTON_LEFT 9  // X
+#define BUTTON_UP 10   // Y
+#define BUTTON_SEL 14  // SELECT
+#define JOYSTICK_H 3
+#define JOYSTICK_V 2
 
-enum class ButtonPress
+enum ButtonPressState
 {
-    None = 0,
-    A = 1,
-    B = 1 << 1,
-    X = 1 << 2,
-    Y = 1 << 3,
-    Select = 1 << 4
+    Up,
+    Down,
+};
+
+struct ButtonState
+{
+    ButtonPressState a;
+    ButtonPressState b;
+    ButtonPressState x;
+    ButtonPressState y;
+    ButtonPressState sel;
 };
 
 struct AnalogStickMovement
@@ -37,18 +42,20 @@ struct AnalogStickMovement
     bool isCentered;
 };
 
-typedef std::function<void(ButtonPress press)> controller_button_press_callback;
+typedef std::function<void(ButtonState press)> controller_button_callback;
 typedef std::function<void(AnalogStickMovement move)> controller_analog_stick_move_callback;
 
 class Controller
 {
 public:
-    Controller(uint8_t irqPin);
+    Controller(uint8_t irqPin, uint8_t addr = 0x49);
     ~Controller();
 
-    void begin(controller_button_press_callback buttonCallback, controller_analog_stick_move_callback stickCallback);
-    void end();
-    void calibrate();
+    bool begin(controller_button_callback buttonCallback, controller_analog_stick_move_callback stickCallback);
+    bool end();
+    bool calibrate(int16_t upCorrection = 0, int16_t downCorrection = 0,
+                   int16_t leftCorrection = 0, int16_t rightCorrection = 0,
+                   uint16_t minStickMovementH = 0, uint16_t minStickMovementV = 0);
 
 private:
     bool giveSemaphore();
@@ -56,13 +63,22 @@ private:
     void IRAM_ATTR onButtonPress();
     void buttonPressTask(void *);
     void analogStickTask(void *);
+    AnalogStickMovement getStickPosition(int16_t &x, int16_t &y);
 
     bool isFinalizing;
+    bool hasBegun;
     uint8_t irqPin;
+    uint8_t addr;
     Adafruit_seesaw ss;
-    int16_t x_ctr, y_ctr;
     SemaphoreHandle_t sem;
     QueueHandle_t buttonQueue;
+    controller_analog_stick_move_callback stickCallback;
+    controller_button_callback buttonCallback;
+
+    // Calibration values
+    int16_t x_ctr, y_ctr;
+    int16_t upCorrection, downCorrection, leftCorrection, rightCorrection;
+    uint16_t minStickMovementH, minStickMovementV;
 };
 
 /*

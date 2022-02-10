@@ -1,11 +1,13 @@
 #include <unity.h>
 #include "../MousrTests.h"
+#include "../UtilityTests.h"
 
 int main(int argc, char** argv)
 {
     UNITY_BEGIN();
 
-    runMousrTests();
+    //runMousrTests();
+    runUtilityTests();
 
     UNITY_END();
 

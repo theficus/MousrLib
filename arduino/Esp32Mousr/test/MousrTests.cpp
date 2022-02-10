@@ -117,7 +117,7 @@ void test_ParseMessage()
     // ROBOT_POSE message
     {
         std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
-        MousrData d(data);
+        MousrData d(data.c_str());
         TEST_ASSERT_EQUAL(MousrMessage::ROBOT_POSE, d.getMessageKind());
         TEST_ASSERT_EQUAL(20, d.getMessageLength());
 
@@ -131,7 +131,7 @@ void test_ParseMessage()
     {
         // BATTERY_VOLTAGE
         std::string data = "0x625c000000002015000000000000000000000000";
-        MousrData d = MousrData(data);
+        MousrData d = MousrData(data.c_str());
         TEST_ASSERT_EQUAL(MousrMessage::BATTERY_VOLTAGE, d.getMessageKind());
         TEST_ASSERT_EQUAL(20, d.getMessageLength());
 
@@ -165,19 +165,4 @@ void test_messageCtor()
     std::string actual = d.toString();
     s_printf("%s\n", actual.c_str());
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
-}
-
-void runMousrTests()
-{
-    /*
-    test_ParseMessage();
-    test_toHexString();
-    test_mousrAlloc();
-    test_getRawData();
-    test_convertToBytes();
-    test_createFromRaw();
-    test_connectionStatusMap();
-    */
-
-   test_messageCtor();
 }
