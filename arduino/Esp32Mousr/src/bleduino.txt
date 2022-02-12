@@ -1,0 +1,414 @@
+#include <Wire.h>
+#include "Mousr.h"
+//#include <SPI.h>
+
+// OLED
+#include <U8g2lib.h>
+
+U8G2_SSD1306_128X64_NONAME_2_HW_I2C u8g2(U8G2_R0);
+U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8_status = U8X8_SSD1306_128X64_NONAME_HW_I2C(U8X8_PIN_NONE); // Status mode
+// U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8_settings = U8X8_SSD1306_128X64_NONAME_HW_I2C(U8X8_PIN_NONE); // Settings mode
+
+#define U8LOG_WIDTH 16
+#define U8LOG_HEIGHT 8
+U8X8LOG u8x8log;
+uint8_t u8log_buffer[U8LOG_WIDTH * U8LOG_HEIGHT];
+
+// Glyphs
+#define ARROW_UP_FILL 0x25b2
+#define ARROW_UP_EMPTY 0x25b3
+#define ARROW_RIGHT_FILL 0x25b6
+#define ARROW_RIGHT_EMPTY 0x25b7
+#define ARROW_DOWN_FILL 0x25bc
+#define ARROW_DOWN_EMPTY 0x25bd
+#define ARROW_LEFT_FILL 0x25c0
+#define ARROW_LEFT_EMPTY 0x25c1
+
+// BLE
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEScan.h>
+#include <BLEAdvertisedDevice.h>
+
+// BLE characteristics
+BLEUUID serviceUuid("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
+BLEUUID uartWriteUuid("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+BLEUUID uartSubscribeUuid("6e400003-b5a3-f393-e0a9-e50e24dcca9e");
+
+BLEScan *bleScan;
+BLEClient *bleClient;
+BLEAdvertisedDevice device;
+BLERemoteCharacteristic *uartWriteCharacteristic;
+BLERemoteCharacteristic *uartSubscribeCharacteristic;
+bool isConnected = false;
+
+enum displayMode
+{
+    unknown,
+    mousr,
+    logging,
+    settings
+};
+
+displayMode mode = unknown;
+
+// Seesaw
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7735.h> // Hardware-specific library
+#include "Adafruit_seesaw.h"
+
+Adafruit_seesaw ss;
+#define BUTTON_RIGHT 6
+#define BUTTON_DOWN 7
+#define BUTTON_LEFT 9
+#define BUTTON_UP 10
+#define BUTTON_SEL 14
+#define JOYSTICK_H 2
+#define JOYSTICK_V 3
+
+// Calibration values
+#define JOYSTICK_H_CORRECTION 2
+#define JOYSTICK_V_CORRECTION 0
+
+uint32_t button_mask = (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) |
+                       (1 << BUTTON_LEFT) | (1 << BUTTON_UP) |
+                       (1 << BUTTON_SEL);
+
+#define JOY_IRQ_PIN 14 // ESP32
+
+// Other
+static SemaphoreHandle_t waitHandle = xSemaphoreCreateRecursiveMutex();
+
+static void semTake()
+{
+    logln("Waiting for semaphore...");
+    xSemaphoreTake(waitHandle, portMAX_DELAY);
+    logln("Semaphore get!");
+}
+
+static void semGive()
+{
+    logln("Releasing semaphore...");
+    xSemaphoreGive(waitHandle);
+}
+
+// Callback for discovering BLE devices
+class BleScanCallback : public BLEAdvertisedDeviceCallbacks
+{
+    void onResult(BLEAdvertisedDevice advertisedDevice)
+    {
+        logf("Discovered device: %s\n", advertisedDevice.toString().c_str());
+        if (advertisedDevice.getName() == "Mousr")
+        {
+            logf("Device ptr: %p\n", &advertisedDevice);
+            device = advertisedDevice;
+            logf("Stopping BLE scan");
+            // writeOled(advertisedDevice.getAddress().toString().c_str());
+            bleScan->stop();
+            bleScan->clearResults();
+            semGive();
+        }
+    }
+};
+
+class BleClientCallback : public BLEClientCallbacks
+{
+    void onConnect(BLEClient *client)
+    {
+        logf("Connected to client: %d\n", client->isConnected());
+    }
+
+    void onDisconnect(BLEClient *client)
+    {
+        logf("Disconnected from client: %d\n", client->isConnected());
+    }
+};
+
+void bleNotifyCallback(
+    BLERemoteCharacteristic *characteristic,
+    uint8_t *data,
+    size_t length,
+    bool isNotify)
+{
+    logf("Got notification from characteristic %s\n", characteristic->getUUID().toString().c_str());
+    logf("Length: %zu Data: ", length);
+    printData(data, length);
+}
+
+void setup()
+{
+    Serial.begin(115200);
+    semGive();
+    // setupOled();
+    setupOledLogView();
+    // writeOled("hello world");
+    setupSeeSaw();
+    startBleScan();
+    logf("Device: %p\n", device);
+    discoverDevice();
+    logln("Setting up...");
+    setupDevice();
+}
+
+void loop()
+{
+    delay(100);
+    // delay(10);
+    // readSeeSaw();
+}
+
+void die()
+{
+    logln("SYSTEM ERROR");
+    while (1)
+        ;
+}
+
+void reset()
+{
+    // TODO: Clean up and reset. Also restart scan?
+}
+
+void readSeeSaw()
+{
+    if (digitalRead(JOY_IRQ_PIN) == true)
+    {
+        // Serial.println("JOY_IRQ_PIN READ");
+        return;
+    }
+
+    // Transform from 0...1024 to -128...127
+    int x = (ss.analogRead(JOYSTICK_H) / 4 - 128) + JOYSTICK_H_CORRECTION;
+    int y = (ss.analogRead(JOYSTICK_V) / 4 - 128) + JOYSTICK_V_CORRECTION;
+
+    uint32_t buttons = ss.digitalReadBulk(button_mask);
+    logf("Analog: X: %d Y: %d\n", x, y);
+
+    logf("Button: A: %d B: %d Y: %d X: %d SEL: %d\n",
+         buttons & (1 << BUTTON_RIGHT),
+         buttons & (1 << BUTTON_DOWN),
+         buttons & (1 << BUTTON_LEFT),
+         buttons & (1 << BUTTON_UP),
+         buttons & (1 << BUTTON_SEL));
+
+    Serial.print("Button (mask):");
+    Serial.println(buttons, BIN);
+}
+
+bool setupSeeSaw()
+{
+    if (ss.begin(0x49) == false)
+    {
+        logf("Could not set up JoyWing!");
+        return false;
+    }
+
+    logln("seesaw started");
+    Serial.print("version: ");
+    Serial.println(ss.getVersion(), HEX);
+    ss.pinModeBulk(button_mask, INPUT_PULLUP);
+    ss.setGPIOInterrupts(button_mask, 1);
+    pinMode(JOY_IRQ_PIN, INPUT);
+    attachInterrupt(JOY_IRQ_PIN, onButtonPress, FALLING);
+    return true;
+}
+
+void onButtonPress()
+{
+    logln("press!");
+}
+
+void discoverDevice()
+{
+    logln("In discoverDevice()");
+    logf("Got device: Name: %s Address: %s RSSI: %d\n",
+         device.getName().c_str(),
+         device.getAddress().toString().c_str(),
+         device.getRSSI());
+    logln("Leaving discoverDevice()");
+}
+
+bool setupDevice()
+{
+    bool success = false;
+    logln("Connecting to device ...");
+    bleClient = BLEDevice::createClient();
+    bleClient->setClientCallbacks(new BleClientCallback());
+    bleClient->connect(&device);
+    logln("Device connected!");
+    logln("Getting characteristics ...");
+    BLERemoteService *remoteService = bleClient->getService(serviceUuid);
+    if (remoteService == nullptr)
+    {
+        logf("ERROR: Could not find service UUID: %s\n", serviceUuid.toString().c_str());
+        goto final;
+    }
+
+    // TX characteristic
+    uartWriteCharacteristic = remoteService->getCharacteristic(uartWriteUuid);
+    if (uartWriteCharacteristic == nullptr)
+    {
+        logf("ERROR: Could not find characteristic: %s\n", uartWriteUuid.toString().c_str());
+        goto final;
+    }
+
+    uartSubscribeCharacteristic = remoteService->getCharacteristic(uartSubscribeUuid);
+    if (uartSubscribeCharacteristic == nullptr)
+    {
+        logf("ERROR: Could not find characteristic: %s\n", uartSubscribeUuid.toString().c_str());
+        goto final;
+    }
+
+    if (uartSubscribeCharacteristic->canNotify() == true)
+    {
+        uartSubscribeCharacteristic->registerForNotify(bleNotifyCallback);
+    }
+    else
+    {
+        logf("ERROR: Could not subscribe to notifications from characteristic: %s\n", uartSubscribeCharacteristic->toString());
+        goto final;
+    }
+
+    success = true;
+
+final:
+    if (success == false &&
+        bleClient != nullptr)
+    {
+        logln("Disconnecting device because of a setup failure.");
+        bleClient->disconnect();
+    }
+
+    return success;
+}
+
+/*
+void log(const char* str) {
+    if (Serial.availableForWrite() == true) {
+        Serial.print(str);
+    }
+
+    if (mode == displayMode::log)
+    {
+        u8x8log.print(str);
+    }
+}
+*/
+
+void logln()
+{
+    logf("\n");
+}
+
+void logln(const char *str)
+{
+    Serial.println(str);
+
+    if (mode == displayMode::logging)
+    {
+        u8x8log.println(str);
+    }
+}
+
+void logf(const char *fmt, ...)
+{
+    char *str;
+    va_list args;
+    va_start(args, fmt);
+    vasprintf(&str, fmt, args);
+    va_end(args);
+
+    Serial.print(str);
+
+    if (mode == displayMode::logging)
+    {
+        u8x8log.print(str);
+    }
+}
+
+void startBleScan()
+{
+    logln("Setting up BLE for scan ...");
+    BLEDevice::init("");
+    bleScan = BLEDevice::getScan();
+    bleScan->setAdvertisedDeviceCallbacks(new BleScanCallback());
+    bleScan->setActiveScan(true);
+    bleScan->setInterval(100);
+    bleScan->setWindow(99);
+    bleScan->start(30, false);
+    semTake();
+    logln("startBleScan() end ...");
+}
+
+void setupOledLogView()
+{
+    u8x8_status.begin();
+
+    // Set a suitable font. This font will be used for U8x8log
+    u8x8_status.setFont(u8x8_font_chroma48medium8_r);
+
+    // Start U8x8log, connect to U8x8, set the dimension and assign the static memory
+    u8x8log.begin(u8x8_status, U8LOG_WIDTH, U8LOG_HEIGHT, u8log_buffer);
+
+    // Set the U8x8log redraw mode
+    u8x8log.setRedrawMode(0);
+    u8x8log.println("hello world");
+
+    // mode = displayMode::logging;
+}
+
+void setupOledMousrView()
+{
+    u8g2.begin();
+    writeOled("hello world");
+}
+
+void drawPosition()
+{
+    // u8g2.drawRBox(0, 0, 200, 100, 0);
+    u8g2.drawCircle(60, 30, 20);
+    u8g2.drawTriangle(20, 5, 27, 50, 5, 32);
+}
+
+void writeOled(const char *text)
+{
+    u8g2.firstPage();
+    do
+    {
+        u8g2.setFont(u8g2_font_ncenB14_tf);
+        u8g2.drawStr(0, 20, text);
+
+        u8g2.setFont(u8g2_font_unifont_t_symbols);
+
+        u8g2.drawGlyph(20, 40, ARROW_UP_FILL);
+        u8g2.drawGlyph(20, 60, ARROW_DOWN_FILL);
+        u8g2.drawGlyph(10, 50, ARROW_LEFT_FILL);
+        u8g2.drawGlyph(30, 50, ARROW_RIGHT_FILL);
+
+        drawPosition();
+    } while (u8g2.nextPage());
+}
+
+// Print the data as a hex string
+void printData(uint8_t *data, size_t length)
+{
+    MousrData *mousr = (MousrData *)data;
+    logf("Got message type: %2x\n", mousr->msg);
+
+    switch (mousr->msg)
+    {
+    case MousrMessageType::BATTERY_VOLTAGE:
+        logf("Battery voltage: %d%%\n", mousr->battery.voltage);
+        u8x8log.printf("BATT:%d%%\n", mousr->battery.voltage);
+        break;
+    }
+    /*
+    //log("0x");
+    for (int i = 0; i < length; i++)
+    {
+        logf("%02x", data[i]);
+    }
+
+    logln();
+    */
+}
