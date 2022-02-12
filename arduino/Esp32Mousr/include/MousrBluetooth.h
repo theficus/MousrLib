@@ -4,6 +4,7 @@
 #ifdef ARDUINO_ARCH_ESP32
 
 #include "Mousr.h"
+#include "utility.h"
 #include <BLEAdvertisedDevice.h>
 #include <BLEDevice.h>
 #include <BLEScan.h>
@@ -21,13 +22,24 @@ typedef std::function<void(BLERemoteCharacteristic *characteristic, MousrData &m
 
 class MousrBluetooth
 {
+private:
+    static MousrBluetooth *singleton;
+    MousrBluetooth();
+
     // Allow for updating connection status from callbacks
     friend class MousrBluetoothClientCallback;
     friend class MousrBluetoothScanCallback;
 
 public:
-    MousrBluetooth();
-    ~MousrBluetooth();
+    static MousrBluetooth* getInstance()
+    {   
+        if (singleton == NULL)
+        {
+            singleton = new MousrBluetooth;
+        }
+
+        return singleton;
+    }
 
     MousrConnectionStatus getConnectionStatus()
     {
@@ -46,6 +58,7 @@ public:
 
     void init();
     void connect();
+    void disconnect();
     bool discoverCapabilities();
     void startScan();
     void stopScan();
@@ -69,6 +82,7 @@ private:
     std::atomic_ulong packetsSent;
     std::atomic_ulong packetsReceived;
     MousrConnectionStatus connectionStatus = MousrConnectionStatus::Unknown;
+    SemaphoreHandle_t sem;
     BLEScan *bleScan;
     BLEClient *bleClient;
     BLEClientCallbacks *clientCallback;

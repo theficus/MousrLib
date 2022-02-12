@@ -1,7 +1,6 @@
 #include "MousrBluetooth.h"
 
-// Synchronize status changes
-static portMUX_TYPE bleStatusMutex = portMUX_INITIALIZER_UNLOCKED;
+MousrBluetooth *MousrBluetooth::singleton = 0;
 
 // Scan callback
 class MousrBluetoothScanCallback : public BLEAdvertisedDeviceCallbacks
@@ -29,7 +28,7 @@ public:
         {
             s_println("Found device");
             ble->device = advertisedDevice;
-            //advertisedDevice.getScan()->stop();
+            // advertisedDevice.getScan()->stop();
             ble->stopScan();
             ble->setConnectionStatus(MousrConnectionStatus::Discovered);
         }
@@ -68,24 +67,8 @@ MousrBluetooth::MousrBluetooth()
 {
     // Do not use the helper function for this since things may not be initialized yet.
     this->connectionStatus = MousrConnectionStatus::Disconnected;
-}
-
-MousrBluetooth::~MousrBluetooth()
-{
-    if (this->bleScan != nullptr)
-    {
-        this->bleScan->stop();
-        this->bleScan->clearResults();
-        delete this->bleScan;
-    }
-
-    if (this->bleClient != nullptr)
-    {
-        this->bleClient->disconnect();
-        delete this->bleClient;
-    }
-
-    this->setConnectionStatus(MousrConnectionStatus::Unknown);
+    this->sem = xSemaphoreCreateBinary();
+    semGive(this->sem);
 }
 
 void MousrBluetooth::init()
@@ -174,6 +157,24 @@ void MousrBluetooth::connect()
     this->bleClient->connect(&this->device);
 }
 
+void MousrBluetooth::disconnect()
+{
+    if (this->bleScan != nullptr)
+    {
+        this->bleScan->stop();
+        this->bleScan->clearResults();
+        delete this->bleScan;
+    }
+
+    if (this->bleClient != nullptr)
+    {
+        this->bleClient->disconnect();
+        delete this->bleClient;
+    }
+
+    this->setConnectionStatus(MousrConnectionStatus::Unknown);
+}
+
 void MousrBluetooth::sendMessage(MousrData &data)
 {
     // Serial.printf("Sending message to %s: %s", this->uartWriteCharacteristic->getUUID().toString().c_str(), data.toString().c_str());
@@ -213,7 +214,7 @@ void MousrBluetooth::setConnectionStatusChangeCallback(mousr_status_change_callb
 
 void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
 {
-    portENTER_CRITICAL(&bleStatusMutex);
+    semTake(this->sem);
     MousrConnectionStatus oldStatus = this->connectionStatus;
     if (oldStatus > MousrConnectionStatus::Max)
     {
@@ -222,7 +223,7 @@ void MousrBluetooth::setConnectionStatus(MousrConnectionStatus status)
     }
 
     this->connectionStatus = status;
-    portEXIT_CRITICAL(&bleStatusMutex);
+    semGive(this->sem);
 
     std::string oldStatusStr = getMousrConnectionStatusString(oldStatus);
     std::string newStatusStr = getMousrConnectionStatusString(status);

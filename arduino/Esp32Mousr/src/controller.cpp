@@ -1,4 +1,6 @@
-#include "Controller.h"
+#include "controller.h"
+
+Controller *Controller::singleton = 0;
 
 constexpr uint32_t s_button_mask =
     (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) |
@@ -14,63 +16,42 @@ constexpr uint32_t s_button_mask =
         return false;                                                                       \
     }
 
-#define semTake(c) c->takeSemaphore();
-#define semGive(c) c->giveSemaphore();
-
 ButtonState getPressedButtons(uint32_t mask)
 {
     ButtonState bs;
+    bs.r = (!(mask & 1 << BUTTON_RIGHT)) ? ButtonPressState::Down : ButtonPressState::Up;
+    bs.d = (!(mask & 1 << BUTTON_DOWN)) ? ButtonPressState::Down : ButtonPressState::Up;
+    bs.l = (!(mask & 1 << BUTTON_LEFT)) ? ButtonPressState::Down : ButtonPressState::Up;
+    bs.u = (!(mask & 1 << BUTTON_UP)) ? ButtonPressState::Down : ButtonPressState::Up;
+    bs.sel = (!(mask & 1 << BUTTON_SEL)) ? ButtonPressState::Down : ButtonPressState::Up;
+    bs.raw = mask;
 
-    if (!(mask & BUTTON_RIGHT))
-    {
-        bs.a = ButtonPressState::Down;
-    }
-
-    if (!(mask & BUTTON_LEFT))
-    {
-        bs.x = ButtonPressState::Down;
-    }
-
-    if (!(mask & BUTTON_DOWN))
-    {
-        bs.b = ButtonPressState::Down;
-    }
-
-    if (!(mask & BUTTON_UP))
-    {
-        bs.y = ButtonPressState::Down;
-    }
-
-    if (!(mask & BUTTON_SEL))
-    {
-        bs.sel = ButtonPressState::Up;
-    }
-
-    d_printf("PRESS: x=%d y=%d a=%d b=%d s=%d bin=" BYTE_TO_BINARY_PATTERN "\n",
-             (int)bs.x, (int)bs.y,
-             (int)bs.a, (int)bs.b,
+    d_printf("PRESS: u=%d d=%d l=%d r=%d s=%d bin=" BYTE_TO_BINARY_PATTERN "\n",
+             (int)bs.u,
+             (int)bs.d,
+             (int)bs.l,
+             (int)bs.r,
              (int)bs.sel,
-             BYTE_TO_BINARY(mask));
+             BYTE_TO_BINARY(bs.mask));
 
     return bs;
 }
 
-Controller::Controller(uint8_t irqPin, uint8_t addr)
+Controller::Controller()
 {
-    this->irqPin = irqPin;
-    this->addr = addr;
-    this->sem = xSemaphoreCreateBinary();
-    this->buttonQueue = xQueueCreate(10, sizeof(Controller));
-    this->giveSemaphore();
+    this->opSem = xSemaphoreCreateBinary();
+    this->startSem = xSemaphoreCreateBinary();
+    this->buttonQueue = xQueueCreate(10, sizeof(uint8_t));
+
+    semGive(this->opSem);
+    semGive(this->startSem);
+    semTake(this->startSem);
 }
 
-Controller::~Controller()
+bool Controller::begin(controller_button_callback buttonCallback, controller_analog_stick_move_callback stickCallback, uint8_t irqPin, uint8_t addr)
 {
-    detachInterrupt(this->irqPin);
-}
+    BaseType_t result;
 
-bool Controller::begin(controller_button_callback buttonCallback, controller_analog_stick_move_callback stickCallback)
-{
     if (buttonCallback == nullptr ||
         stickCallback == nullptr)
     {
@@ -78,19 +59,27 @@ bool Controller::begin(controller_button_callback buttonCallback, controller_ana
         return false;
     }
 
-    this->buttonCallback = buttonCallback;
-    this->stickCallback = stickCallback;
+    s_printf("has begun=%d\n", this->hasBegun);
+
+    if (this->hasBegun == true)
+    {
+        s_println(F("Controller is already set up. Cannot continue."));
+        goto finalize;
+    }
 
     if (ss.begin(addr) == false)
     {
         s_println(F("ERROR: Could not start Seesaw"));
-        return false;
+        goto finalize;
     }
 
+    this->irqPin = irqPin;
     this->ss.pinModeBulk(s_button_mask, INPUT_PULLUP);
     this->ss.setGPIOInterrupts(s_button_mask, 1);
-    this->hasBegun = true;
-    BaseType_t result = xTaskCreate(
+    this->buttonCallback = buttonCallback;
+    this->stickCallback = stickCallback;
+
+    result = xTaskCreate(
         Controller::buttonPressTask,
         "buttonPressTask",
         10000,
@@ -101,8 +90,7 @@ bool Controller::begin(controller_button_callback buttonCallback, controller_ana
     if (result != pdPASS)
     {
         s_printf("ERROR: Could not create button press task. Result: %d\n", result);
-        this->hasBegun = false;
-        return false;
+        goto finalize;
     }
 
     result = xTaskCreate(
@@ -110,28 +98,25 @@ bool Controller::begin(controller_button_callback buttonCallback, controller_ana
         "analogStickTask",
         10000,
         this,
-        1,
+        2,
         NULL);
 
     if (result != pdPASS)
     {
         s_printf("ERROR: Could not create analog stick task. Result: %d\n", result);
-        this->hasBegun = false;
-        return false;
+        goto finalize;
     }
 
     pinMode(this->irqPin, INPUT);
-    attachInterrupt(this->irqPin, this->isr, FALLING);
+    attachInterrupt(this->irqPin, Controller::onButtonPress, FALLING);
+    this->hasBegun = true;
 
-    return true;
+finalize:
+    semGive(this->startSem);
+    return this->hasBegun;
 }
 
-bool Controller::calibrate(uint16_t upCorrection,
-                           uint16_t downCorrection,
-                           uint16_t leftCorrection,
-                           uint16_t rightCorrection,
-                           uint16_t minStickMovementH,
-                           uint16_t minStickMovementV)
+bool Controller::calibrate(uint16_t upCorrection, uint16_t downCorrection, uint16_t leftCorrection, uint16_t rightCorrection, uint16_t minStickMovementH, uint16_t minStickMovementV)
 {
     checkIsBegun();
 
@@ -140,7 +125,7 @@ bool Controller::calibrate(uint16_t upCorrection,
     // Hold on to the semaphore for the entirety of the function to make sure
     // we aren't reading the stick while calibration is happening and messing up
     // positional calcluations
-    semTake(this);
+    semTake(this->opSem);
 
     this->upCorrection = upCorrection;
     this->downCorrection = -downCorrection;
@@ -149,7 +134,6 @@ bool Controller::calibrate(uint16_t upCorrection,
 
     this->minStickMovementH = minStickMovementH;
     this->minStickMovementV = minStickMovementV;
-
     this->x_ctr = ss.analogRead(JOYSTICK_H);
     this->y_ctr = ss.analogRead(JOYSTICK_V);
     s_printf("Calibrated analog stick. Center X=%d Y=%d. Correction values: L=%d R=%d U=%d D=%d\n",
@@ -160,46 +144,75 @@ bool Controller::calibrate(uint16_t upCorrection,
              this->upCorrection,
              this->downCorrection);
     this->hasRecalibrated = true;
-    semGive(this);
+    semGive(this->opSem);
     return true;
 }
 
 bool Controller::end()
 {
+    detachInterrupt(this->irqPin);
     this->hasBegun = false;
+    this->isFinalizing = false;
+    semTake(startSem);
     return true;
 }
 
 void IRAM_ATTR Controller::onButtonPress()
 {
-    xQueueSendFromISR(buttonQueue, this, NULL);
+    if (singleton == NULL)
+    {
+        return;
+    }
+
+    uint8_t v = 0;
+    xQueueSend(singleton->buttonQueue, &v, portMAX_DELAY);
 }
 
 void Controller::buttonPressTask(void *p)
 {
-    s_println("buttonPressTask() enter");
+    s_println(F("buttonPressTask() enter"));
     uint32_t lastValue = 0;
     Controller *c = static_cast<Controller *>(p);
-    while (c->hasBegun == true)
+
+    s_println(F("buttonPressTask() waiting for begin..."));
+    semWait(c->startSem);
+    s_println(F("starting button loop"));
+    while (c->hasBegun == true && c->isFinalizing == false)
     {
-        if (xQueueReceive(c->buttonQueue, &c, 10000000) == false)
+        // Don't care about the queue value, just that we get something queued
+        void *x;
+        if (xQueueReceive(c->buttonQueue, &x, 10000000) == false)
         {
             continue;
         }
 
-        semTake(c);
+        semTake(c->opSem);
         uint32_t v = c->ss.digitalReadBulk(s_button_mask);
-        semGive(c);
+        ButtonState prev{};
+        semGive(c->opSem);
 
         // Simple debounce. If the value is identical to before we will just discard it.
         if (lastValue != v)
         {
             lastValue = v;
-            c->buttonCallback(getPressedButtons(v));
+            ButtonStateChange bc;
+            bc.oldState.u = prev.u;
+            bc.oldState.d = prev.d;
+            bc.oldState.l = prev.l;
+            bc.oldState.r = prev.r;
+            bc.oldState.sel = prev.sel;
+
+            bc.newState = getPressedButtons(v);
+            prev.u = bc.newState.u;
+            prev.d = bc.newState.d;
+            prev.l = bc.newState.l;
+            prev.r = bc.newState.r;
+            prev.sel = bc.newState.sel;
+            c->buttonCallback(bc);
         }
     }
 
-    s_println("buttonPressTask() exit");
+    s_println(F("buttonPressTask() exit"));
     vTaskDelete(NULL);
 }
 
@@ -209,15 +222,20 @@ void Controller::stickMoveTask(void *p)
     int16_t y = -1;
     s_println(F("stickMoveTask() begin"));
     Controller *c = static_cast<Controller *>(p);
-    while (c->hasBegun == true)
+
+    s_println(F("stickMoveTask() waiting to begin..."));
+    semWait(c->startSem);
+    s_println(F("starting stick move loop"));
+    while (c->hasBegun == true &&
+           c->isFinalizing == false)
     {
         bool hasRecalibrated;
-        semTake(c);
+        semTake(c->opSem);
         int16_t new_x = c->ss.analogRead(JOYSTICK_H);
         int16_t new_y = c->ss.analogRead(JOYSTICK_V);
         hasRecalibrated = c->hasRecalibrated;
         c->hasRecalibrated = false;
-        semGive(c);
+        semGive(c->opSem);
 
         // Ignore minute changes to the analog stick movement as every reading will
         // be slightly different
@@ -238,16 +256,6 @@ void Controller::stickMoveTask(void *p)
 
     s_println(F("stickMoveTask() end"));
     vTaskDelete(NULL);
-}
-
-bool Controller::giveSemaphore()
-{
-    return xSemaphoreGive(this->sem);
-}
-
-bool Controller::takeSemaphore()
-{
-    return xSemaphoreTake(this->sem, portMAX_DELAY);
 }
 
 AnalogStickMovement Controller::getStickPosition(int16_t &x, int16_t &y)

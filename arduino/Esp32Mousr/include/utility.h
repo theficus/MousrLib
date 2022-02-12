@@ -42,6 +42,10 @@
 #ifdef ARDUINO_ARCH_ESP32
 #include "common.h"
 
+#define semTake(sem) xSemaphoreTake(sem, portMAX_DELAY);
+#define semGive(sem) xSemaphoreGive(sem);
+#define semWait(sem) semTake(sem); semGive(sem);
+
 static void logMemory()
 {
     uint32_t total = ESP.getHeapSize();

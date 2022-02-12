@@ -3,6 +3,7 @@
 #define MOUSR_CONTROLLER_H
 
 #include "common.h"
+#include "utility.h"
 #include <functional>
 
 #ifdef ARDUINO
@@ -30,11 +31,18 @@ enum ButtonPressState
 
 struct ButtonState
 {
-    ButtonPressState a;
-    ButtonPressState b;
-    ButtonPressState x;
-    ButtonPressState y;
+    ButtonPressState u;
+    ButtonPressState d;
+    ButtonPressState l;
+    ButtonPressState r;
     ButtonPressState sel;
+    uint32_t raw;
+};
+
+struct ButtonStateChange
+{
+    ButtonState newState;
+    ButtonState oldState;
 };
 
 struct AnalogStickMovement
@@ -44,48 +52,63 @@ struct AnalogStickMovement
     bool isCentered;
 };
 
-typedef std::function<void(ButtonState press)> controller_button_callback;
+typedef std::function<void(ButtonStateChange press)> controller_button_callback;
 typedef std::function<void(AnalogStickMovement move)> controller_analog_stick_move_callback;
+
 class Controller
 {
-public:
-    Controller(uint8_t irqPin, uint8_t addr = 0x49);
-    ~Controller();
+private:
+    static Controller *singleton;
+    Controller();
 
-    bool begin(controller_button_callback buttonCallback, controller_analog_stick_move_callback stickCallback);
+public:
+    static Controller *getInstance()
+    {
+        if (singleton == NULL)
+        {
+            singleton = new Controller;
+        }
+
+        return singleton;
+    };
+
+    bool begin(controller_button_callback buttonCallback,
+               controller_analog_stick_move_callback stickCallback,
+               uint8_t irqPin,
+               uint8_t addr = 0x49);
+
     bool end();
     bool calibrate(uint16_t upCorrection = 5, uint16_t downCorrection = 5,
                    uint16_t leftCorrection = 5, uint16_t rightCorrection = 5,
                    uint16_t minStickMovementH = MIN_STICK_MOVEMENT, uint16_t minStickMovementV = MIN_STICK_MOVEMENT);
 
 private:
-    bool giveSemaphore();
-    bool takeSemaphore();
-    void IRAM_ATTR onButtonPress();
     static void buttonPressTask(void *);
     static void stickMoveTask(void *);
+    static void IRAM_ATTR onButtonPress();
+
     AnalogStickMovement getStickPosition(int16_t &x, int16_t &y);
-
-    bool isFinalizing;
-    bool hasRecalibrated;
-    bool hasBegun;
-
-    uint8_t irqPin;
-    uint8_t addr;
-
     Adafruit_seesaw ss;
-    SemaphoreHandle_t sem;
+    SemaphoreHandle_t opSem;
+    SemaphoreHandle_t startSem;
     QueueHandle_t buttonQueue;
-
-    // Callbacks
     controller_analog_stick_move_callback stickCallback;
     controller_button_callback buttonCallback;
-    //std::function<void()> isr = [&]{ onButtonPress(); };
 
-    // Calibration values
-    int16_t x_ctr, y_ctr;
-    int16_t upCorrection, downCorrection, leftCorrection, rightCorrection;
-    uint16_t minStickMovementH, minStickMovementV;
+    bool isFinalizing = false;
+    bool hasRecalibrated = false;
+    bool hasBegun = false;
+
+    uint8_t irqPin = 0;
+    uint8_t addr = 0;
+    int16_t x_ctr = 0;
+    int16_t y_ctr = 0;
+    int16_t upCorrection = 0;
+    int16_t downCorrection = 0;
+    int16_t leftCorrection = 0;
+    int16_t rightCorrection = 0;
+    int16_t minStickMovementH = 0;
+    int16_t minStickMovementV = 0;
 };
 
 #endif // ARDUINO

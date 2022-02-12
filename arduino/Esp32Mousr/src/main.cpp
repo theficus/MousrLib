@@ -15,43 +15,49 @@ void setup()
 
 #ifdef _DO_BLE
     // Set up Bluetooth
-    mb.init();
-    mb.setConnectionStatusChangeCallback(onBluetoothStatusChange);
-    mb.setMousrNotificationCallback(onBluetoothNotify);
-    mb.startScan();
+    MousrBluetooth *mb = MousrBluetooth::getInstance();
+    mb->init();
+    mb->setConnectionStatusChangeCallback(onBluetoothStatusChange);
+    mb->setMousrNotificationCallback(onBluetoothNotify);
+    mb->startScan();
     waitForStatus(MousrConnectionStatus::Discovered);
-    mb.connect();
+    mb->connect();
     waitForStatus(MousrConnectionStatus::Connected);
-    if (mb.discoverCapabilities() == false)
+    if (mb->discoverCapabilities() == false)
     {
         die();
     }
 #endif // _DO_BLE
 
 #ifdef _DO_SS
-    c.begin(onButtonPressStateChange, onAnalogStickMovement);
-    c.calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
+    Controller *c = Controller::getInstance();
+    c->begin(onButtonPressStateChange, onAnalogStickMovement, JOYSTICK_INT_PIN);
+    c->calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
 #endif // _DO_SS
 }
 
 void loop()
 {
     // onButtonPress();
-    ;
     logMemory();
-    sleep(1);
+    sleep(5);
 }
 
 #ifdef _DO_SS
 #define getButtonState(s) s == ButtonPressState::Up ? "UP" : "DOWN"
-void onButtonPressStateChange(ButtonState press)
+void onButtonPressStateChange(ButtonStateChange press)
 {
-    s_printf("[main] Buttons pressed! x=%s y=%s a=%s b=%s sel=%s\n",
-             getButtonState(press.x),
-             getButtonState(press.y),
-             getButtonState(press.a),
-             getButtonState(press.b),
-             getButtonState(press.sel));
+    s_printf("[main] Buttons pressed! u=%s->%s d=%s->%s l=%s->%s r=%s->%s sel=%s->%s\n",
+             getButtonState(press.oldState.u),
+             getButtonState(press.newState.u),
+             getButtonState(press.oldState.d),
+             getButtonState(press.newState.d), 
+             getButtonState(press.oldState.l),
+             getButtonState(press.newState.l),
+             getButtonState(press.oldState.r),
+             getButtonState(press.newState.r),
+             getButtonState(press.oldState.sel),
+             getButtonState(press.newState.sel));
 }
 
 void onAnalogStickMovement(AnalogStickMovement move)
@@ -70,7 +76,8 @@ void waitForStatus(MousrConnectionStatus status)
     std::string expectedStatus = getMousrConnectionStatusString(status);
     s_printf("Waiting for status: %s\n", expectedStatus.c_str());
     MousrConnectionStatus s;
-    while ((s = mb.getConnectionStatus()) != status)
+    MousrBluetooth *mb = MousrBluetooth::getInstance();
+    while ((s = mb->getConnectionStatus()) != status)
     {
         std::string actualStatus = getMousrConnectionStatusString(s);
         s_printf("Current status: %s ...\n", actualStatus.c_str());
