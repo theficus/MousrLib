@@ -9,6 +9,25 @@ void die()
         ;
 }
 
+int counter = 0;
+void updateOledTask(AnalogStickMovement &stick)
+{
+    i2cSemTake();
+    s_println("Updating OLED...");
+    //2*pi * (x / 360).
+    
+    float angle = stick.angle;
+    s_printf("stick angle: %f -> %f\n", stick.angle, angle);
+    u8g2.clearBuffer();
+    drawBattery(u8g2, 100, 2, 24, 10, 5, counter % 6);
+    drawPos(u8g2, 30, 30, 20, angle, stick.isCentered);
+    // drawAngle(u8g2, 40, 40, 20, 8, counter % 45);
+    drawDetails(u8g2, 55, 40, stick.isCentered ? 0 : angle, (float)(counter % 90), stick.isCentered ? 0 : stick.velocity);
+    u8g2.sendBuffer();
+    i2cSemGive();
+    counter++;
+}
+
 void setup()
 {
     Serial.begin(115200);
@@ -31,34 +50,23 @@ void setup()
     }
 #endif // _DO_BLE
 
+#ifdef _DO_OLED
+    u8g2.begin();
+    u8g2.clear();
+    // xTaskCreate(updateOledTask, "oledTask", 10000, NULL, 10, NULL);
+#endif // _DO_OLED
+
 #ifdef _DO_SS
     Controller *c = Controller::getInstance();
     c->begin(onButtonPressStateChange, onAnalogStickMovement, JOYSTICK_INT_PIN);
     c->calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
 #endif // _DO_SS
 
-#ifdef _DO_OLED
-    u8g2.begin();
-    u8g2.clear();
-#endif // _DO_OLED
 }
 
 void loop()
 {
-    int counter = 0;
-    while (true)
-    {
-        i2cSemTake();
-        u8g2.clearBuffer();
-        drawBattery(u8g2, 100, 2, 24, 10, 5, counter % 6);
-        drawPos(u8g2, 30, 30, 20, counter % 360);
-        //drawAngle(u8g2, 40, 40, 20, 8, counter % 45);
-        drawDetails(u8g2, 55, 40, counter % 360, (float)(counter % 90), (float)(counter % 100));
-        u8g2.sendBuffer();
-        i2cSemGive();
-        delay(100);
-        counter+=10;
-    }
+    ;
 }
 
 #ifdef _DO_SS
@@ -84,6 +92,9 @@ void onAnalogStickMovement(AnalogStickMovement move)
              move.isCentered ? "TRUE" : "FALSE",
              move.angle,
              move.velocity);
+#ifdef _DO_OLED
+    updateOledTask(move);
+#endif
 }
 #endif // _DO_SS
 

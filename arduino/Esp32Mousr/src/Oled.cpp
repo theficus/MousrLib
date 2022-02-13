@@ -9,10 +9,20 @@ void drawPosition()
 }
 */
 
-void drawPos(U8G2 u8g2, int x, int y, int rad, int deg)
+void drawPos(U8G2 u8g2, int x, int y, int rad, int deg, bool ctr)
 {
-    float xx = (rad * cos(deg * PI / 180.0)) + x;
-    float yy = (rad * sin(deg * PI / 180.0)) + y;
+    float xx, yy;
+    if (ctr == false)
+    {
+        xx = (rad * cos(deg * PI / 180.0)) + x;
+        yy = (rad * sin(deg * PI / 180.0)) + y;
+    }
+    else
+    {
+        xx = x;
+        yy = y;
+    }
+
     d_printf("deg:%d x:%d y:%d xx:%f yy:%f rad:%f\n", deg, x, y, xx, yy, rad);
     u8g2.drawCircle(x, y, rad);
     u8g2.drawDisc(xx, yy, 4);

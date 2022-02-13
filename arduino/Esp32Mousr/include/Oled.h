@@ -25,8 +25,9 @@
 static U8G2 u8g2 = U8G2_SSD1306_128X64_NONAME_F_HW_I2C(U8G2_R0); // Graphical mode
 
 void drawBattery(U8G2 u8g2, int x, int y, int w, int h, int segments, int lvl);
-void drawPos(U8G2 u8g2, int x, int y, int rad, int deg);
+void drawPos(U8G2 u8g2, int x, int y, int rad, int deg, bool ctr = false);
 void drawDetails(U8G2 u8g2, int x, int y, float angle, float tilt, float speed);
+void drawPosPtr(U8G2 u8g2, int x, int y);
 
 enum class OledView
 {

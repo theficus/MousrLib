@@ -3,6 +3,7 @@
 #define MOUSR_UTILITY_H
 
 #include <cstdint>
+#include "logging.h"
 
 #define clearmem(v, sz) memset(v, 0, sz);
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c"
@@ -41,59 +42,52 @@
         (byte & 0x01 ? '1' : '0')
 
 #ifdef ARDUINO_ARCH_ESP32
-#include "logging.h"
 
-#define semTake(sem) xSemaphoreTake(sem, portMAX_DELAY);
-#define semGive(sem) xSemaphoreGive(sem);
-#define semWait(sem) \
-    semTake(sem);    \
-    semGive(sem);
+// Implementation of shortcut for normal semaphore operations
+#define __semTakeWithTimeout(__sem, __timeout) xSemaphoreTake(__sem, __timeout);
+#define __semTake(__sem) __semTakeWithTimeout(__sem, portMAX_DELAY);
+#define __semGive(__sem) xSemaphoreGive(__sem);
 
-static SemaphoreHandle_t global_i2c_sem;
-static StaticSemaphore_t staticSemBuffer;
-#define i2cSemTake() semTake(global_i2c_sem);
-#define i2cSemGive() semGive(global_i2c_sem);
+void i2cSemInit();
+void logMemory();
+bool __i2cSemTake(TickType_t timeout = portMAX_DELAY);
+bool __i2cSemGive();
 
-static void i2cSemInit()
-{
-    global_i2c_sem = xSemaphoreCreateBinaryStatic(&staticSemBuffer);
-    i2cSemGive();
-}
+#ifdef DEBUG_SEM_OP
+#define i2cSemTake() \
+    s_printf("[%s] %s: Taking global i2c semaphore...\n", __TIME__, __FUNCTION__); \
+    __i2cSemTake();
+#define i2cSemGive() \
+    s_printf("[%s] %s: Giving global i2c semaphore...\n", __TIME__, __FUNCTION__); \
+    __i2cSemGive();
 
-static void logMemory()
-{
-    uint32_t total = ESP.getHeapSize();
-    uint32_t used = ESP.getFreeHeap();
-    uint32_t avail = total - used;
-    s_printf("Heap usage: %u/%u (%f%%)\n", avail, total, (avail / total) * 100.0);
-}
+#define semTakeWithTimeout(__sem, __timeout) \
+    s_printf("[%s] %s: Taking semaphore %p timeout %d\n", __TIME__, __FUNCTION__, &__sem, __timeout); \
+    bool __take_result = __semTakeWithTimeout(__sem, __timeout); \
+    s_printf("[%s] %s: Take semaphore %p result: %d\n", __TIME__, __FUNCTION__, &__sem, __take_result);
+#define semTake(__sem) semTakeWithTimeout(__sem, portMAX_DELAY);
+#define semGive(__sem) \
+    s_printf("[%s] %s: Giving semaphore %p", __TIME__, __FUNCTION__, &__sem); \
+    bool __give_result = __semGive(__sem); \
+    s_printf("[%s] %s: Give semaphore %p result: %d\n", __TIME__, __FUNCTION__, &__sem, __give_result);
+#else
+#define semTakeWithTimeout(__sem, __timeout) __semTakeWithTimeout(__sem, __timeout);
+#define semTake(__sem) __semTake(__sem);
+#define semGive(__sem) __semGive(__sem);
+#define i2cSemGive() __i2cSemGive();
+#define i2cSemTake() __i2cSemTake();
+#define i2cSemTakeWithTimeout(timeout) __i2cSemTake(timeout);
+#endif
 
-/*
-static void semTake(SemaphoreHandle_t waitHandle)
-{
-    if (waitHandle == nullptr)
-    {
-        return;
-    }
+#define semWaitWithTimeout(__sem, __timeout) \
+    semTakeWithTimeout(__sem, __timeout); \
+    semGive(__sem);
 
-    Serial.println("Waiting for semaphore...");
-    xSemaphoreTake(waitHandle, portMAX_DELAY);
-    Serial.println("Semaphore get!");
-}
-
-static void semGive(SemaphoreHandle_t waitHandle)
-{
-    if (waitHandle == nullptr)
-    {
-        return;
-    }
-    Serial.println("Releasing semaphore...");
-    xSemaphoreGive(waitHandle);
-
-}
-*/
+#define semWait(__sem) \
+    semTake(__sem);    \
+    semGive(__sem);
 
 #else // ARDUINO_ARCH_ESP32
-static void logMemory() {}
+void logMemory();
 #endif
 #endif // MOUSR_UTILITY_H
