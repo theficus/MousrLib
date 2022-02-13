@@ -1,5 +1,13 @@
 #include "controller.h"
 
+#ifndef STICK_ENABLED
+#define STICK_ENABLED
+#endif // STICK_ENABLED
+
+#ifndef BUTTONS_ENABLED
+#define BUTTONS_ENABLED
+#endif // BUTTONS_ENABLED
+
 Controller *Controller::singleton = 0;
 
 constexpr uint32_t s_button_mask =
@@ -39,11 +47,8 @@ ButtonState getPressedButtons(uint32_t mask)
 
 Controller::Controller()
 {
-    this->opSem = xSemaphoreCreateBinary();
     this->startSem = xSemaphoreCreateBinary();
     this->buttonQueue = xQueueCreate(10, sizeof(uint8_t));
-
-    semGive(this->opSem);
     semGive(this->startSem);
     semTake(this->startSem);
 }
@@ -79,6 +84,24 @@ bool Controller::begin(controller_button_callback buttonCallback, controller_ana
     this->buttonCallback = buttonCallback;
     this->stickCallback = stickCallback;
 
+#ifdef STICK_ENABLED
+    result = xTaskCreate(
+        Controller::stickMoveTask,
+        "analogStickTask",
+        10000,
+        this,
+        2,
+        NULL);
+
+    if (result != pdPASS)
+    {
+        s_printf("ERROR: Could not create analog stick task. Result: %d\n", result);
+        goto finalize;
+    }
+#endif // STICK_ENABLED
+
+
+#ifdef BUTTONS_ENABLED
     result = xTaskCreate(
         Controller::buttonPressTask,
         "buttonPressTask",
@@ -93,22 +116,11 @@ bool Controller::begin(controller_button_callback buttonCallback, controller_ana
         goto finalize;
     }
 
-    result = xTaskCreate(
-        Controller::stickMoveTask,
-        "analogStickTask",
-        10000,
-        this,
-        2,
-        NULL);
-
-    if (result != pdPASS)
-    {
-        s_printf("ERROR: Could not create analog stick task. Result: %d\n", result);
-        goto finalize;
-    }
-
     pinMode(this->irqPin, INPUT);
     attachInterrupt(this->irqPin, Controller::onButtonPress, FALLING);
+
+#endif // BUTTONS_ENABLED
+
     this->hasBegun = true;
 
 finalize:
@@ -125,7 +137,7 @@ bool Controller::calibrate(uint16_t upCorrection, uint16_t downCorrection, uint1
     // Hold on to the semaphore for the entirety of the function to make sure
     // we aren't reading the stick while calibration is happening and messing up
     // positional calcluations
-    semTake(this->opSem);
+    i2cSemTake();
 
     this->upCorrection = upCorrection;
     this->downCorrection = -downCorrection;
@@ -144,7 +156,7 @@ bool Controller::calibrate(uint16_t upCorrection, uint16_t downCorrection, uint1
              this->upCorrection,
              this->downCorrection);
     this->hasRecalibrated = true;
-    semGive(this->opSem);
+    i2cSemGive();
     return true;
 }
 
@@ -186,10 +198,10 @@ void Controller::buttonPressTask(void *p)
             continue;
         }
 
-        semTake(c->opSem);
+        i2cSemTake();
         uint32_t v = c->ss.digitalReadBulk(s_button_mask);
         ButtonState prev{};
-        semGive(c->opSem);
+        i2cSemGive();
 
         // Simple debounce. If the value is identical to before we will just discard it.
         if (lastValue != v)
@@ -230,12 +242,12 @@ void Controller::stickMoveTask(void *p)
            c->isFinalizing == false)
     {
         bool hasRecalibrated;
-        semTake(c->opSem);
+        i2cSemTake();
         int16_t new_x = c->ss.analogRead(JOYSTICK_H);
         int16_t new_y = c->ss.analogRead(JOYSTICK_V);
         hasRecalibrated = c->hasRecalibrated;
         c->hasRecalibrated = false;
-        semGive(c->opSem);
+        i2cSemGive();
 
         // Ignore minute changes to the analog stick movement as every reading will
         // be slightly different

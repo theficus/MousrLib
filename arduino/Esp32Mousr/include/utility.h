@@ -4,9 +4,10 @@
 
 #include <cstdint>
 
+#define clearmem(v, sz) memset(v, 0, sz);
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c"
 #define BYTE_TO_BINARY(byte)             \
-        (byte & 0x80000000 ? '1' : '0'), \
+    (byte & 0x80000000 ? '1' : '0'),     \
         (byte & 0x40000000 ? '1' : '0'), \
         (byte & 0x20000000 ? '1' : '0'), \
         (byte & 0x10000000 ? '1' : '0'), \
@@ -40,11 +41,24 @@
         (byte & 0x01 ? '1' : '0')
 
 #ifdef ARDUINO_ARCH_ESP32
-#include "common.h"
+#include "logging.h"
 
 #define semTake(sem) xSemaphoreTake(sem, portMAX_DELAY);
 #define semGive(sem) xSemaphoreGive(sem);
-#define semWait(sem) semTake(sem); semGive(sem);
+#define semWait(sem) \
+    semTake(sem);    \
+    semGive(sem);
+
+static SemaphoreHandle_t global_i2c_sem;
+static StaticSemaphore_t staticSemBuffer;
+#define i2cSemTake() semTake(global_i2c_sem);
+#define i2cSemGive() semGive(global_i2c_sem);
+
+static void i2cSemInit()
+{
+    global_i2c_sem = xSemaphoreCreateBinaryStatic(&staticSemBuffer);
+    i2cSemGive();
+}
 
 static void logMemory()
 {

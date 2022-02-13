@@ -2,7 +2,8 @@
 #ifndef MOUSR_MAIN_H
 #define MOUSR_MAIN_H
 
-#include "common.h"
+#include "logging.h"
+#include "utility.h"
 
 #ifdef ARDUINO
 #ifdef ARDUINO_ARCH_ESP32

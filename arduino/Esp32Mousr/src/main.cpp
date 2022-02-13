@@ -13,6 +13,8 @@ void setup()
 {
     Serial.begin(115200);
 
+    i2cSemInit();
+
 #ifdef _DO_BLE
     // Set up Bluetooth
     MousrBluetooth *mb = MousrBluetooth::getInstance();
@@ -34,13 +36,29 @@ void setup()
     c->begin(onButtonPressStateChange, onAnalogStickMovement, JOYSTICK_INT_PIN);
     c->calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
 #endif // _DO_SS
+
+#ifdef _DO_OLED
+    u8g2.begin();
+    u8g2.clear();
+#endif // _DO_OLED
 }
 
 void loop()
 {
-    // onButtonPress();
-    logMemory();
-    sleep(5);
+    int counter = 0;
+    while (true)
+    {
+        i2cSemTake();
+        u8g2.clearBuffer();
+        drawBattery(u8g2, 100, 2, 24, 10, 5, counter % 6);
+        drawPos(u8g2, 30, 30, 20, counter % 360);
+        //drawAngle(u8g2, 40, 40, 20, 8, counter % 45);
+        drawDetails(u8g2, 55, 40, counter % 360, (float)(counter % 90), (float)(counter % 100));
+        u8g2.sendBuffer();
+        i2cSemGive();
+        delay(100);
+        counter+=10;
+    }
 }
 
 #ifdef _DO_SS
@@ -51,7 +69,7 @@ void onButtonPressStateChange(ButtonStateChange press)
              getButtonState(press.oldState.u),
              getButtonState(press.newState.u),
              getButtonState(press.oldState.d),
-             getButtonState(press.newState.d), 
+             getButtonState(press.newState.d),
              getButtonState(press.oldState.l),
              getButtonState(press.newState.l),
              getButtonState(press.oldState.r),
@@ -108,5 +126,9 @@ static void onBluetoothNotify(BLERemoteCharacteristic *characteristic, MousrData
 }
 
 #endif // _DO_BLE
+
+#ifdef _DO_OLED
+
+#endif // _DO_OLED
 
 #endif // ARDUINO

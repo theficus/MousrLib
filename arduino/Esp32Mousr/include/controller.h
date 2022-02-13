@@ -2,7 +2,7 @@
 #ifndef MOUSR_CONTROLLER_H
 #define MOUSR_CONTROLLER_H
 
-#include "common.h"
+#include "logging.h"
 #include "utility.h"
 #include <functional>
 
@@ -89,7 +89,6 @@ private:
 
     AnalogStickMovement getStickPosition(int16_t &x, int16_t &y);
     Adafruit_seesaw ss;
-    SemaphoreHandle_t opSem;
     SemaphoreHandle_t startSem;
     QueueHandle_t buttonQueue;
     controller_analog_stick_move_callback stickCallback;
