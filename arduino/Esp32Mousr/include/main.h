@@ -2,11 +2,13 @@
 #ifndef MOUSR_MAIN_H
 #define MOUSR_MAIN_H
 
-#include "common.h"
+#include "logging.h"
+#include "utility.h"
 
 #ifdef ARDUINO
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp32-hal-log.h"
+#include "Wire.h"
 #endif // ARDUINO_ARCH_ESP32
 
 #ifdef _DO_BLE
@@ -31,8 +33,11 @@ static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData
 #define DRIFT_L 55
 #define DRIFT_R 50
 
-void onButtonPressStateChange(ButtonStateChange press);
-void onAnalogStickMovement(AnalogStickMovement move);
+void onButtonPressChangeTask(void*);
+void onAnalogStickChangeTask(void*);
+
+//void onButtonPressStateChange(ButtonStateChange press);
+//void onAnalogStickMovement(AnalogStickMovement move);
 
 #endif // _DO_SS
 

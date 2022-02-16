@@ -3,10 +3,12 @@
 #define MOUSR_UTILITY_H
 
 #include <cstdint>
+#include "logging.h"
 
+#define clearmem(v, sz) memset(v, 0, sz);
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c"
 #define BYTE_TO_BINARY(byte)             \
-        (byte & 0x80000000 ? '1' : '0'), \
+    (byte & 0x80000000 ? '1' : '0'),     \
         (byte & 0x40000000 ? '1' : '0'), \
         (byte & 0x20000000 ? '1' : '0'), \
         (byte & 0x10000000 ? '1' : '0'), \
@@ -40,46 +42,41 @@
         (byte & 0x01 ? '1' : '0')
 
 #ifdef ARDUINO_ARCH_ESP32
-#include "common.h"
 
-#define semTake(sem) xSemaphoreTake(sem, portMAX_DELAY);
-#define semGive(sem) xSemaphoreGive(sem);
-#define semWait(sem) semTake(sem); semGive(sem);
+bool __i2cSemTake(TickType_t timeout);
+bool __i2cSemGive();
+bool i2cSemInit();
+void logMemory();
 
-static void logMemory()
-{
-    uint32_t total = ESP.getHeapSize();
-    uint32_t used = ESP.getFreeHeap();
-    uint32_t avail = total - used;
-    s_printf("Heap usage: %u/%u (%f%%)\n", avail, total, (avail / total) * 100.0);
-}
+// Implementation of shortcut for normal semaphore operations
+#define semTakeWithTimeout(__sem, __timeout) xSemaphoreTake(__sem, __timeout)
+#define semTake(__sem) semTakeWithTimeout(__sem, portMAX_DELAY)
+#define semGive(__sem) xSemaphoreGive(__sem)
+#define semWait(__sem) \
+    semTake(__sem);    \
+    semGive(__sem);
 
-/*
-static void semTake(SemaphoreHandle_t waitHandle)
-{
-    if (waitHandle == nullptr)
-    {
-        return;
+#define semCritSec(__sem, __func) \
+    semTake(__sem);               \
+    func;                         \
+    semGive(__sem);
+
+#define check(__func, __expr)                                     \
+    auto __res = __func;                                          \
+    if (__res != __expr)                                          \
+    {                                                             \
+        s_println("failed check: " #__func " expected " #__expr); \
+        return false;                                             \
     }
 
-    Serial.println("Waiting for semaphore...");
-    xSemaphoreTake(waitHandle, portMAX_DELAY);
-    Serial.println("Semaphore get!");
-}
+#define checkTrue(__func) check(__func, true);
 
-static void semGive(SemaphoreHandle_t waitHandle)
-{
-    if (waitHandle == nullptr)
-    {
-        return;
-    }
-    Serial.println("Releasing semaphore...");
-    xSemaphoreGive(waitHandle);
-
-}
-*/
+#define i2cSemCritSec(__func)    \
+    __i2cSemTake(portMAX_DELAY); \
+    __func;                      \
+    __i2cSemGive();
 
 #else // ARDUINO_ARCH_ESP32
-static void logMemory() {}
+void logMemory();
 #endif
 #endif // MOUSR_UTILITY_H

@@ -3,7 +3,7 @@
 #ifndef MOUSR_FAKES_H
 #define MOUSR_FAKES_H
 
-#include "common.h"
+#include "logging.h"
 
 #ifndef ARDUINO
 

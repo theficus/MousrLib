@@ -1,11 +1,17 @@
 #include "controller.h"
 
-Controller *Controller::singleton = 0;
+#ifndef STICK_ENABLED
+#define STICK_ENABLED
+#endif // STICK_ENABLED
 
-constexpr uint32_t s_button_mask =
-    (1 << BUTTON_RIGHT) | (1 << BUTTON_DOWN) |
-    (1 << BUTTON_LEFT) | (1 << BUTTON_UP) |
-    (1 << BUTTON_SEL);
+#ifndef BUTTONS_ENABLED
+#define BUTTONS_ENABLED
+#endif // BUTTONS_ENABLED
+
+// 27 = sda
+// 33 = scl
+Controller *Controller::singleton = 0;
+SemaphoreHandle_t buttonSem;
 
 // Make sure someone has called Controller::begin() before running functions that
 // rely on this.
@@ -16,49 +22,20 @@ constexpr uint32_t s_button_mask =
         return false;                                                                       \
     }
 
-ButtonState getPressedButtons(uint32_t mask)
-{
-    ButtonState bs;
-    bs.r = (!(mask & 1 << BUTTON_RIGHT)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.d = (!(mask & 1 << BUTTON_DOWN)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.l = (!(mask & 1 << BUTTON_LEFT)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.u = (!(mask & 1 << BUTTON_UP)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.sel = (!(mask & 1 << BUTTON_SEL)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.raw = mask;
-
-    d_printf("PRESS: u=%d d=%d l=%d r=%d s=%d bin=" BYTE_TO_BINARY_PATTERN "\n",
-             (int)bs.u,
-             (int)bs.d,
-             (int)bs.l,
-             (int)bs.r,
-             (int)bs.sel,
-             BYTE_TO_BINARY(bs.mask));
-
-    return bs;
-}
-
 Controller::Controller()
 {
-    this->opSem = xSemaphoreCreateBinary();
-    this->startSem = xSemaphoreCreateBinary();
-    this->buttonQueue = xQueueCreate(10, sizeof(uint8_t));
+    // Wire1.setPins(27, 33);
+    // this->ss = Adafruit_seesaw(&Wire1);
+    buttonSem = xSemaphoreCreateBinary();
+    // semGive(buttonSem);
 
-    semGive(this->opSem);
-    semGive(this->startSem);
-    semTake(this->startSem);
+    this->buttonPressQueue = xQueueCreate(3, sizeof(ButtonPressEvent));
+    this->stickQueue = xQueueCreate(2, sizeof(AnalogStickEvent));
 }
 
-bool Controller::begin(controller_button_callback buttonCallback, controller_analog_stick_move_callback stickCallback, uint8_t irqPin, uint8_t addr)
+bool Controller::begin(uint8_t irqPin, uint8_t addr)
 {
     BaseType_t result;
-
-    if (buttonCallback == nullptr ||
-        stickCallback == nullptr)
-    {
-        s_println(F("ERROR: Missing button or stick callback parameter value."));
-        return false;
-    }
-
     s_printf("has begun=%d\n", this->hasBegun);
 
     if (this->hasBegun == true)
@@ -67,32 +44,19 @@ bool Controller::begin(controller_button_callback buttonCallback, controller_ana
         goto finalize;
     }
 
-    if (ss.begin(addr) == false)
+    bool ssDidBegin;
+    i2cSemCritSec(ssDidBegin = ss.begin(addr));
+    if (ssDidBegin == false)
     {
         s_println(F("ERROR: Could not start Seesaw"));
         goto finalize;
     }
 
     this->irqPin = irqPin;
-    this->ss.pinModeBulk(s_button_mask, INPUT_PULLUP);
-    this->ss.setGPIOInterrupts(s_button_mask, 1);
-    this->buttonCallback = buttonCallback;
-    this->stickCallback = stickCallback;
+    i2cSemCritSec(this->ss.pinModeBulk(s_button_mask, INPUT_PULLUP));
+    i2cSemCritSec(this->ss.setGPIOInterrupts(s_button_mask, 1));
 
-    result = xTaskCreate(
-        Controller::buttonPressTask,
-        "buttonPressTask",
-        10000,
-        this,
-        1,
-        NULL);
-
-    if (result != pdPASS)
-    {
-        s_printf("ERROR: Could not create button press task. Result: %d\n", result);
-        goto finalize;
-    }
-
+#ifdef STICK_ENABLED
     result = xTaskCreate(
         Controller::stickMoveTask,
         "analogStickTask",
@@ -106,13 +70,30 @@ bool Controller::begin(controller_button_callback buttonCallback, controller_ana
         s_printf("ERROR: Could not create analog stick task. Result: %d\n", result);
         goto finalize;
     }
+#endif // STICK_ENABLED
+
+#ifdef BUTTONS_ENABLED
+    result = xTaskCreate(
+        Controller::buttonPressTask,
+        "buttonPressTask",
+        10000,
+        NULL,
+        1,
+        NULL);
+
+    if (result != pdPASS)
+    {
+        s_printf("ERROR: Could not create button press task. Result: %d\n", result);
+        goto finalize;
+    }
 
     pinMode(this->irqPin, INPUT);
     attachInterrupt(this->irqPin, Controller::onButtonPress, FALLING);
+
+#endif // BUTTONS_ENABLED
     this->hasBegun = true;
 
 finalize:
-    semGive(this->startSem);
     return this->hasBegun;
 }
 
@@ -125,8 +106,6 @@ bool Controller::calibrate(uint16_t upCorrection, uint16_t downCorrection, uint1
     // Hold on to the semaphore for the entirety of the function to make sure
     // we aren't reading the stick while calibration is happening and messing up
     // positional calcluations
-    semTake(this->opSem);
-
     this->upCorrection = upCorrection;
     this->downCorrection = -downCorrection;
     this->leftCorrection = -leftCorrection;
@@ -134,8 +113,8 @@ bool Controller::calibrate(uint16_t upCorrection, uint16_t downCorrection, uint1
 
     this->minStickMovementH = minStickMovementH;
     this->minStickMovementV = minStickMovementV;
-    this->x_ctr = ss.analogRead(JOYSTICK_H);
-    this->y_ctr = ss.analogRead(JOYSTICK_V);
+    i2cSemCritSec(this->x_ctr = ss.analogRead(JOYSTICK_H));
+    i2cSemCritSec(this->y_ctr = ss.analogRead(JOYSTICK_V));
     s_printf("Calibrated analog stick. Center X=%d Y=%d. Correction values: L=%d R=%d U=%d D=%d\n",
              this->x_ctr,
              this->y_ctr,
@@ -144,7 +123,6 @@ bool Controller::calibrate(uint16_t upCorrection, uint16_t downCorrection, uint1
              this->upCorrection,
              this->downCorrection);
     this->hasRecalibrated = true;
-    semGive(this->opSem);
     return true;
 }
 
@@ -153,7 +131,6 @@ bool Controller::end()
     detachInterrupt(this->irqPin);
     this->hasBegun = false;
     this->isFinalizing = false;
-    semTake(startSem);
     return true;
 }
 
@@ -164,51 +141,37 @@ void IRAM_ATTR Controller::onButtonPress()
         return;
     }
 
-    uint8_t v = 0;
-    xQueueSend(singleton->buttonQueue, &v, portMAX_DELAY);
+    xSemaphoreGiveFromISR(buttonSem, pdFALSE);
 }
 
 void Controller::buttonPressTask(void *p)
 {
     s_println(F("buttonPressTask() enter"));
-    uint32_t lastValue = 0;
-    Controller *c = static_cast<Controller *>(p);
-
+    Controller *c = Controller::getInstance();
     s_println(F("buttonPressTask() waiting for begin..."));
-    semWait(c->startSem);
     s_println(F("starting button loop"));
-    while (c->hasBegun == true && c->isFinalizing == false)
+    uint32_t pv = 0;
+    while (c->isFinalizing == false)
     {
-        // Don't care about the queue value, just that we get something queued
-        void *x;
-        if (xQueueReceive(c->buttonQueue, &x, 10000000) == false)
+        if (semTakeWithTimeout(buttonSem, 5000) == false)
         {
+            s_println("Did not receive a queued button press...");
             continue;
         }
 
-        semTake(c->opSem);
-        uint32_t v = c->ss.digitalReadBulk(s_button_mask);
-        ButtonState prev{};
-        semGive(c->opSem);
+        uint32_t v;
+        i2cSemCritSec(v = c->ss.digitalReadBulk(s_button_mask));
+        s_printf("press: %u\n", v);
 
         // Simple debounce. If the value is identical to before we will just discard it.
-        if (lastValue != v)
+        if (pv != v)
         {
-            lastValue = v;
-            ButtonStateChange bc;
-            bc.oldState.u = prev.u;
-            bc.oldState.d = prev.d;
-            bc.oldState.l = prev.l;
-            bc.oldState.r = prev.r;
-            bc.oldState.sel = prev.sel;
-
-            bc.newState = getPressedButtons(v);
-            prev.u = bc.newState.u;
-            prev.d = bc.newState.d;
-            prev.l = bc.newState.l;
-            prev.r = bc.newState.r;
-            prev.sel = bc.newState.sel;
-            c->buttonCallback(bc);
+            ButtonPressEvent evt;
+            evt.prev = pv;
+            evt.cur = v;
+            pv = v;
+            s_printf("xqueuesend: %d\n", xQueueSendToFront(c->buttonPressQueue, &evt, 0));
+            s_printf("queue space available: %zu\n", uxQueueSpacesAvailable(c->buttonPressQueue));
         }
     }
 
@@ -224,18 +187,19 @@ void Controller::stickMoveTask(void *p)
     Controller *c = static_cast<Controller *>(p);
 
     s_println(F("stickMoveTask() waiting to begin..."));
-    semWait(c->startSem);
     s_println(F("starting stick move loop"));
-    while (c->hasBegun == true &&
-           c->isFinalizing == false)
+    while (c->isFinalizing == false)
     {
         bool hasRecalibrated;
-        semTake(c->opSem);
-        int16_t new_x = c->ss.analogRead(JOYSTICK_H);
-        int16_t new_y = c->ss.analogRead(JOYSTICK_V);
+        int16_t new_x, new_y;
+        i2cSemCritSec(new_x = c->ss.analogRead(JOYSTICK_H));
+        i2cSemCritSec(new_y = c->ss.analogRead(JOYSTICK_V));
         hasRecalibrated = c->hasRecalibrated;
         c->hasRecalibrated = false;
-        semGive(c->opSem);
+
+#ifdef JOY_CALIB_DEBUG
+        s_printf("x=%d y=%d new_x=%d new_y=%d x_range=%d...%d y_range=%d...%d hasRecal=%d\n", x, y, new_x, new_y, x - c->minStickMovementH, x + c->minStickMovementH, y - c->minStickMovementV, y + c->minStickMovementH, hasRecalibrated);
+#endif
 
         // Ignore minute changes to the analog stick movement as every reading will
         // be slightly different
@@ -245,41 +209,53 @@ void Controller::stickMoveTask(void *p)
             new_y >= y + c->minStickMovementV ||
             hasRecalibrated == true)
         {
+            /*
             AnalogStickMovement as = c->getStickPosition(new_x, new_y);
             c->stickCallback(as);
+            */
+
+            AnalogStickEvent evt;
+            evt.prev_x = x;
+            evt.prev_y = y;
+            evt.cur_x = new_x;
+            evt.cur_y = new_y;
+            xQueueSend(c->stickQueue, &evt, portMAX_DELAY);
+
             x = new_x;
             y = new_y;
         }
 
-        delay(100); // Short enough to have quick reads, long enough not to saturate the i2c bus
+        delay(250); // Short enough to have quick reads, long enough not to saturate the i2c bus
     }
 
     s_println(F("stickMoveTask() end"));
     vTaskDelete(NULL);
 }
 
-AnalogStickMovement Controller::getStickPosition(int16_t &x, int16_t &y)
+AnalogStickMovement Controller::getStickPosition(AnalogStickEvent evt)
 {
     AnalogStickMovement as;
 
     // Best effort to determine if we're centered or not
-    as.isCentered = this->x_ctr >= max(0, x + this->leftCorrection) &&
-                    this->x_ctr <= max(0, x + this->rightCorrection) &&
-                    this->y_ctr <= max(0, y + this->upCorrection) &&
-                    this->y_ctr >= max(0, y + downCorrection);
+    as.isCentered = this->x_ctr >= max(0, evt.cur_x + this->leftCorrection) &&
+                    this->x_ctr <= max(0, evt.cur_x + this->rightCorrection) &&
+                    this->y_ctr <= max(0, evt.cur_x + this->upCorrection) &&
+                    this->y_ctr >= max(0, evt.cur_x + this->downCorrection);
 
     // If we're out of bounds, recalculate
-    x = x < 0 ? 0 : x > 1024 ? 1024
-                             : x;
-    y = y < 0 ? 0 : y > 1024 ? 1024
-                             : y;
+    evt.cur_x = evt.cur_x < 0 ? 0 : evt.cur_x > 1024 ? 1024
+                                                     : evt.cur_x;
+    evt.cur_y = evt.cur_y < 0 ? 0 : evt.cur_y > 1024 ? 1024
+                                                     : evt.cur_y;
 
     // Convert the position to radian values
-    double xr = x / 4 - 128;
-    double yr = y / 4 - 128;
+    double xr = evt.cur_x / 4 - 128;
+    double yr = evt.cur_y / 4 - 128;
 
     // Get the angle and position position from center
-    as.angle = -atan2(-xr, yr) * (180.0 / PI);
+    as.angle = -atan2(-yr, xr) * (180.0 / PI);
     as.velocity = sqrt(pow(xr, 2) + pow(yr, 2));
+    as.x = xr;
+    as.y = yr;
     return as;
 }

@@ -2,7 +2,8 @@
 #ifndef MOUSR_MOUSR_H
 #define MOUSR_MOUSR_H
 
-#include "common.h"
+#include "logging.h"
+#include "utility.h"
 #include <cstdint>
 #include <cstdio>
 #include <iostream>

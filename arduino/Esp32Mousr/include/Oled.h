@@ -8,6 +8,9 @@
 #include <iostream>
 #include <map>
 #include <U8g2lib.h>
+#include "logging.h"
+#include "utility.h"
+#include "controller.h"
 
 // Glyphs
 #define ARROW_UP_FILL 0x25b2
@@ -19,6 +22,14 @@
 #define ARROW_LEFT_FILL 0x25c0
 #define ARROW_LEFT_EMPTY 0x25c1
 
+// U8G2_SSD1306_128X64_NONAME_2_HW_I2C u8g2(U8G2_R0);
+// static U8G2 u8g2 = U8G2_SSD1306_128X64_NONAME_F_HW_I2C(U8G2_R0); // Graphical mode
+
+void drawBattery(U8G2 u8g2, int x, int y, int w, int h, int segments, int lvl);
+void drawPos(U8G2 u8g2, int x, int y, int rad, int deg, bool ctr = false);
+void drawDetails(U8G2 u8g2, int x, int y, float angle, float tilt, float speed);
+void drawPosPtr(U8G2 u8g2, int x, int y);
+
 enum class OledView
 {
     None,
@@ -28,19 +39,44 @@ enum class OledView
     Diagnostic
 };
 
-class Oled
+struct OledDisplayMessage
 {
-public:
-    OledView getOledView()
-    {
-        return this->view;
-    }
-
-private:
-    OledView view;
+    OledView viewKind;
+    // union
+    //{
+    AnalogStickMovement pos;
+    //};
 };
 
-static void registerView(Oled& view);
+class Oled
+{
+private:
+    static Oled *singleton;
+    Oled();
+
+public:
+    static Oled *getInstance()
+    {
+        if (singleton == NULL)
+        {
+            singleton = new Oled;
+        }
+
+        return singleton;
+    }
+
+    void queueMessage(OledDisplayMessage *message);
+    bool begin();
+    bool end();
+
+    U8G2 u8g2; // TODO: Should probably hide this
+
+private:
+    static void displayQueueTask(void *);
+    bool hasBegun = false;
+    bool isFinalizing = false;
+    QueueHandle_t displayQueue;
+};
 
 #endif // ARDUINO
 #endif // MOUSR_OLED_H

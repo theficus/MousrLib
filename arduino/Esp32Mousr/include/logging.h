@@ -5,8 +5,6 @@
 #include <cstring>
 #include <cstdio>
 
-#define clearmem(v, sz) memset(v, 0, sz);
-
 #ifdef ARDUINO
 #include <Arduino.h>
 #define s_printf(fmt, ...) Serial.printf(fmt, __VA_ARGS__);
