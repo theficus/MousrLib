@@ -5,10 +5,10 @@
 static SemaphoreHandle_t global_i2c_sem;
 static StaticSemaphore_t staticSemBuffer;
 
-void i2cSemInit()
+bool i2cSemInit()
 {
     global_i2c_sem = xSemaphoreCreateBinaryStatic(&staticSemBuffer);
-    i2cSemGive();
+    return __i2cSemGive();
 }
 
 bool __i2cSemTake(TickType_t timeout)

@@ -43,49 +43,38 @@
 
 #ifdef ARDUINO_ARCH_ESP32
 
-// Implementation of shortcut for normal semaphore operations
-#define __semTakeWithTimeout(__sem, __timeout) xSemaphoreTake(__sem, __timeout);
-#define __semTake(__sem) __semTakeWithTimeout(__sem, portMAX_DELAY);
-#define __semGive(__sem) xSemaphoreGive(__sem);
-
-void i2cSemInit();
-void logMemory();
-bool __i2cSemTake(TickType_t timeout = portMAX_DELAY);
+bool __i2cSemTake(TickType_t timeout);
 bool __i2cSemGive();
+bool i2cSemInit();
+void logMemory();
 
-#ifdef DEBUG_SEM_OP
-#define i2cSemTake() \
-    s_printf("[%s] %s: Taking global i2c semaphore...\n", __TIME__, __FUNCTION__); \
-    __i2cSemTake();
-#define i2cSemGive() \
-    s_printf("[%s] %s: Giving global i2c semaphore...\n", __TIME__, __FUNCTION__); \
-    __i2cSemGive();
-
-#define semTakeWithTimeout(__sem, __timeout) \
-    s_printf("[%s] %s: Taking semaphore %p timeout %d\n", __TIME__, __FUNCTION__, &__sem, __timeout); \
-    bool __take_result = __semTakeWithTimeout(__sem, __timeout); \
-    s_printf("[%s] %s: Take semaphore %p result: %d\n", __TIME__, __FUNCTION__, &__sem, __take_result);
-#define semTake(__sem) semTakeWithTimeout(__sem, portMAX_DELAY);
-#define semGive(__sem) \
-    s_printf("[%s] %s: Giving semaphore %p", __TIME__, __FUNCTION__, &__sem); \
-    bool __give_result = __semGive(__sem); \
-    s_printf("[%s] %s: Give semaphore %p result: %d\n", __TIME__, __FUNCTION__, &__sem, __give_result);
-#else
-#define semTakeWithTimeout(__sem, __timeout) __semTakeWithTimeout(__sem, __timeout);
-#define semTake(__sem) __semTake(__sem);
-#define semGive(__sem) __semGive(__sem);
-#define i2cSemGive() __i2cSemGive();
-#define i2cSemTake() __i2cSemTake();
-#define i2cSemTakeWithTimeout(timeout) __i2cSemTake(timeout);
-#endif
-
-#define semWaitWithTimeout(__sem, __timeout) \
-    semTakeWithTimeout(__sem, __timeout); \
-    semGive(__sem);
-
+// Implementation of shortcut for normal semaphore operations
+#define semTakeWithTimeout(__sem, __timeout) xSemaphoreTake(__sem, __timeout)
+#define semTake(__sem) semTakeWithTimeout(__sem, portMAX_DELAY)
+#define semGive(__sem) xSemaphoreGive(__sem)
 #define semWait(__sem) \
     semTake(__sem);    \
     semGive(__sem);
+
+#define semCritSec(__sem, __func) \
+    semTake(__sem);               \
+    func;                         \
+    semGive(__sem);
+
+#define check(__func, __expr)                                     \
+    auto __res = __func;                                          \
+    if (__res != __expr)                                          \
+    {                                                             \
+        s_println("failed check: " #__func " expected " #__expr); \
+        return false;                                             \
+    }
+
+#define checkTrue(__func) check(__func, true);
+
+#define i2cSemCritSec(__func)    \
+    __i2cSemTake(portMAX_DELAY); \
+    __func;                      \
+    __i2cSemGive();
 
 #else // ARDUINO_ARCH_ESP32
 void logMemory();
