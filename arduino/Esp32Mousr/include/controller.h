@@ -24,6 +24,8 @@ class Controller
 
 private:
     static Controller *singleton;
+    QueueHandle_t buttonPressQueue;
+    QueueHandle_t stickQueue;
     Controller();
 
 public:

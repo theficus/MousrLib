@@ -15,6 +15,9 @@
 
 #ifdef ARDUINO
 #include <U8g2lib.h>
+#include "logging.h"
+#include "utility.h"
+#include "controller.h"
 
 // Glyphs
 #define ARROW_UP_FILL 0x25b2
