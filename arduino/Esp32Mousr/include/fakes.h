@@ -12,6 +12,29 @@
 #include <any>
 
 #define uchar unsigned char
+#define BaseType_t int
+#define xTaskCreate(...) 1
+#define pdPASS 1
+#define QueueHandle_t int
+#define SemaphoreHandle_t int
+#define F(str) #str
+#define FALLING 0
+#define INPUT 0
+#define IRAM_ATTR
+#define vTaskDelete(...)
+#define xSemaphoreGiveFromISR(...) 1
+#define uxQueueSpacesAvailable(...) (size_t)1
+#define xQueueSendToFront(...) 1
+#define semTake(...) true
+#define semTakeWithTimeout(...) true
+#define xSemaphoreCreateBinary() 1
+
+class Adafruit_seesaw
+{
+    public:
+    Adafruit_seesaw() { }
+    uint32_t digitalReadBulk(...) { return 0xffffffff; }
+};
 
 class BLERemoteCharacteristic
 {

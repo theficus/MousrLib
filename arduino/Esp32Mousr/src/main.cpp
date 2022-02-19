@@ -58,7 +58,7 @@ void setup()
     Controller *c = Controller::getInstance();
     c->begin(JOYSTICK_INT_PIN);
     s_printf("controller Wire speed now: %zu\n", Wire.getClock());
-    c->calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
+    c->getStick()->calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
 
     xTaskCreate(onButtonPressChangeTask, "mainButtonPress", 10000, NULL, 5, NULL);
     xTaskCreate(onAnalogStickChangeTask, "mainAnalogStick", 10000, NULL, 4, NULL);
@@ -87,7 +87,7 @@ void onButtonPressChangeTask(void*)
 {
     s_println("main() starting onButtonPressChangeTask()");
 
-    QueueHandle_t q = Controller::getInstance()->getButtonPressQueueHandle();
+    QueueHandle_t q = Controller::getInstance()->getButtons()->buttonPressQueue;
     while (true)
     {
         ButtonPressEvent e;
@@ -108,7 +108,8 @@ void onAnalogStickChangeTask(void*)
     s_println("main() starting onAnalogStickChangeTask()");
     
     Oled* oled = Oled::getInstance();
-    QueueHandle_t q = Controller::getInstance()->getStickQueueHandle();
+    Controller* c = Controller::getInstance();
+    QueueHandle_t q = Controller::getInstance()->getStick()->stickQueue;
     int ctr = 0;
     while(true)
     {
@@ -120,13 +121,11 @@ void onAnalogStickChangeTask(void*)
         }
 
         s_printf("Got analog stick movement! x=%d->%d y=%d->%d\n", e.prev_x, e.cur_x, e.prev_y, e.cur_y);
+
+        AnalogStickMovement mov = c->getStick()->getMovement(e);
         OledDisplayMessage m;
-        m.viewKind = OledView::Robot;
-        m.pos.angle = ctr % 360;
-        m.pos.isCentered = (bool)ctr % 1;
-        m.pos.velocity = ctr % 100;
-        m.pos.x = ctr % 1024;
-        m.pos.y = ctr % 1024;
+        m.viewKind = OledView::ControllerDiagStick;
+        m.stickPos = mov;
         oled->queueMessage(&m);
         ctr += 10;
     }

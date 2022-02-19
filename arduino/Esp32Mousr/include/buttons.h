@@ -4,6 +4,7 @@
 #define _MOUSR_BUTTONS_H
 
 #include <functional>
+#include "controller.h"
 
 #define BUTTON_RIGHT 6 // A
 #define BUTTON_DOWN 7  // B
@@ -47,6 +48,23 @@ struct ButtonPressEvent
 {
     uint32_t prev;
     uint32_t cur;
+};
+
+class ControllerButtons
+{
+    friend class Controller;
+
+public:
+    QueueHandle_t buttonPressQueue;
+    
+private:
+    Controller *controller;
+    ControllerButtons(Controller *c);
+    bool begin();
+    bool end();
+    uint8_t irqPin = 0;
+    static void buttonPressTask(void *);
+    static void IRAM_ATTR onButtonPress();
 };
 
 #endif // _MOUSR_BUTTONS_H
