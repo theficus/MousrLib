@@ -51,7 +51,7 @@ static std::string getMousrConnectionStatusString(MousrConnectionStatus status)
     uint8_t v = (uint8_t)status;
     if (v > (uint8_t)MousrConnectionStatus::Max)
     {
-        //Serial.printf("Could not map unknown status value %d. Returning \"Unknown\"\n", v);
+        // Serial.printf("Could not map unknown status value %d. Returning \"Unknown\"\n", v);
         v = (uint8_t)MousrConnectionStatus::Unknown;
     }
 
@@ -143,7 +143,7 @@ class MousrData
 public:
     MousrData(const uint8_t *data, size_t length);
     MousrData(const char *data);
-    MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8_t* data, const size_t length = 12);
+    MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length = 12);
     MousrData(std::string data);
     ~MousrData();
 

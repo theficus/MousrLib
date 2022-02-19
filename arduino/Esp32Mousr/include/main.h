@@ -23,6 +23,8 @@ static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData
 
 #ifdef _DO_SS
 #include "Controller.h"
+#include "buttons.h"
+#include "analog.h"
 
 #ifndef JOYSTICK_INT_PIN
 #define JOYSTICK_INT_PIN 32 // Interrupt pin

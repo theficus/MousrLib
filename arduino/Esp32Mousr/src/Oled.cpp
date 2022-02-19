@@ -17,31 +17,25 @@ void Oled::displayQueueTask(void *p)
         }
 
         s_printf("Got message %p is (count: %d)\n", &m, ctr);
+        u8g2.clearBuffer();
         ctr++;
-        AnalogStickMovement stick = m.pos;
 
-        i2cSemCritSec({
-            u8g2.clearBuffer();
-            ctr++;
-            switch (m.viewKind)
-            {
-            case OledView::Robot:
-                drawBattery(oled->u8g2, 100, 2, 24, 10, 5, ctr % 6);
-                drawPos(oled->u8g2, 30, 30, 20, stick.angle, stick.isCentered);
-                drawDetails(oled->u8g2, 55, 40, stick.isCentered ? 0 : stick.angle, (float)(ctr % 90), stick.isCentered ? 0 : stick.velocity);
-                break;
-            case OledView::None:
-            case OledView::Settings:
-            case OledView::Diagnostic:
-            default:
-                u8g2.setFont(u8g2_font_courR08_tf);
-                u8g2.drawStr(10, 10, "invalid write mode");
-                s_printf("Ignoring unsupported message kind %d", (int)m.viewKind);
-                break;
-            }
+        if(m.viewKind == OledView::ControllerDiagStick)
+        {
+            AnalogStickMovement stick = m.stickPos;
+            drawBattery(oled->u8g2, 100, 2, 24, 10, 5, ctr % 6);
+            drawPos(oled->u8g2, 30, 30, 20, stick.angle, stick.isCentered);
+            drawDetails(oled->u8g2, 55, 40, stick.isCentered ? 0 : stick.angle, (float)(ctr % 90), stick.isCentered ? 0 : stick.velocity);
+        }
+        else
+        {
+            u8g2.setFont(u8g2_font_courR08_tf);
+            u8g2.drawStr(10, 10, "invalid write mode");
+            s_printf("Ignoring unsupported message kind %d", (int)m.viewKind);
+            break;
+        }
 
-            u8g2.sendBuffer();
-        });
+        i2cSemCritSec(u8g2.sendBuffer());
     }
 
     s_println("Leaving displayQueueTask()");
@@ -59,15 +53,6 @@ int ctr = 0;
 void Oled::queueMessage(OledDisplayMessage *msg)
 {
     xQueueSendToFront(this->displayQueue, msg, 0);
-    /*
-    Oled *oled = this;
-    AnalogStickMovement stick = msg.pos;
-    u8g2.clearBuffer();
-    drawBattery(oled->u8g2, 100, 2, 24, 10, 5, ctr++ % 6);
-    drawPos(oled->u8g2, 30, 30, 20, stick.angle, stick.isCentered);
-    drawDetails(oled->u8g2, 55, 40, stick.isCentered ? 0 : stick.angle, (float)(ctr % 90), stick.isCentered ? 0 : stick.velocity);
-    u8g2.sendBuffer();
-    */
 }
 
 bool Oled::begin()
@@ -123,7 +108,6 @@ void drawPos(U8G2 u8g2, int x, int y, int rad, int deg, bool ctr)
 
 void drawDetails(U8G2 u8g2, int x, int y, float angle, float tilt, float speed)
 {
-    /*
     char buf[32] = {0};
     u8g2.setFont(u8g2_font_courR08_tf);
     sprintf(buf, "Angle: %03.2f", angle);
@@ -132,7 +116,6 @@ void drawDetails(U8G2 u8g2, int x, int y, float angle, float tilt, float speed)
     u8g2.drawStr(x, y + 9, buf);
     sprintf(buf, "Speed: %02.2f", speed);
     u8g2.drawStr(x, y + 18, buf);
-    */
 }
 
 void drawBattery(U8G2 u8g2, int x, int y, int w, int h, int segments, int lvl)

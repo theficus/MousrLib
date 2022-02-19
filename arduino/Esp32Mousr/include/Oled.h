@@ -1,12 +1,19 @@
 #pragma once
 #ifndef MOUSR_OLED_H
 #define MOUSR_OLED_H
-#ifdef ARDUINO
 
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
 #include <map>
+#include "logging.h"
+#include "utility.h"
+//#include "controller.h"
+#include "analog.h"
+#include "buttons.h"
+#include "mousr.h"
+
+#ifdef ARDUINO
 #include <U8g2lib.h>
 #include "logging.h"
 #include "utility.h"
@@ -36,17 +43,31 @@ enum class OledView
     Robot,
     Log,
     Settings,
+    ControllerDiagStick,
+    ControllerDiagButton,
     Diagnostic
 };
 
 struct OledDisplayMessage
 {
     OledView viewKind;
-    // union
-    //{
-    AnalogStickMovement pos;
-    //};
+    union
+    {
+        AnalogStickMovement stickPos;
+        MousrMovementMsg mousrMove;
+        ButtonPressEvent buttonPress;
+    };
 };
+
+/*
+// Message to display OLED data
+template<class M>
+struct OledDisplayMessage
+{
+    OledViewKind viewKind;
+    M message;
+};
+*/
 
 class Oled
 {
