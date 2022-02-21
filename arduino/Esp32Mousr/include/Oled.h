@@ -28,16 +28,13 @@
 #define ARROW_DOWN_EMPTY 0x25bd
 #define ARROW_LEFT_FILL 0x25c0
 #define ARROW_LEFT_EMPTY 0x25c1
+#define SNOWMAN 0x2603
+#define UMBRELLA 0x6202
 
 // U8G2_SSD1306_128X64_NONAME_2_HW_I2C u8g2(U8G2_R0);
 // static U8G2 u8g2 = U8G2_SSD1306_128X64_NONAME_F_HW_I2C(U8G2_R0); // Graphical mode
 
-void drawBattery(U8G2 u8g2, int x, int y, int w, int h, int segments, int lvl);
-void drawPos(U8G2 u8g2, int x, int y, int rad, int deg, bool ctr = false);
-void drawDetails(U8G2 u8g2, int x, int y, float angle, float tilt, float speed);
-void drawPosPtr(U8G2 u8g2, int x, int y);
-
-enum class OledView
+enum class OledMessage
 {
     None,
     Robot,
@@ -45,18 +42,42 @@ enum class OledView
     Settings,
     ControllerDiagStick,
     ControllerDiagButton,
+    Diagnostic,
+};
+
+enum class OledView
+{
+    None,
+    Robot,
+    Log,
+    Settings,
     Diagnostic
 };
 
+enum OledDisplayFlags : uint8_t
+{
+    None = 0,
+    Dump = 1,
+    Overlay = 1 << 1
+};
+
+void drawBattery(U8G2 u8g2, int x, int y, int w, int h, int segments, int lvl);
+void drawPos(U8G2 u8g2, int x, int y, int rad, int deg, bool ctr = false);
+void drawDetails(U8G2 u8g2, int x, int y, float angle, float tilt, float speed);
+void drawPosPtr(U8G2 u8g2, int x, int y);
+void drawMode(U8G2 u8g2, OledView mode);
+void drawButtons(U8G2 u8g2, ButtonState buttons);
+
 struct OledDisplayMessage
 {
-    OledView viewKind;
+    OledMessage message;
     union
     {
         AnalogStickMovement stickPos;
         MousrMovementMsg mousrMove;
-        ButtonPressEvent buttonPress;
+        ButtonState buttonPress;
     };
+    OledDisplayFlags flags;
 };
 
 /*

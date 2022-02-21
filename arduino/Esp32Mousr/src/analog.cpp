@@ -1,13 +1,15 @@
 #include "analog.h"
+#include "controller.h"
 
-ControllerAnalogStick::ControllerAnalogStick(Controller *c)
+ControllerAnalogStick::ControllerAnalogStick()
 {
-    this->controller = c;
     this->stickQueue = xQueueCreate(2, sizeof(AnalogStickEvent));
 }
 
 bool ControllerAnalogStick::begin()
 {
+    this->hasFinalized = false;
+
     BaseType_t result = xTaskCreate(
         ControllerAnalogStick::stickMoveTask,
         "analogStickTask",
@@ -22,37 +24,44 @@ bool ControllerAnalogStick::begin()
         return false;
     }
 
+    this->hasBegun = true;
+
     return true;
 }
 
 bool ControllerAnalogStick::end()
 {
+    this->hasBegun = false;
+    this->hasFinalized = true;
     return true;
 }
 
-AnalogStickMovement ControllerAnalogStick::getMovement(const AnalogStickEvent &evt)
+AnalogStickMovement ControllerAnalogStick::getMovement(const int x, const int y)
 {
     AnalogStickMovement as;
 
+    /*
     // Best effort to determine if we're centered or not
     as.isCentered = this->x_ctr >= max(0, evt.cur_x + this->leftCorrection) &&
                     this->x_ctr <= max(0, evt.cur_x + this->rightCorrection) &&
                     this->y_ctr <= max(0, evt.cur_x + this->upCorrection) &&
                     this->y_ctr >= max(0, evt.cur_x + this->downCorrection);
+    */
 
     // If we're out of bounds, recalculate
-    int16_t x = evt.cur_x < 0 ? 0 : evt.cur_x > 1024 ? 1024
-                                                     : evt.cur_x;
-    int16_t y = evt.cur_y < 0 ? 0 : evt.cur_y > 1024 ? 1024
-                                                     : evt.cur_y;
+    int16_t nx = x < 0 ? 0 : x > 1024 ? 1024
+                                      : x;
+    int16_t ny = y < 0 ? 0 : y > 1024 ? 1024
+                                      : y;
 
     // Convert the position to radian values
-    double xr = x / 4 - 128;
-    double yr = y / 4 - 128;
+    double xr = nx / 4 - 128;
+    double yr = ny / 4 - 128;
 
     // Get the angle and position position from center
     as.angle = -atan2(-yr, xr) * (180.0 / PI);
     as.velocity = sqrt(pow(xr, 2) + pow(yr, 2));
+    as.isCentered = as.velocity <= 20; // TODO: Is this better?
     as.x = xr;
     as.y = yr;
     return as;
@@ -61,8 +70,7 @@ AnalogStickMovement ControllerAnalogStick::getMovement(const AnalogStickEvent &e
 bool ControllerAnalogStick::calibrate(uint16_t upCorrection, uint16_t downCorrection, uint16_t leftCorrection, uint16_t rightCorrection, uint16_t minStickMovementH, uint16_t minStickMovementV)
 {
     Controller *c = Controller::getInstance();
-    //c->checkIsBegun();
-
+    checkTrue(c->hasBegun);
     s_println(F("Calibrating analog stick"));
 
     // Hold on to the semaphore for the entirety of the function to make sure
@@ -94,11 +102,16 @@ void ControllerAnalogStick::stickMoveTask(void *p)
     int16_t y = -1;
     s_println(F("stickMoveTask() begin"));
     ControllerAnalogStick *stick = static_cast<ControllerAnalogStick *>(p);
-    Controller *c = stick->controller;
+    Controller *c = Controller::getInstance();
 
-    s_println(F("stickMoveTask() waiting to begin..."));
-    s_println(F("starting stick move loop"));
-    while (c->isFinalizing == false)
+    s_println(F("stickMoveTask() waiting for begin() to finish..."));
+    while (stick->hasBegun == false)
+    {
+        delay(100);
+    }
+
+    s_println(F("stickMoveTask() starting stick movement loop..."));
+    while (stick->hasFinalized == false)
     {
         bool hasRecalibrated;
         int16_t new_x, new_y;
@@ -130,7 +143,7 @@ void ControllerAnalogStick::stickMoveTask(void *p)
             y = new_y;
         }
 
-        delay(250); // Short enough to have quick reads, long enough not to saturate the i2c bus
+        delay(200); // Short enough to have quick reads, long enough not to saturate the i2c bus
     }
 
     s_println(F("stickMoveTask() end"));

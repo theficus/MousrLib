@@ -4,7 +4,8 @@
 
 #include <functional>
 #include <algorithm>
-#include "controller.h"
+#include "logging.h"
+#include "utility.h"
 
 #ifndef ARDUINO_ARCH_ESP32
 #include "fakes.h"
@@ -33,6 +34,8 @@ struct AnalogStickMovement
     bool isCentered;
 };
 
+class Controller;
+
 class ControllerAnalogStick
 {
     friend class Controller;
@@ -44,16 +47,17 @@ public:
                    uint16_t leftCorrection = 5, uint16_t rightCorrection = 5,
                    uint16_t minStickMovementH = MIN_STICK_MOVEMENT, uint16_t minStickMovementV = MIN_STICK_MOVEMENT);
 
-    AnalogStickMovement getMovement(const AnalogStickEvent &evt);
-    
+    AnalogStickMovement getMovement(const int x, const int y);
+
 private:
     static void stickMoveTask(void *);
-    ControllerAnalogStick(Controller *c);
+    ControllerAnalogStick();
     bool begin();
     bool end();
 
     bool hasRecalibrated = false;
-    Controller *controller;
+    bool hasBegun = false;
+    bool hasFinalized = false;
     int16_t x_ctr = 0;
     int16_t y_ctr = 0;
     int16_t upCorrection = 0;

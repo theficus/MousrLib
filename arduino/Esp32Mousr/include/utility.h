@@ -42,11 +42,15 @@
         (byte & 0x01 ? '1' : '0')
 
 #ifdef ARDUINO_ARCH_ESP32
+#include "Wire.h"
 
 bool __i2cSemTake(TickType_t timeout);
 bool __i2cSemGive();
 bool i2cSemInit();
 void logMemory();
+void startWireDebugTask(uint32_t delayMs);
+void stopWireDebugTask();
+void printWireStatus();
 
 // Implementation of shortcut for normal semaphore operations
 #define semTakeWithTimeout(__sem, __timeout) xSemaphoreTake(__sem, __timeout)
@@ -61,12 +65,14 @@ void logMemory();
     func;                         \
     semGive(__sem);
 
-#define check(__func, __expr)                                     \
-    auto __res = __func;                                          \
-    if (__res != __expr)                                          \
-    {                                                             \
-        s_println("failed check: " #__func " expected " #__expr); \
-        return false;                                             \
+#define check(__func, __expr)                                         \
+    {                                                                 \
+        auto __res = __func;                                          \
+        if (__res != __expr)                                          \
+        {                                                             \
+            s_println("failed check: " #__func " expected " #__expr); \
+            return false;                                             \
+        }                                                             \
     }
 
 #define checkTrue(__func) check(__func, true);

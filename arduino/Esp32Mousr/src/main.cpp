@@ -9,30 +9,13 @@ void die()
         ;
 }
 
-#ifdef _DO_OLED
-/*
-int counter = 0;
-void updateOledTask(AnalogStickMovement &stick)
-{
-    s_println("Updating OLED...");
-    float angle = stick.angle;
-    s_printf("stick angle: %f -> %f\n", stick.angle, angle);
-    __i2cSemTake();
-    u8g2.clearBuffer();
-    drawBattery(u8g2, 100, 2, 24, 10, 5, counter % 6);
-    drawPos(u8g2, 30, 30, 20, angle, stick.isCentered);
-    // drawAngle(u8g2, 40, 40, 20, 8, counter % 45);
-    drawDetails(u8g2, 55, 40, stick.isCentered ? 0 : angle, (float)(counter % 90), stick.isCentered ? 0 : stick.velocity);
-    u8g2.sendBuffer();
-    __i2cSemGive();
-    counter++;
-}
-*/
-#endif // _DO_OLED
-
 void setup()
 {
     Serial.begin(115200);
+
+#ifdef WIRE_DEBUG
+    startWireDebugTask();
+#endif // WIRE_DEBUG
 
     i2cSemInit();
 
@@ -52,79 +35,87 @@ void setup()
     }
 #endif // _DO_BLE
 
-    s_printf("Wire speed then: %zu\n", Wire.getClock());
+#ifdef _DO_OLED
+    Oled::getInstance()->u8g2.setBusClock(100000);
+    Oled::getInstance()->begin();
+#endif // _DO_OLED
 
 #ifdef _DO_SS
     Controller *c = Controller::getInstance();
     c->begin(JOYSTICK_INT_PIN);
-    s_printf("controller Wire speed now: %zu\n", Wire.getClock());
     c->getStick()->calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
-
-    xTaskCreate(onButtonPressChangeTask, "mainButtonPress", 10000, NULL, 5, NULL);
+    xTaskCreate(onButtonPressChangeTask, "mainButtonPress", 10000, NULL, 3, NULL);
     xTaskCreate(onAnalogStickChangeTask, "mainAnalogStick", 10000, NULL, 4, NULL);
 #endif // _DO_SS
-
-#ifdef _DO_OLED
-    Oled::getInstance()->begin();
-    Oled::getInstance()->u8g2.setBusClock(100000);
-    s_printf("oled Wire speed now: %zu\n", Wire.getClock());
-    //u8g2.begin();
-    //u8g2.clear();
-    //xTaskCreate(updateOledTask, "oledTask", 10000, NULL, 100, NULL);
-#endif // _DO_OLED
-
 }
 
 void loop()
 {
-    //logMemory();
-    //delay(5000);
+    // logMemory();
+    // delay(5000);
     ;
 }
 
 #ifdef _DO_SS
-void onButtonPressChangeTask(void*)
+void displayButtonState(Oled* oled, const ButtonState &state)
+{
+    OledDisplayMessage m;
+    m.message = OledMessage::ControllerDiagButton;
+    //m.flags = OledDisplayFlags::Overlay;
+    m.buttonPress = state;
+    oled->queueMessage(&m);
+}
+
+void onButtonPressChangeTask(void *)
 {
     s_println("main() starting onButtonPressChangeTask()");
 
     QueueHandle_t q = Controller::getInstance()->getButtons()->buttonPressQueue;
+    Oled *oled = Oled::getInstance();
+
     while (true)
     {
         ButtonPressEvent e;
-        if(xQueueReceive(q, &e, 5000) == false) 
+        if (xQueueReceive(q, &e, 5000) == false)
         {
-            s_println("No button press triggered ...");
+            s_println(F("main() No button press triggered ..."));
             continue;
         }
 
-        s_printf("Got buton press! before=%d after=%d\n", e.prev, e.cur);
+        s_println(F("main() Got button press!"));
+        ButtonStateChange state = ControllerButtons::getStateChange(e);
+        onButtonPressStateChange(state);
+        displayButtonState(oled, state.cur);
     }
 
     vTaskDelete(NULL);
 }
 
-void onAnalogStickChangeTask(void*)
+void onAnalogStickChangeTask(void *)
 {
     s_println("main() starting onAnalogStickChangeTask()");
-    
-    Oled* oled = Oled::getInstance();
-    Controller* c = Controller::getInstance();
+    Oled *oled = Oled::getInstance();
+    Controller *c = Controller::getInstance();
     QueueHandle_t q = Controller::getInstance()->getStick()->stickQueue;
+    ButtonState bs;
+    displayButtonState(oled, bs);
     int ctr = 0;
-    while(true)
+    while (true)
     {
         AnalogStickEvent e;
         if (xQueueReceive(q, &e, 5000) == false)
         {
-            s_println("No analog stick movement ...");
+            s_println("main() No analog stick movement ...");
             continue;
         }
 
-        s_printf("Got analog stick movement! x=%d->%d y=%d->%d\n", e.prev_x, e.cur_x, e.prev_y, e.cur_y);
+        s_printf("main() Got analog stick movement! x=%d->%d y=%d->%d\n", e.prev_x, e.cur_x, e.prev_y, e.cur_y);
 
-        AnalogStickMovement mov = c->getStick()->getMovement(e);
+        AnalogStickMovement mov = c->getStick()->getMovement(e.cur_x, e.cur_y);
+        AnalogStickMovement prev = c->getStick()->getMovement(e.prev_x, e.prev_y);
+        onAnalogStickChange(prev, mov);
         OledDisplayMessage m;
-        m.viewKind = OledView::ControllerDiagStick;
+        m.message = OledMessage::ControllerDiagStick;
         m.stickPos = mov;
         oled->queueMessage(&m);
         ctr += 10;
@@ -132,38 +123,37 @@ void onAnalogStickChangeTask(void*)
 
     vTaskDelete(NULL);
 }
-/*
-#define getButtonState(s) s == ButtonPressState::Up ? "UP" : "DOWN"
-void onButtonPressStateChange(ButtonStateChange press)
+
+#define getButtonState(s) s == ButtonPress::Up ? "UP" : "DOWN"
+void onButtonPressStateChange(ButtonStateChange state)
 {
     s_printf("[main] Buttons pressed! u=%s->%s d=%s->%s l=%s->%s r=%s->%s sel=%s->%s\n",
-             getButtonState(press.oldState.u),
-             getButtonState(press.newState.u),
-             getButtonState(press.oldState.d),
-             getButtonState(press.newState.d),
-             getButtonState(press.oldState.l),
-             getButtonState(press.newState.l),
-             getButtonState(press.oldState.r),
-             getButtonState(press.newState.r),
-             getButtonState(press.oldState.sel),
-             getButtonState(press.newState.sel));
+             getButtonState(state.prev.u),
+             getButtonState(state.cur.u),
+             getButtonState(state.prev.d),
+             getButtonState(state.cur.d),
+             getButtonState(state.prev.l),
+             getButtonState(state.cur.l),
+             getButtonState(state.prev.r),
+             getButtonState(state.cur.r),
+             getButtonState(state.prev.sel),
+             getButtonState(state.cur.sel));
 }
-*/
 
-/*
-void onAnalogStickMovement(AnalogStickMovement move)
+void onAnalogStickChange(AnalogStickMovement prev, AnalogStickMovement cur)
 {
-    s_printf("[main] Stick moved! ctr=%s angle=%f velocity=%f\n",
-             move.isCentered ? "TRUE" : "FALSE",
-             move.angle,
-             move.velocity);
-#ifdef _DO_OLED
-    OledDisplayMessage m;
-    m.pos = move;
-    Oled::getInstance()->queueMessage(m);
-#endif
+    s_printf("[main] Analog stick moved! x=%f->%f y=%f->%f angle=%f->%f velocity=%f->%f isCentered=%d->%d\n",
+             prev.x,
+             cur.x,
+             prev.y,
+             cur.y,
+             prev.angle,
+             cur.angle,
+             prev.velocity,
+             cur.velocity,
+             prev.isCentered,
+             cur.isCentered);
 }
-*/
 
 #endif // _DO_SS
 
