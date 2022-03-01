@@ -28,7 +28,7 @@ static void onBluetoothNotify(BLERemoteCharacteristic *characteristic, MousrData
 
 #ifndef JOYSTICK_INT_PIN
 #define JOYSTICK_INT_PIN 32 // Interrupt pin
-#endif                      // JOYSTICK_INT_PIN
+#endif
 
 #define DRIFT_U 20
 #define DRIFT_D 20
@@ -44,6 +44,9 @@ void onAnalogStickChange(AnalogStickMovement prev, AnalogStickMovement cur);
 
 #ifdef _DO_OLED
 #include "Oled.h"
+OledDisplayMessage controllerMsg;
+OledDisplayMessage mousrMsg;
+OledDisplayMessage connectionMsg;
 #endif // _DO_OLED
 
 #include "utility.h"

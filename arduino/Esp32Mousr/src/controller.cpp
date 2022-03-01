@@ -24,7 +24,14 @@ bool Controller::begin(uint8_t irqPin, uint8_t addr)
         return false;
     }
 
-    checkTrue(i2cSemCritSec(ss.begin(addr)));
+    bool didBegin = false;
+    i2cSemCritSecGetValue(ss.begin(addr), didBegin);
+    if (didBegin == false)
+    {
+        s_println(F("ERROR: Seesaw.begin() was unsuccessful."));
+        return false;
+    }
+    
     i2cSemCritSec(this->ss.pinModeBulk(s_button_mask, INPUT_PULLUP));
     i2cSemCritSec(this->ss.setGPIOInterrupts(s_button_mask, 1));
 

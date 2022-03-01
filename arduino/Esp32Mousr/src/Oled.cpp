@@ -6,8 +6,6 @@
 Oled *Oled::singleton = 0;
 
 bool dumpEnable = false;
-AnalogStickMovement lastStick;
-ButtonState lastButton;
 OledView mode;
 
 void dumpBuffer(U8G2 u8g2)
@@ -22,7 +20,7 @@ void drawMode(U8G2 u8g2, OledMessage view)
 {
     u8g2.setFont(u8g2_font_profont10_mf);
     char c[30];
-    sprintf(c, "MODE: %d", view);
+    sprintf(c, "MODE: %d\n", (int)view);
     u8g2.drawStr(2, 60, c);
 }
 
@@ -30,7 +28,12 @@ void drawAnalogStick(U8G2 u8g2, AnalogStickMovement m)
 {
     drawPos(u8g2, 30, 30, 20, m.angle, m.isCentered);
     drawDetails(u8g2, 55, 40, m.isCentered ? 0 : m.angle, 0, m.isCentered ? 0 : m.velocity);
-    lastStick = m;
+}
+
+void drawMousrPosition(U8G2 u8g2, MousrMovementMsg m)
+{
+    drawPos(u8g2, 30, 30, 20, m.angle);
+    drawDetails(u8g2, 55, 40, m.angle, m.held, m.speed);
 }
 
 void drawButtons(U8G2 u8g2, ButtonState buttons)
@@ -91,6 +94,32 @@ void drawButtons(U8G2 u8g2, ButtonState buttons)
     }
 }
 
+void Oled::setView(OledView view)
+{
+    if (this->isLocked)
+    {
+        s_println("ERROR: Cannot change view because it is locked.");
+    }
+
+    s_printf("Changing view from %d -> %d\n", (int)this->view, (int)view);
+    this->view = view;
+}
+
+OledView Oled::getView()
+{
+    return this->view;
+}
+
+void Oled::lockView()
+{
+    this->isLocked = true;
+}
+
+void Oled::unlockView()
+{
+    this->isLocked = false;
+}
+
 void Oled::displayQueueTask(void *p)
 {
     s_println("Starting displayQueueTask()");
@@ -105,7 +134,13 @@ void Oled::displayQueueTask(void *p)
             continue;
         }
 
-        // s_printf("Got OLED message %p. Kind=%d Flags=%u (count=%d)\n", &m, (uint8_t)m.viewKind, (uint8_t)m.flags, ctr);
+        d_printf("Got OLED message %p. Kind=%d Flags=%u (count=%d) Current view=%d Locked=%d\n", &m, (uint8_t)m.message, (uint8_t)m.flags, ctr, (int)oled->getView(), oled->isLocked);
+
+        if (m.view != oled->view)
+        {
+            d_println("Ignoring message because it's not for the active view.");
+            continue;
+        }
 
         if ((m.flags & OledDisplayFlags::Overlay) == 0)
         {
@@ -114,20 +149,24 @@ void Oled::displayQueueTask(void *p)
         ctr++;
 
         drawMode(u8g2, m.message);
-        if (m.message == OledMessage::ControllerDiagStick)
+        if (m.message == OledMessage::ControllerDiag)
         {
             AnalogStickMovement stick = m.stickPos;
-            drawBattery(u8g2, 100, 2, 24, 10, 5, ctr % 6);
+            drawBattery(u8g2, 100, 0, 24, 10, 10, ctr % 10);
             drawAnalogStick(u8g2, stick);
-            drawButtons(u8g2, lastButton);
-            lastStick = stick;
-        }
-        else if (m.message == OledMessage::ControllerDiagButton)
-        {
             drawButtons(u8g2, m.buttonPress);
-            drawBattery(u8g2, 100, 2, 24, 10, 5, ctr % 6);
-            drawAnalogStick(u8g2, lastStick);
-            lastButton = m.buttonPress;
+        }
+        else if (m.message == OledMessage::Robot)
+        {
+            u8g2.setFont(u8g2_font_courR12_tf);
+            u8g2.drawStr(0, 10, getMousrConnectionStatusString(m.status).c_str());
+            drawBattery(u8g2, 100, 0, 24, 10, 10, m.mousrBattery.voltage / 10);
+            drawMousrPosition(u8g2, m.mousrMove);
+        }
+        else if (m.message == OledMessage::Connecting)
+        {
+            u8g2.setFont(u8g2_font_courR12_tf);
+            u8g2.drawStr(0, 10, getMousrConnectionStatusString(m.status).c_str());   
         }
         else
         {
@@ -154,7 +193,9 @@ void Oled::displayQueueTask(void *p)
 Oled::Oled()
 {
     // this->displayQueue = xQueueCreate(1, sizeof(OledDisplayMessage));
-    this->u8g2 = U8G2_SSD1306_128X64_NONAME_F_HW_I2C(U8G2_R0);
+    //this->u8g2 = U8G2_SSD1306_128X64_NONAME_F_HW_I2C(U8G2_R0);
+    this->u8g2 = U8G2_SH1106_128X64_NONAME_F_HW_I2C(U8G2_R0);
+
     this->displayQueue = xQueueCreate(1, sizeof(OledDisplayMessage));
 }
 
@@ -178,7 +219,7 @@ bool Oled::begin()
 
     this->isFinalizing = false;
     checkTrue(this->u8g2.begin());
-    s_printf("OLED bus clock: %u Wire bus clock: %zu", this->u8g2.getBusClock(), Wire.getClock());
+    s_printf("OLED bus clock: %u Wire bus clock: %zu\n", this->u8g2.getBusClock(), Wire.getClock());
     xTaskCreate(displayQueueTask,
                 "OledDisplay",
                 10000,
@@ -215,7 +256,7 @@ void drawPos(U8G2 u8g2, int x, int y, int rad, int deg, bool ctr)
         yy = y;
     }
 
-    s_printf("deg:%d x:%d y:%d x(cir):%f y(cir):%f rad:%d\n", deg, x, y, xx, yy, rad);
+    d_printf("deg:%d x:%d y:%d x(cir):%f y(cir):%f rad:%d\n", deg, x, y, xx, yy, rad);
     u8g2.drawCircle(x, y, rad);
     u8g2.drawDisc(xx, yy, 4);
     u8g2.drawLine(x, y, xx, yy);

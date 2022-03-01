@@ -25,10 +25,10 @@ ButtonState getPressedButtons(uint32_t mask)
 */
 
 QueueHandle_t buttonSem;
-
 ControllerButtons::ControllerButtons()
 {
     buttonSem = xSemaphoreCreateBinary();
+    //semGive(buttonSem);
     this->buttonPressQueue = xQueueCreate(3, sizeof(ButtonPressEvent));
 }
 
@@ -103,13 +103,13 @@ void ControllerButtons::buttonPressTask(void *p)
     {
         if (semTakeWithTimeout(buttonSem, 5000) == false)
         {
-            s_println(F("Did not receive a queued button press..."));
+            d_println(F("Did not receive a queued button press..."));
             continue;
         }
 
-        uint32_t v;
-        i2cSemCritSec(v = c->ss.digitalReadBulk(s_button_mask));
-        s_printf("press: %u\n", v);
+        uint32_t v = 0;
+        i2cSemCritSecGetValue(c->ss.digitalReadBulk(s_button_mask), v);
+        d_printf("press: %u\n", v);
         // Simple debounce. If the value is identical to before we will just discard it.
         if (pv != v)
         {
@@ -117,8 +117,9 @@ void ControllerButtons::buttonPressTask(void *p)
             evt.prev = pv;
             evt.cur = v;
             pv = v;
-            s_printf("xqueuesend: %d\n", xQueueSendToFront(b->buttonPressQueue, &evt, 0));
-            s_printf("queue space available: %zu\n", uxQueueSpacesAvailable(b->buttonPressQueue));
+            logResult(xQueueSendToFront(b->buttonPressQueue, &evt, 0));
+
+            d_printf("queue space available: %zu\n", uxQueueSpacesAvailable(b->buttonPressQueue));
         }
     }
 
@@ -128,5 +129,6 @@ void ControllerButtons::buttonPressTask(void *p)
 
 void IRAM_ATTR ControllerButtons::onButtonPress()
 {
+    //s_println("ISR onButtonPress()");
     xSemaphoreGiveFromISR(buttonSem, pdFALSE);
 }

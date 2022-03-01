@@ -19,6 +19,10 @@
 #include "utility.h"
 #include "controller.h"
 
+#ifdef _DO_BLE
+#include "MousrBluetooth.h"
+#endif
+
 // Glyphs
 #define ARROW_UP_FILL 0x25b2
 #define ARROW_UP_EMPTY 0x25b3
@@ -40,9 +44,9 @@ enum class OledMessage
     Robot,
     Log,
     Settings,
-    ControllerDiagStick,
-    ControllerDiagButton,
+    ControllerDiag,
     Diagnostic,
+    Connecting,
 };
 
 enum class OledView
@@ -51,7 +55,8 @@ enum class OledView
     Robot,
     Log,
     Settings,
-    Diagnostic
+    ControllerDiag,
+    Connection
 };
 
 enum OledDisplayFlags : uint8_t
@@ -71,12 +76,20 @@ void drawButtons(U8G2 u8g2, ButtonState buttons);
 struct OledDisplayMessage
 {
     OledMessage message;
+    OledView view;
     union
     {
         AnalogStickMovement stickPos;
         MousrMovementMsg mousrMove;
-        ButtonState buttonPress;
     };
+
+    union
+    {
+        ButtonState buttonPress;
+        MousrBatteryMsg mousrBattery;
+    };
+
+    MousrConnectionStatus status;
     OledDisplayFlags flags;
 };
 
@@ -110,6 +123,10 @@ public:
     void queueMessage(OledDisplayMessage *message);
     bool begin();
     bool end();
+    OledView getView();
+    void setView(OledView view);
+    void lockView();
+    void unlockView();
 
     U8G2 u8g2; // TODO: Should probably hide this
 
@@ -117,6 +134,8 @@ private:
     static void displayQueueTask(void *);
     bool hasBegun = false;
     bool isFinalizing = false;
+    OledView view = OledView::None;
+    bool isLocked;
     QueueHandle_t displayQueue;
 };
 

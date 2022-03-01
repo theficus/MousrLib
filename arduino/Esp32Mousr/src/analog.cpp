@@ -83,8 +83,8 @@ bool ControllerAnalogStick::calibrate(uint16_t upCorrection, uint16_t downCorrec
 
     this->minStickMovementH = minStickMovementH;
     this->minStickMovementV = minStickMovementV;
-    i2cSemCritSec(this->x_ctr = c->ss.analogRead(JOYSTICK_H));
-    i2cSemCritSec(this->y_ctr = c->ss.analogRead(JOYSTICK_V));
+    i2cSemCritSecGetValue(c->ss.analogRead(JOYSTICK_H), this->x_ctr);
+    i2cSemCritSecGetValue(c->ss.analogRead(JOYSTICK_V), this->y_ctr);
     s_printf("Calibrated analog stick. Center X=%d Y=%d. Correction values: L=%d R=%d U=%d D=%d\n",
              this->x_ctr,
              this->y_ctr,
@@ -113,10 +113,10 @@ void ControllerAnalogStick::stickMoveTask(void *p)
     s_println(F("stickMoveTask() starting stick movement loop..."));
     while (stick->hasFinalized == false)
     {
-        bool hasRecalibrated;
-        int16_t new_x, new_y;
-        i2cSemCritSec(new_x = c->ss.analogRead(JOYSTICK_H));
-        i2cSemCritSec(new_y = c->ss.analogRead(JOYSTICK_V));
+        bool hasRecalibrated = false;
+        int16_t new_x = 0, new_y = 0;
+        i2cSemCritSecGetValue(c->ss.analogRead(JOYSTICK_H), new_x);
+        i2cSemCritSecGetValue(c->ss.analogRead(JOYSTICK_V), new_y);
         hasRecalibrated = stick->hasRecalibrated;
         stick->hasRecalibrated = false;
 

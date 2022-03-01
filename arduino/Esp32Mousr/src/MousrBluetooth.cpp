@@ -177,7 +177,7 @@ void MousrBluetooth::disconnect()
 
 void MousrBluetooth::sendMessage(MousrData &data)
 {
-    // Serial.printf("Sending message to %s: %s", this->uartWriteCharacteristic->getUUID().toString().c_str(), data.toString().c_str());
+    s_printf("Sending message to %s: %s\n", this->uartWriteCharacteristic->getUUID().toString().c_str(), data.toString().c_str());
     uint8_t *raw;
     size_t length = 0;
     data.getRawMessageData(&raw, length);
