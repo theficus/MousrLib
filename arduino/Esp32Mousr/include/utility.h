@@ -42,11 +42,15 @@
         (byte & 0x01 ? '1' : '0')
 
 #ifdef ARDUINO_ARCH_ESP32
+#include "Wire.h"
 
-bool __i2cSemTake(TickType_t timeout);
-bool __i2cSemGive();
+bool i2cSemTake(TickType_t timeout);
+bool i2cSemGive();
 bool i2cSemInit();
 void logMemory();
+void startWireDebugTask(uint32_t delayMs);
+void stopWireDebugTask();
+void printWireStatus();
 
 // Implementation of shortcut for normal semaphore operations
 #define semTakeWithTimeout(__sem, __timeout) xSemaphoreTake(__sem, __timeout)
@@ -57,24 +61,45 @@ void logMemory();
     semGive(__sem);
 
 #define semCritSec(__sem, __func) \
-    semTake(__sem);               \
-    func;                         \
-    semGive(__sem);
+    {                             \
+        semTake(__sem);           \
+        __func;                   \
+        semGive(__sem);           \
+    }
 
-#define check(__func, __expr)                                     \
-    auto __res = __func;                                          \
-    if (__res != __expr)                                          \
-    {                                                             \
-        s_println("failed check: " #__func " expected " #__expr); \
-        return false;                                             \
+#define check(__func, __expr)                                         \
+    {                                                                 \
+        auto __res = __func;                                          \
+        if (__res != __expr)                                          \
+        {                                                             \
+            s_println("failed check: " #__func " expected " #__expr); \
+            return false;                                             \
+        }                                                             \
+    }
+
+#define logResult(__expr)     \
+    {                         \
+        auto __res = __expr;  \
+        s_print(#__expr);     \
+        s_print(" result: "); \
+        s_println(__res);     \
     }
 
 #define checkTrue(__func) check(__func, true);
 
-#define i2cSemCritSec(__func)    \
-    __i2cSemTake(portMAX_DELAY); \
-    __func;                      \
-    __i2cSemGive();
+#define i2cSemCritSec(__func)      \
+    {                              \
+        i2cSemTake(portMAX_DELAY); \
+        __func;                    \
+        i2cSemGive();              \
+    }
+
+#define i2cSemCritSecGetValue(__func, __val) \
+    {                                        \
+        i2cSemTake(portMAX_DELAY);           \
+        __val = __func;                      \
+        i2cSemGive();                        \
+    }
 
 #else // ARDUINO_ARCH_ESP32
 void logMemory();

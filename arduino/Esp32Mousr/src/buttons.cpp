@@ -1,14 +1,15 @@
 #include "buttons.h"
+#include "controller.h"
 
 /*
 ButtonState getPressedButtons(uint32_t mask)
 {
     ButtonState bs;
-    bs.r = (!(mask & 1 << BUTTON_RIGHT)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.d = (!(mask & 1 << BUTTON_DOWN)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.l = (!(mask & 1 << BUTTON_LEFT)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.u = (!(mask & 1 << BUTTON_UP)) ? ButtonPressState::Down : ButtonPressState::Up;
-    bs.sel = (!(mask & 1 << BUTTON_SEL)) ? ButtonPressState::Down : ButtonPressState::Up;
+    bs.r = (!(mask & 1 << BUTTON_RIGHT)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.d = (!(mask & 1 << BUTTON_DOWN)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.l = (!(mask & 1 << BUTTON_LEFT)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.u = (!(mask & 1 << BUTTON_UP)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.sel = (!(mask & 1 << BUTTON_SEL)) ? ButtonPress::Down : ButtonPress::Up;
     bs.raw = mask;
 
     s_printf("PRESS: u=%d d=%d l=%d r=%d s=%d bin=" BYTE_TO_BINARY_PATTERN "\n",
@@ -23,17 +24,37 @@ ButtonState getPressedButtons(uint32_t mask)
 }
 */
 
-SemaphoreHandle_t buttonSem;
-
-ControllerButtons::ControllerButtons(Controller* c)
+QueueHandle_t buttonSem;
+ControllerButtons::ControllerButtons()
 {
-    this->controller = c;
     buttonSem = xSemaphoreCreateBinary();
+    //semGive(buttonSem);
     this->buttonPressQueue = xQueueCreate(3, sizeof(ButtonPressEvent));
+}
+
+ButtonStateChange ControllerButtons::getStateChange(ButtonPressEvent &event)
+{
+    ButtonStateChange bs;
+    bs.prev.r = (!(event.prev & 1 << BUTTON_RIGHT)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.prev.d = (!(event.prev & 1 << BUTTON_DOWN)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.prev.l = (!(event.prev & 1 << BUTTON_LEFT)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.prev.u = (!(event.prev & 1 << BUTTON_UP)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.prev.sel = (!(event.prev & 1 << BUTTON_SEL)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.prev.raw = event.prev;
+
+    bs.cur.r = (!(event.cur & 1 << BUTTON_RIGHT)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.cur.d = (!(event.cur & 1 << BUTTON_DOWN)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.cur.l = (!(event.cur & 1 << BUTTON_LEFT)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.cur.u = (!(event.cur & 1 << BUTTON_UP)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.cur.sel = (!(event.cur & 1 << BUTTON_SEL)) ? ButtonPress::Down : ButtonPress::Up;
+    bs.cur.raw = event.cur;
+    return bs;
 }
 
 bool ControllerButtons::begin()
 {
+    this->hasFinalized = false;
+
     BaseType_t result = xTaskCreate(
         ControllerButtons::buttonPressTask,
         "buttonPressTask",
@@ -50,13 +71,15 @@ bool ControllerButtons::begin()
 
     pinMode(this->irqPin, INPUT);
     attachInterrupt(this->irqPin, ControllerButtons::onButtonPress, FALLING);
-
+    this->hasBegun = true;
     return true;
 }
 
 bool ControllerButtons::end()
 {
     detachInterrupt(this->irqPin);
+    this->hasBegun = false;
+    this->hasFinalized = true;
     return true;
 }
 
@@ -66,20 +89,27 @@ void ControllerButtons::buttonPressTask(void *p)
     ControllerButtons *b = static_cast<ControllerButtons *>(p);
     Controller *c = Controller::getInstance();
     s_println(F("buttonPressTask() waiting for begin..."));
-    s_println(F("starting button loop"));
+    s_println(F("buttonPressTask() starting button loop"));
     uint32_t pv = 0;
-    while (c->isFinalizing == false)
+
+    s_println(F("buttonPressTask() waiting for begin() to finish..."));
+    while (b->hasBegun == false)
+    {
+        delay(100);
+    }
+
+    s_println(F("buttonPressTask() waiting for button press..."));
+    while (b->hasFinalized == false)
     {
         if (semTakeWithTimeout(buttonSem, 5000) == false)
         {
-            s_println(F("Did not receive a queued button press..."));
+            d_println(F("Did not receive a queued button press..."));
             continue;
         }
 
-        uint32_t v;
-        i2cSemCritSec(v = c->ss.digitalReadBulk(s_button_mask));
-        s_printf("press: %u\n", v);
-
+        uint32_t v = 0;
+        i2cSemCritSecGetValue(c->ss.digitalReadBulk(s_button_mask), v);
+        d_printf("press: %u\n", v);
         // Simple debounce. If the value is identical to before we will just discard it.
         if (pv != v)
         {
@@ -87,8 +117,9 @@ void ControllerButtons::buttonPressTask(void *p)
             evt.prev = pv;
             evt.cur = v;
             pv = v;
-            s_printf("xqueuesend: %d\n", xQueueSendToFront(b->buttonPressQueue, &evt, 0));
-            s_printf("queue space available: %zu\n", uxQueueSpacesAvailable(b->buttonPressQueue));
+            logResult(xQueueSendToFront(b->buttonPressQueue, &evt, 0));
+
+            d_printf("queue space available: %zu\n", uxQueueSpacesAvailable(b->buttonPressQueue));
         }
     }
 
@@ -98,5 +129,6 @@ void ControllerButtons::buttonPressTask(void *p)
 
 void IRAM_ATTR ControllerButtons::onButtonPress()
 {
+    //s_println("ISR onButtonPress()");
     xSemaphoreGiveFromISR(buttonSem, pdFALSE);
 }

@@ -5,14 +5,28 @@
 uint8_t *raw;
 size_t rawLength;
 
-MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length)
+void init(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length, const size_t padding = 3)
 {
-    rawLength = length + 3; // +1 for msg, +1 for cmd, +1 for trailing byte
-    raw = (uint8_t *)malloc(rawLength);
-    clearmem(raw, length + 3);
+    // Default padding is 3, one for msg, one for cmd, one for trailing byte
+    rawLength = length + padding;
+    raw = (uint8_t*)malloc(rawLength);
+    clearmem(raw, rawLength);
     memcpy(&raw[0], &msg, 1);
     memcpy(&raw[1], data, length);
-    memcpy(&raw[length + 1], &cmd, 1);
+    memcpy(&raw[length+1], &cmd, 1);
+}
+
+MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, const size_t length)
+{
+    uint8_t* data = (uint8_t*)malloc(length);
+    clearmem(data, length);
+    init(msg, cmd, data, length);
+
+}
+
+MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length)
+{
+    init(msg, cmd, data, length);
 }
 
 MousrData::MousrData(const uint8_t *data, size_t length)

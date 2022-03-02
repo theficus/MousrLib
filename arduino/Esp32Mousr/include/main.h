@@ -17,34 +17,36 @@
 
 void waitForStatus(MousrConnectionStatus);
 static void onBluetoothStatusChange(MousrConnectionStatus oldStatus, MousrConnectionStatus newStatus);
-static void onBluetoothNotify(BLERemoteCharacteristic* characteristic, MousrData& data);
+static void onBluetoothNotify(BLERemoteCharacteristic *characteristic, MousrData &data);
 
 #endif // _DO_BLE
 
 #ifdef _DO_SS
-#include "Controller.h"
+#include "controller.h"
 #include "buttons.h"
 #include "analog.h"
 
 #ifndef JOYSTICK_INT_PIN
 #define JOYSTICK_INT_PIN 32 // Interrupt pin
-#endif // JOYSTICK_INT_PIN
+#endif
 
 #define DRIFT_U 20
 #define DRIFT_D 20
 #define DRIFT_L 55
 #define DRIFT_R 50
 
-void onButtonPressChangeTask(void*);
-void onAnalogStickChangeTask(void*);
-
-//void onButtonPressStateChange(ButtonStateChange press);
-//void onAnalogStickMovement(AnalogStickMovement move);
+void onButtonPressChangeTask(void *);
+void onAnalogStickChangeTask(void *);
+void onButtonPressStateChange(ButtonStateChange state);
+void onAnalogStickChange(AnalogStickMovement prev, AnalogStickMovement cur);
 
 #endif // _DO_SS
 
 #ifdef _DO_OLED
 #include "Oled.h"
+OledDisplayMessage controllerMsg;
+OledDisplayMessage mousrMsg;
+OledDisplayMessage connectionMsg;
 #endif // _DO_OLED
 
 #include "utility.h"

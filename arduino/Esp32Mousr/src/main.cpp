@@ -10,31 +10,46 @@ void die()
 }
 
 #ifdef _DO_OLED
-/*
-int counter = 0;
-void updateOledTask(AnalogStickMovement &stick)
+void setupMessages()
 {
-    s_println("Updating OLED...");
-    float angle = stick.angle;
-    s_printf("stick angle: %f -> %f\n", stick.angle, angle);
-    __i2cSemTake();
-    u8g2.clearBuffer();
-    drawBattery(u8g2, 100, 2, 24, 10, 5, counter % 6);
-    drawPos(u8g2, 30, 30, 20, angle, stick.isCentered);
-    // drawAngle(u8g2, 40, 40, 20, 8, counter % 45);
-    drawDetails(u8g2, 55, 40, stick.isCentered ? 0 : angle, (float)(counter % 90), stick.isCentered ? 0 : stick.velocity);
-    u8g2.sendBuffer();
-    __i2cSemGive();
-    counter++;
+    controllerMsg.message = OledMessage::ControllerDiag;
+    controllerMsg.view = OledView::ControllerDiag;
+    mousrMsg.message = OledMessage::Robot;
+    mousrMsg.view = OledView::Robot;
+    connectionMsg.message = OledMessage::Connecting;
+    connectionMsg.view = OledView::Connection;
+    connectionMsg.status = MousrConnectionStatus::Unknown;
 }
-*/
-#endif // _DO_OLED
+#endif
 
 void setup()
 {
     Serial.begin(115200);
-
     i2cSemInit();
+
+#ifdef _DO_OLED
+    setupMessages();
+    Oled *oled = Oled::getInstance();
+    oled->u8g2.setBusClock(100000);
+    oled->begin();
+#endif // _DO_OLED
+
+#ifdef _DO_SS
+    Controller *c = Controller::getInstance();
+    c->begin(JOYSTICK_INT_PIN);
+    c->getStick()->calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
+    xTaskCreate(onButtonPressChangeTask, "mainButtonPress", 10000, NULL, 3, NULL);
+    xTaskCreate(onAnalogStickChangeTask, "mainAnalogStick", 10000, NULL, 4, NULL);
+#endif // _DO_SS
+
+#ifdef WIRE_DEBUG
+    startWireDebugTask(5000);
+#endif // WIRE_DEBUG
+
+#if _DO_OLED
+    oled->setView(OledView::Connection);
+    oled->lockView();
+#endif
 
 #ifdef _DO_BLE
     // Set up Bluetooth
@@ -46,124 +61,198 @@ void setup()
     waitForStatus(MousrConnectionStatus::Discovered);
     mb->connect();
     waitForStatus(MousrConnectionStatus::Connected);
+
     if (mb->discoverCapabilities() == false)
     {
         die();
     }
 #endif // _DO_BLE
 
-    s_printf("Wire speed then: %zu\n", Wire.getClock());
+#if _DO_OLED
+    oled->unlockView();
 
-#ifdef _DO_SS
-    Controller *c = Controller::getInstance();
-    c->begin(JOYSTICK_INT_PIN);
-    s_printf("controller Wire speed now: %zu\n", Wire.getClock());
-    c->getStick()->calibrate(DRIFT_U, DRIFT_D, DRIFT_L, DRIFT_R);
-
-    xTaskCreate(onButtonPressChangeTask, "mainButtonPress", 10000, NULL, 5, NULL);
-    xTaskCreate(onAnalogStickChangeTask, "mainAnalogStick", 10000, NULL, 4, NULL);
-#endif // _DO_SS
-
-#ifdef _DO_OLED
-    Oled::getInstance()->begin();
-    Oled::getInstance()->u8g2.setBusClock(100000);
-    s_printf("oled Wire speed now: %zu\n", Wire.getClock());
-    //u8g2.begin();
-    //u8g2.clear();
-    //xTaskCreate(updateOledTask, "oledTask", 10000, NULL, 100, NULL);
-#endif // _DO_OLED
-
+#if _DO_BLE
+    oled->setView(OledView::Robot);
+#else
+    oled->setView(OledView::ControllerDiag);
+#endif
+#endif
 }
 
 void loop()
 {
-    //logMemory();
-    //delay(5000);
+    // logMemory();
+    // delay(5000);
     ;
 }
 
+#ifdef _DO_OLED
+void displayButtonState(Oled *oled, const ButtonState &state)
+{
+    controllerMsg.buttonPress = state;
+    oled->queueMessage(&controllerMsg);
+}
+#endif
+
 #ifdef _DO_SS
-void onButtonPressChangeTask(void*)
+
+#if _DO_OLED
+OledView getNextView(OledView currentView)
+{
+    switch (currentView)
+    {
+    case OledView::ControllerDiag:
+        return OledView::Robot;
+    case OledView::Robot:
+        return OledView::ControllerDiag;
+    default:
+        return currentView;
+    }
+}
+#endif
+
+void onButtonPressChangeTask(void *)
 {
     s_println("main() starting onButtonPressChangeTask()");
 
     QueueHandle_t q = Controller::getInstance()->getButtons()->buttonPressQueue;
+#ifdef _DO_OLED
+    Oled *oled = Oled::getInstance();
+#endif
+
+#ifdef _DO_BLE
+    MousrBluetooth *mb = MousrBluetooth::getInstance();
+#endif
+
     while (true)
     {
         ButtonPressEvent e;
-        if(xQueueReceive(q, &e, 5000) == false) 
+        if (xQueueReceive(q, &e, 5000) == false)
         {
-            s_println("No button press triggered ...");
+            d_println(F("main() No button press triggered ..."));
             continue;
         }
 
-        s_printf("Got buton press! before=%d after=%d\n", e.prev, e.cur);
+        d_println(F("main() Got button press!"));
+        ButtonStateChange state = ControllerButtons::getStateChange(e);
+        onButtonPressStateChange(state);
+#ifdef _DO_OLED
+        displayButtonState(oled, state.cur);
+
+        if (state.cur.sel == ButtonPress::Down)
+        {
+            oled->setView(getNextView(oled->getView()));
+        }
+#endif
+
+#ifdef _DO_BLE
+        if (mb->getConnectionStatus() == MousrConnectionStatus::Ready)
+        {
+            if (state.cur.d == ButtonPress::Down)
+            {
+                std::vector<uint8_t> data;
+                MousrData::append(data, (uint8_t)MousrMessage::ROBOT_POSE);
+                MousrData::append(data, (uint16_t)0);
+                MousrData::append(data, (uint16_t)0);
+                MousrData::append(data, (uint16_t)0);
+                MousrData::append(data, (uint8_t)MousrCommand::RESET_HEADING);
+                MousrData::append(data, false);
+                MousrData msg = MousrData(data.data(), data.size());
+                mb->sendMessage(msg);
+            }
+
+            if (state.cur.u == ButtonPress::Down)
+            {
+                std::vector<uint8_t> data;
+                MousrData::append(data, (uint8_t)MousrMessage::ROBOT_POSE);
+                MousrData::append(data, (uint16_t)0);
+                MousrData::append(data, (uint16_t)0);
+                MousrData::append(data, (uint16_t)0);
+                MousrData::append(data, (uint8_t)MousrCommand::RESET_HEADING);
+                MousrData::append(data, false);
+                MousrData msg = MousrData(data.data(), data.size());
+            }
+        }
+#endif
     }
 
     vTaskDelete(NULL);
 }
 
-void onAnalogStickChangeTask(void*)
+void onAnalogStickChangeTask(void *)
 {
     s_println("main() starting onAnalogStickChangeTask()");
-    
-    Oled* oled = Oled::getInstance();
-    Controller* c = Controller::getInstance();
+#ifdef _DO_OLED
+    Oled *oled = Oled::getInstance();
+#endif
+    Controller *c = Controller::getInstance();
     QueueHandle_t q = Controller::getInstance()->getStick()->stickQueue;
+    ButtonState bs;
+
+#ifdef _DO_OLED
+    displayButtonState(oled, bs);
+#endif
+
+#ifdef _DO_BLE
+    // MousrBluetooth *mb = MousrBluetooth::getInstance();
+#endif
+
     int ctr = 0;
-    while(true)
+    while (true)
     {
         AnalogStickEvent e;
         if (xQueueReceive(q, &e, 5000) == false)
         {
-            s_println("No analog stick movement ...");
+            d_println("main() No analog stick movement ...");
             continue;
         }
 
-        s_printf("Got analog stick movement! x=%d->%d y=%d->%d\n", e.prev_x, e.cur_x, e.prev_y, e.cur_y);
+        d_printf("main() Got analog stick movement! x=%d->%d y=%d->%d\n", e.prev_x, e.cur_x, e.prev_y, e.cur_y);
 
-        AnalogStickMovement mov = c->getStick()->getMovement(e);
-        OledDisplayMessage m;
-        m.viewKind = OledView::ControllerDiagStick;
-        m.stickPos = mov;
-        oled->queueMessage(&m);
+        AnalogStickMovement mov = c->getStick()->getMovement(e.cur_x, e.cur_y);
+        AnalogStickMovement prev = c->getStick()->getMovement(e.prev_x, e.prev_y);
+        onAnalogStickChange(prev, mov);
+
+#ifdef _DO_OLED
+        controllerMsg.stickPos = mov;
+        oled->queueMessage(&controllerMsg);
+#endif
         ctr += 10;
     }
 
     vTaskDelete(NULL);
 }
-/*
-#define getButtonState(s) s == ButtonPressState::Up ? "UP" : "DOWN"
-void onButtonPressStateChange(ButtonStateChange press)
+
+#define getButtonState(s) s == ButtonPress::Up ? "UP" : "DOWN"
+void onButtonPressStateChange(ButtonStateChange state)
 {
     s_printf("[main] Buttons pressed! u=%s->%s d=%s->%s l=%s->%s r=%s->%s sel=%s->%s\n",
-             getButtonState(press.oldState.u),
-             getButtonState(press.newState.u),
-             getButtonState(press.oldState.d),
-             getButtonState(press.newState.d),
-             getButtonState(press.oldState.l),
-             getButtonState(press.newState.l),
-             getButtonState(press.oldState.r),
-             getButtonState(press.newState.r),
-             getButtonState(press.oldState.sel),
-             getButtonState(press.newState.sel));
+             getButtonState(state.prev.u),
+             getButtonState(state.cur.u),
+             getButtonState(state.prev.d),
+             getButtonState(state.cur.d),
+             getButtonState(state.prev.l),
+             getButtonState(state.cur.l),
+             getButtonState(state.prev.r),
+             getButtonState(state.cur.r),
+             getButtonState(state.prev.sel),
+             getButtonState(state.cur.sel));
 }
-*/
 
-/*
-void onAnalogStickMovement(AnalogStickMovement move)
+void onAnalogStickChange(AnalogStickMovement prev, AnalogStickMovement cur)
 {
-    s_printf("[main] Stick moved! ctr=%s angle=%f velocity=%f\n",
-             move.isCentered ? "TRUE" : "FALSE",
-             move.angle,
-             move.velocity);
-#ifdef _DO_OLED
-    OledDisplayMessage m;
-    m.pos = move;
-    Oled::getInstance()->queueMessage(m);
-#endif
+    s_printf("[main] Analog stick moved! x=%f->%f y=%f->%f angle=%f->%f velocity=%f->%f isCentered=%d->%d\n",
+             prev.x,
+             cur.x,
+             prev.y,
+             cur.y,
+             prev.angle,
+             cur.angle,
+             prev.velocity,
+             cur.velocity,
+             prev.isCentered,
+             cur.isCentered);
 }
-*/
 
 #endif // _DO_SS
 
@@ -175,10 +264,18 @@ void waitForStatus(MousrConnectionStatus status)
     s_printf("Waiting for status: %s\n", expectedStatus.c_str());
     MousrConnectionStatus s;
     MousrBluetooth *mb = MousrBluetooth::getInstance();
+#if _DO_OLED
+    Oled *oled = Oled::getInstance();
+#endif
+
     while ((s = mb->getConnectionStatus()) != status)
     {
         std::string actualStatus = getMousrConnectionStatusString(s);
         s_printf("Current status: %s ...\n", actualStatus.c_str());
+#if _DO_OLED
+        connectionMsg.status = status;
+        oled->queueMessage(&connectionMsg);
+#endif
         sleep(1);
     }
 }
@@ -195,14 +292,25 @@ static void onBluetoothNotify(BLERemoteCharacteristic *characteristic, MousrData
     switch (data.getMessageKind())
     {
     case MousrMessage::ROBOT_POSE:
-        s_printf("[main] ROBOT_POSE: Speed=%f Angle=%f Tilt=%f\n", msg->movement.speed, msg->movement.angle, msg->movement.held);
-        break;
+        if (msg->movement.angle <= mousrMsg.mousrMove.angle - 1 ||
+            msg->movement.angle >= mousrMsg.mousrMove.angle + 1)
+        {
+            mousrMsg.mousrMove = msg->movement;
+            d_printf("[main] ROBOT_POSE: Speed=%f Angle=%f Tilt=%f\n", msg->movement.speed, msg->movement.angle, msg->movement.held);
+            break;
+        }
+        d_printf("ignoring movement... %f -> %f", mousrMsg.mousrMove.angle, msg->movement.angle);
+        return;
     case MousrMessage::BATTERY_VOLTAGE:
-        s_printf("[main] BATTERY: Percent: %d%%\n", msg->battery.voltage);
+        mousrMsg.mousrBattery = msg->battery;
+        d_printf("[main] BATTERY: Percent: %d%%\n", msg->battery.voltage);
         break;
     default:
         s_printf("[main] Got unknown Bluetooth notification for %s: %s\n", characteristic->getUUID().toString().c_str(), data.toString().c_str());
+        return;
     }
+
+    Oled::getInstance()->queueMessage(&mousrMsg);
 }
 
 #endif // _DO_BLE

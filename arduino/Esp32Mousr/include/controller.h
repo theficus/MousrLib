@@ -5,6 +5,8 @@
 #include <functional>
 #include "logging.h"
 #include "utility.h"
+#include "analog.h"
+#include "buttons.h"
 
 #ifndef ARDUINO
 #include "fakes.h"
@@ -24,8 +26,6 @@ class Controller
 
 private:
     static Controller *singleton;
-    QueueHandle_t buttonPressQueue;
-    QueueHandle_t stickQueue;
     Controller();
 
 public:
@@ -48,13 +48,11 @@ public:
     ControllerButtons *getButtons();
 
 private:
+    ControllerButtons buttons;
+    ControllerAnalogStick stick;
     Adafruit_seesaw ss;
-    bool isFinalizing = false;
     bool hasBegun = false;
     uint8_t addr = 0;
-
-    // ControllerButtons buttons;
-    // ControllerAnalogStick stick;
 };
 
 #endif // ARDUINO

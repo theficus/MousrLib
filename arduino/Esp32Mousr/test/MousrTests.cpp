@@ -4,6 +4,10 @@
 #include "Mousr.h"
 #include "MousrTests.h"
 
+/**
+ * @brief Validates the conversion of MousrConnectionStatus to std::string
+ *
+ */
 void test_connectionStatusMap()
 {
     std::string expected = "Unknown";
@@ -165,4 +169,20 @@ void test_messageCtor()
     std::string actual = d.toString();
     s_printf("%s\n", actual.c_str());
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
+
+    d = MousrData(MousrMessage::ROBOT_POSE, MousrCommand::RESET_HEADING);
+    actual = d.toString();
+    s_printf("%s\n", actual.c_str());
+    TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
+}
+
+void runMousrTests()
+{
+    test_ParseMessage();
+    test_mousrAlloc();
+    test_getRawData();
+    test_convertToBytes();
+    test_createFromRaw();
+    test_connectionStatusMap();
+    test_messageCtor();
 }

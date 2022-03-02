@@ -4,7 +4,8 @@
 #define _MOUSR_BUTTONS_H
 
 #include <functional>
-#include "controller.h"
+#include "logging.h"
+#include "utility.h"
 
 #define BUTTON_RIGHT 6 // A
 #define BUTTON_DOWN 7  // B
@@ -17,8 +18,7 @@ const uint32_t s_button_mask =
     (1 << BUTTON_LEFT) | (1 << BUTTON_UP) |
     (1 << BUTTON_SEL);
 
-/*
-enum ButtonPressState
+enum ButtonPress
 {
     Up,
     Down,
@@ -26,23 +26,19 @@ enum ButtonPressState
 
 struct ButtonState
 {
-    ButtonPressState u;
-    ButtonPressState d;
-    ButtonPressState l;
-    ButtonPressState r;
-    ButtonPressState sel;
+    ButtonPress u;
+    ButtonPress d;
+    ButtonPress l;
+    ButtonPress r;
+    ButtonPress sel;
+    uint32_t raw;
 };
 
-class ButtonPress
+struct ButtonStateChange
 {
-private:
-    uint32_t prev;
-    uint32_t cur;
-
-public:
-    ButtonPress(uint32_t prev, uint32_t cur);
+    ButtonState prev;
+    ButtonState cur;
 };
-*/
 
 struct ButtonPressEvent
 {
@@ -56,13 +52,15 @@ class ControllerButtons
 
 public:
     QueueHandle_t buttonPressQueue;
-    
+    static ButtonStateChange getStateChange(ButtonPressEvent &event);
+
 private:
-    Controller *controller;
-    ControllerButtons(Controller *c);
+    ControllerButtons();
     bool begin();
     bool end();
     uint8_t irqPin = 0;
+    bool hasBegun = false;
+    bool hasFinalized = false;
     static void buttonPressTask(void *);
     static void IRAM_ATTR onButtonPress();
 };
