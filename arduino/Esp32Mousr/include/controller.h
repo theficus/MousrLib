@@ -16,6 +16,9 @@
 // seesaw includes
 #include <Adafruit_seesaw.h>
 
+class ControllerButtons;
+class ControllerAnalogStick;
+
 class Controller
 {
     friend class ControllerButtons;

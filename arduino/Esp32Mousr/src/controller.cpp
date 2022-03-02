@@ -1,3 +1,5 @@
+#include "buttons.h"
+#include "analog.h"
 #include "controller.h"
 #include "buttons.h"
 #include "analog.h"
