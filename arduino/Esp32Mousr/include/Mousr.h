@@ -1,3 +1,13 @@
+/**
+ * @file Mousr.h
+ * @author Adam Meltzer (11638244+theficus@users.noreply.github.com)
+ * @brief Classes and headers with Mousr-specific implementation details
+ * @version 0.1
+ * @date 2022-03-01
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #pragma once
 #ifndef MOUSR_MOUSR_H
 #define MOUSR_MOUSR_H
@@ -18,6 +28,10 @@
 #include <algorithm>
 #include <map>
 
+/**
+ * @brief Bluetooth connection status
+ *
+ */
 enum class MousrConnectionStatus : uint8_t
 {
     Unknown,
@@ -33,6 +47,10 @@ enum class MousrConnectionStatus : uint8_t
     Max = Error, // Match whatever the last value is
 };
 
+/**
+ * @brief Maps a connection status to a friendly string
+ *
+ */
 static std::map<MousrConnectionStatus, std::string> s_MousrConnectionStatusToStringMap = {
     {MousrConnectionStatus::Unknown, "Unknown"},
     {MousrConnectionStatus::None, "None"},
@@ -58,6 +76,10 @@ static std::string getMousrConnectionStatusString(MousrConnectionStatus status)
     return s_MousrConnectionStatusToStringMap[(MousrConnectionStatus)v];
 }
 
+/**
+ * @brief Mousr message type received by the Bluetooth listener
+ *
+ */
 enum class MousrMessage : uint8_t
 {
     AUTO_ACK = 0x0f,
@@ -76,6 +98,10 @@ enum class MousrMessage : uint8_t
     NACK = 0xff,
 };
 
+/**
+ * @brief Commands that can be sent when sending a ROBOT_POSE message
+ * @see https://github.com/theficus/MousrLib/wiki/Mousr-messages
+ */
 enum class MousrCommand : uint8_t
 {
     STOP = 0x00,
@@ -103,7 +129,12 @@ enum class MousrCommand : uint8_t
 };
 
 #pragma pack(push, 1) // Very important to make sure we align properly
-// 0x6218000000001815000000000000000000000000
+
+/**
+ * @brief Battery message
+ * @note 0x6218000000001815000000000000000000000000
+ * @see https://github.com/theficus/MousrLib/wiki/BATTERY_VOLTAGE
+ */
 struct MousrBatteryMsg
 {
     uint8_t voltage;
@@ -114,7 +145,10 @@ struct MousrBatteryMsg
     uint16_t unknown;
 };
 
-// 0x309f5c10bff3162ec0d71e18c100870000000000
+/**
+ * @brief Movement message (send or receive)
+ * @note 0x309f5c10bff3162ec0d71e18c100870000000000
+ */
 struct MousrMovementMsg
 {
     float speed;
@@ -122,6 +156,10 @@ struct MousrMovementMsg
     float angle;
 };
 
+/**
+ * @brief Received data message that encompasses all currently supported message types
+ * @see https://github.com/theficus/MousrLib/wiki/Mousr-messages
+ */
 struct MousrMessageData
 {
     MousrMessage msg;
@@ -141,19 +179,90 @@ struct MousrMessageData
 class MousrData
 {
 public:
+    /**
+     * @brief Construct a new Mousr Data object with no parameter values (empty)
+     *
+     * @param msg Message kind
+     * @param cmd Message command
+     * @param length Message length
+     */
+    MousrData(const MousrMessage msg, const MousrCommand cmd, const size_t length = 12);
+
+    /**
+     * @brief Construct a new Mousr Data object with pre-defined raw data
+     *
+     * @param data Bytes
+     * @param length Message length
+     */
     MousrData(const uint8_t *data, size_t length);
+
+    /**
+     * @brief Construct a new Mousr Data object with a character string
+     *
+     * @param data Message text (null terminated)
+     */
     MousrData(const char *data);
+
+    /**
+     * @brief Construct a new Mousr Data object
+     *
+     * @param msg Message kind
+     * @param cmd Message command
+     * @param data Message data (if less than length will be zero filled)
+     * @param length Data length (_not_ message length)
+     */
     MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length = 12);
-    MousrData(std::string data);
+
+    /**
+     * @brief Destroy the Mousr Data object
+     *
+     */
     ~MousrData();
 
+    /**
+     * @brief Get the raw internal message data
+     *
+     * @return MousrMessageData*
+     * @note Caller must not free
+     */
     MousrMessageData *getMessageData();
+
+    /**
+     * @brief Get a copy of the raw message data
+     *
+     * @return MousrMessageData*
+     * @note Must be free'd by the calle
+     */
     void getRawMessageData(uint8_t **data, size_t &length);
+
+    /**
+     * @brief Get the Message Kind
+     * 
+     * @return MousrMessage 
+     */
     MousrMessage getMessageKind();
+
+    /**
+     * @brief Get the Message Length
+     * 
+     * @return size_t 
+     */
     size_t getMessageLength();
+
+    /**
+     * @brief Converts the message to a hexadecimal string
+     * 
+     * @return std::string 
+     */
     std::string toString();
 
-    // Simple conversion from T -> array of bytes
+    /**
+     * @brief Simple conversion from T -> array of bytes
+     * 
+     * @tparam T 
+     * @param v value
+     * @return uint8_t* 
+     */
     template <typename T>
     static uint8_t *toBytes(T v)
     {
@@ -163,7 +272,14 @@ public:
         return p;
     }
 
-    // Simple conversion of array of bytes -> T
+    /**
+     * @brief Simple conversion of array of bytes -> T
+     * 
+     * @tparam T 
+     * @param data 
+     * @param v 
+     * @param sz 
+     */
     template <typename T>
     static void fromBytes(const uint8_t *data, T &v, size_t sz = sizeof(T))
     {
@@ -171,7 +287,14 @@ public:
         memcpy(&v, data, sz);
     }
 
-    // Converts T to bytes and appends to the vector
+    /**
+     * @brief Converts T to bytes and appends a vector
+     * 
+     * @tparam T 
+     * @param vec Destination vector
+     * @param v Value
+     * @param length Data length
+     */
     template <typename T>
     static void append(std::vector<uint8_t> &vec, T v, size_t length = sizeof(T))
     {
@@ -183,7 +306,13 @@ public:
         }
     }
 
-    // Converts a vector of bytes to a hex string
+    /**
+     * @brief Converts a vector of bytes to a hex string
+     * 
+     * @param data 
+     * @param addSignifier If true, adds 0x
+     * @return std::string 
+     */
     static std::string toString(const std::vector<uint8_t> data, bool addSignifier = true)
     {
         return toString(data.data(), data.size(), addSignifier);
