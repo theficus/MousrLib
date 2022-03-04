@@ -7,6 +7,7 @@
 
 #ifndef ARDUINO
 
+#include "ArduinoFake.h"
 #include <iostream>
 #include <map>
 #include <any>
@@ -17,9 +18,6 @@
 #define pdPASS 1
 #define QueueHandle_t int
 #define SemaphoreHandle_t int
-#define F(str) #str
-#define FALLING 0
-#define INPUT 0
 #define IRAM_ATTR
 #define vTaskDelete(...)
 #define xSemaphoreGiveFromISR(...) 1
@@ -38,18 +36,10 @@
 #define xQueueCreate(...) 1
 #define OLED_DEBUG_DUMP_OUTPUT_DESTINATION
 
-#define Wire = Wire_()
-class Wire_
+class MockU8G2
 {
 public:
-    Wire_(...) {}
-    int getClock() { return 100000; }
-};
-
-class U8G2
-{
-public:
-    U8G2(...) {}
+    MockU8G2(...) {}
     void drawGlyph(int x, int y, int glyph)
     {
         s_printf("[OLED->drawGlyph] x=%d y=%d glyph=%d (%x)\n", x, y, glyph, glyph);
@@ -102,23 +92,37 @@ public:
     }
 };
 
-class Adafruit_seesaw
+#define U8G2 MockU8G2
+
+class MockAdafruit_seesaw
 {
 public:
-    Adafruit_seesaw() {}
+    MockAdafruit_seesaw() {}
     uint32_t digitalReadBulk(...)
     {
         return 0xffffffff;
     }
+
+    bool begin(...)
+    {
+        return true;
+    };
+    
+    void pinModeBulk(...){};
+    void setGPIOInterrupts(...){};
 };
 
-class BLERemoteCharacteristic
+#define Adafruit_seesaw MockAdafruit_seesaw
+
+class MockBLERemoteCharacteristic
 {
 public:
     void writeValue(uint8_t *, size_t)
     {
     }
 };
+
+#define MockBLERemoteCharacteristic BLERemoteCharacteristic
 
 // Mock out the ESP32 Preferences library to just store things in memory
 class MockPreferences

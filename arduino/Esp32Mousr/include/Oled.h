@@ -6,13 +6,14 @@
 #include <cstdio>
 #include <iostream>
 #include <map>
-#include <math.h>
+#include <cmath>
+#include <algorithm>
 #include "logging.h"
 #include "utility.h"
 //#include "controller.h"
 #include "analog.h"
 #include "buttons.h"
-#include "mousr.h"
+#include "Mousr.h"
 
 #ifdef ARDUINO
 #include <U8g2lib.h>
