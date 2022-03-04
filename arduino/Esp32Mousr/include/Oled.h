@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <iostream>
 #include <map>
+#include <math.h>
 #include "logging.h"
 #include "utility.h"
 //#include "controller.h"
@@ -15,6 +16,10 @@
 
 #ifdef ARDUINO
 #include <U8g2lib.h>
+#else
+#include "fakes.h"
+#endif
+
 #include "logging.h"
 #include "utility.h"
 #include "controller.h"
@@ -139,5 +144,4 @@ private:
     QueueHandle_t displayQueue;
 };
 
-#endif // ARDUINO
 #endif // MOUSR_OLED_H

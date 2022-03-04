@@ -1,3 +1,14 @@
+/**
+ * @file MousrBluetooth.h
+ * @author Adam Meltzer (11638244+theficus@users.noreply.github.com)
+ * @brief BLE functions and classes for working with Mousr
+ * @version 0.1
+ * @date 2022-03-03
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #pragma once
 #ifndef MOUSR_MOUSR_BLUETOOTH_H
 #define MOUSR_MOUSR_BLUETOOTH_H

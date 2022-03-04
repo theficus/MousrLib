@@ -25,15 +25,91 @@
 #define xSemaphoreGiveFromISR(...) 1
 #define uxQueueSpacesAvailable(...) (size_t)1
 #define xQueueSendToFront(...) 1
-#define semTake(...) true
-#define semTakeWithTimeout(...) true
 #define xSemaphoreCreateBinary() 1
+#define TickType_t uint32_t
+#define u8g2_font_courR08_tf 0
+#define u8g2_font_courR12_tf 0
+#define u8g2_font_profont10_mf 0
+#define u8g2_font_9x15_t_symbols 0
+#define xQueueReceive(...) true
+#define portMAX_DELAY 0
+#define U8G2_SH1106_128X64_NONAME_F_HW_I2C U8G2
+#define U8G2_R0 0
+#define xQueueCreate(...) 1
+#define OLED_DEBUG_DUMP_OUTPUT_DESTINATION
+
+#define Wire = Wire_()
+class Wire_
+{
+public:
+    Wire_(...) {}
+    int getClock() { return 100000; }
+};
+
+class U8G2
+{
+public:
+    U8G2(...) {}
+    void drawGlyph(int x, int y, int glyph)
+    {
+        s_printf("[OLED->drawGlyph] x=%d y=%d glyph=%d (%x)\n", x, y, glyph, glyph);
+    }
+
+    void writeBufferXBM(...)
+    {
+        s_println("OLED->writeBufferXBM]");
+    }
+
+    bool begin()
+    {
+        s_println("[OLED->begin]");
+        return true;
+    }
+
+    void clearBuffer() { s_println("[OLED->clearBuffer]"); }
+    void setFont(...) { s_println("[OLED->setFont]"); }
+    void sendBuffer() { s_println("[OLED->sendBuffer]"); }
+    int getBusClock() { return 100000; }
+
+    void drawLine(int x, int y, int w, int h)
+    {
+        s_printf("[OLED->drawLine] x=%d y=%d w=%d h=%d\n", x, y, w, h);
+    }
+
+    void drawDisc(int x, int y, int rad)
+    {
+        s_printf("[OLED->drawDisc] x=%d y=%d rad=%d\n", x, y, rad);
+    }
+
+    void drawCircle(int x, int y, float rad)
+    {
+        s_printf("[OLED->drawCircle] x=%d y=%d rad=%f\n", x, y, rad);
+    }
+
+    void drawFrame(int x, int y, int w, int h)
+    {
+        s_printf("[OLED->drawFrame] x=%d y=%d w=%d h=%d\n", x, y, w, h);
+    }
+
+    void drawBox(int x, int y, int w, int h)
+    {
+        s_printf("[OLED->drawBox] x=%d y=%d w=%d h=%d\n", x, y, w, h);
+    }
+
+    void drawStr(int x, int y, char *buf)
+    {
+        s_printf("[OLED->drawStr] x=%d y=%d str=%s\n", x, y, buf);
+    }
+};
 
 class Adafruit_seesaw
 {
-    public:
-    Adafruit_seesaw() { }
-    uint32_t digitalReadBulk(...) { return 0xffffffff; }
+public:
+    Adafruit_seesaw() {}
+    uint32_t digitalReadBulk(...)
+    {
+        return 0xffffffff;
+    }
 };
 
 class BLERemoteCharacteristic
@@ -56,17 +132,17 @@ public:
     {
     }
 
-    uchar getUChar(const char* key)
+    uchar getUChar(const char *key)
     {
         return getValue<uchar>(key);
     }
 
-    void putUChar(const char* key, unsigned char value)
+    void putUChar(const char *key, unsigned char value)
     {
         valueStore[key] = value;
     }
 
-    void begin(const char* name)
+    void begin(const char *name)
     {
     }
 
@@ -75,7 +151,7 @@ public:
     }
 
     template <typename T>
-    T getValue(const char* name)
+    T getValue(const char *name)
     {
         std::any v = valueStore[name];
         auto retVal = std::any_cast<T>(v);
@@ -85,7 +161,7 @@ public:
     }
 
 private:
-    std::map<const char*, std::any> valueStore;
+    std::map<const char *, std::any> valueStore;
 };
 
 #define Preferences MockPreferences

@@ -2,7 +2,7 @@
 
 /*=======Automagically Detected Files To Include=====*/
 #include "unity.h"
-#include "../tests.h"
+#include "tests.h"
 
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
@@ -82,16 +82,16 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
 /*=======MAIN=====*/
 int main(void)
 {
-  UnityBegin("../tests.cpp");
+  UnityBegin("tests.cpp");
   run_test(test_writeUChar, "test_writeUChar", 5);
   run_test(test_binaryLog, "test_binaryLog", 28);
-  run_test(test_connectionStatusMap, "test_connectionStatusMap", 40);
-  run_test(test_convertToBytes, "test_convertToBytes", 60);
-  //run_test(test_mousrAlloc, "test_mousrAlloc", 105);
-  //run_test(test_getRawData, "test_getRawData", 117);
-  run_test(test_createFromRaw, "test_createFromRaw", 133);
-  run_test(test_ParseMessage, "test_ParseMessage", 159);
-  run_test(test_messageCtor, "test_messageCtor", 203);
+  run_test(test_connectionStatusMap, "test_connectionStatusMap", 38);
+  run_test(test_convertToBytes, "test_convertToBytes", 56);
+  run_test(test_mousrAlloc, "test_mousrAlloc", 98);
+  run_test(test_getRawData, "test_getRawData", 107);
+  run_test(test_createFromRaw, "test_createFromRaw", 121);
+  run_test(test_ParseMessage, "test_ParseMessage", 142);
+  run_test(test_messageCtor, "test_messageCtor", 183);
 
   return UnityEnd();
 }

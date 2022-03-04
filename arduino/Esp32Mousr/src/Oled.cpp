@@ -1,7 +1,9 @@
 #include "Oled.h"
 
+#ifdef ARDUINO
 //#define OLED_DEBUG_DUMP
 #define OLED_DEBUG_DUMP_OUTPUT_DESTINATION Serial
+#endif
 
 Oled *Oled::singleton = 0;
 

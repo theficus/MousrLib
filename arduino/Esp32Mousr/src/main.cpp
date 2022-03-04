@@ -1,6 +1,6 @@
-#ifdef ARDUINO
-
 #include "main.h"
+
+#ifdef ARDUINO
 
 void die()
 {
@@ -318,5 +318,11 @@ static void onBluetoothNotify(BLERemoteCharacteristic *characteristic, MousrData
 #ifdef _DO_OLED
 
 #endif // _DO_OLED
+
+#else
+int main(void)
+{
+    return 0;
+}
 
 #endif // ARDUINO

@@ -11,10 +11,10 @@
 #ifndef ARDUINO
 #include "fakes.h"
 #else
-
 #include <Wire.h>
 // seesaw includes
 #include <Adafruit_seesaw.h>
+#endif 
 
 class ControllerButtons;
 class ControllerAnalogStick;
@@ -55,5 +55,4 @@ private:
     uint8_t addr = 0;
 };
 
-#endif // ARDUINO
 #endif // MOUSR_CONTROLLER_H
