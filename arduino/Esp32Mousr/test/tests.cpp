@@ -1,8 +1,35 @@
-#include <cstring>
-#include "logging.h"
-#include <unity.h>
-#include "Mousr.h"
-#include "MousrTests.h"
+#include "tests.h"
+
+Settings s;
+
+void test_writeUChar()
+{
+    // Speed
+    uint8_t expected = 22;
+    s.setMaxSpeed(expected);
+    uint8_t actual = s.getMaxSpeed();
+    TEST_ASSERT_EQUAL(expected, actual);
+    s.setMaxSpeed(0xff); // Make sure we change to 100
+    expected = 100;
+    actual = s.getMaxSpeed();
+    TEST_ASSERT_EQUAL(expected, actual);
+
+    // Volume
+    expected = 66;
+    s.setVolume(expected);
+    actual = s.getVolume();
+    TEST_ASSERT_EQUAL(expected, actual);
+    s.setVolume(0xff);
+    expected = 100;
+    actual = s.getVolume();
+    TEST_ASSERT_EQUAL(expected, actual);
+}
+
+void test_binaryLog()
+{
+    s_printf("Binary=" BYTE_TO_BINARY_PATTERN "\n", BYTE_TO_BINARY(UINT32_MAX));
+    s_printf("Binary=" BYTE_TO_BINARY_PATTERN "\n", BYTE_TO_BINARY(INT32_MAX));
+}
 
 /**
  * @brief Validates the conversion of MousrConnectionStatus to std::string
@@ -70,7 +97,6 @@ void test_convertToBytes()
 
 void test_mousrAlloc()
 {
-    s_println("test_mousrAlloc()");
     char data[] = "0x307b3c0b3fce824a3ebd45933f00030000000000";
     MousrData d(data);
     d = MousrData(data);
@@ -98,9 +124,6 @@ void test_createFromRaw()
     float f2 = 0.0;
     float f3 = 93.02859;
 
-    // 30bdcd6c3e00000000a40eba420200
-    // 30becd6c3e00000000a30eba420200
-
     std::string expected = "0x30becd6c3e00000000a30eba420200";
     std::vector<uint8_t> data;
     MousrData::append(data, (uint8_t)MousrMessage::ROBOT_POSE);
@@ -120,6 +143,7 @@ void test_ParseMessage()
 {
     // ROBOT_POSE message
     {
+        t_checkpoint("ROBOT_POSE");
         std::string data = "0x307b3c0b3fce824a3ebd45933f00030000000000";
         MousrData d(data.c_str());
         TEST_ASSERT_EQUAL(MousrMessage::ROBOT_POSE, d.getMessageKind());
@@ -133,6 +157,7 @@ void test_ParseMessage()
     }
 
     {
+        t_checkpoint("BATTERY_VOLTAGE");
         // BATTERY_VOLTAGE
         std::string data = "0x625c000000002015000000000000000000000000";
         MousrData d = MousrData(data.c_str());
@@ -174,15 +199,4 @@ void test_messageCtor()
     actual = d.toString();
     s_printf("%s\n", actual.c_str());
     TEST_ASSERT_EQUAL_STRING(expected.c_str(), actual.c_str());
-}
-
-void runMousrTests()
-{
-    test_ParseMessage();
-    test_mousrAlloc();
-    test_getRawData();
-    test_convertToBytes();
-    test_createFromRaw();
-    test_connectionStatusMap();
-    test_messageCtor();
 }
