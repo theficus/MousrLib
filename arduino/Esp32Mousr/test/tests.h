@@ -9,6 +9,6 @@
 #include "logging.h"
 #include "Settings.h"
 
-#define t_checkpoint(checkpoint); s_printf("[%s@%s:%d] Checkpoint: %s\n", __FUNCTION__, __FILE__, __LINE__, checkpoint);
+#define t_checkpoint(checkpoint) s_printf("[%s@%s:%d] Checkpoint: %s\n", __FUNCTION__, __FILE__, __LINE__, checkpoint);
 
 #endif
