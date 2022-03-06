@@ -6,7 +6,7 @@ void MousrData::initializeData(const MousrMessage msg, const MousrCommand cmd, c
 {
     // Default padding is 3, one for msg, one for cmd, one for trailing byte
     this->rawLength = length + padding;
-    this->raw = (uint8_t*)malloc(this->rawLength);
+    this->raw = new uint8_t[this->rawLength];
     clearmem(this->raw, this->rawLength);
     memcpy(&this->raw[0], &msg, 1);
     memcpy(&this->raw[1], data, length);
@@ -15,7 +15,7 @@ void MousrData::initializeData(const MousrMessage msg, const MousrCommand cmd, c
 
 MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, const size_t length)
 {
-    uint8_t* data = (uint8_t*)malloc(length);
+    uint8_t* data = new uint8_t[length];
     clearmem(data, length);
     this->initializeData(msg, cmd, data, length);
 }
@@ -27,7 +27,7 @@ MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8
 
 MousrData::MousrData(const uint8_t *data, size_t length)
 {
-    raw = (uint8_t*)malloc(length);
+    raw = new uint8_t[length];
     if (raw == NULL)
     {
         s_printf("ERROR: Unable to allocate %zu bytes\n", length);
@@ -36,10 +36,14 @@ MousrData::MousrData(const uint8_t *data, size_t length)
     memcpy(raw, data, length);
 }
 
-// TODO: Convert to binary 
 MousrData::MousrData(const char *data)
 {
-    size_t length = strlen(data);
+    if (data == NULL)
+    {
+        return;
+    }
+
+    size_t length = strlen(data) + 1;
     int start = 0;
     if (length < 2)
     {
@@ -54,7 +58,7 @@ MousrData::MousrData(const char *data)
     }
 
     this->rawLength = length / 2;
-    this->raw = (uint8_t*)malloc(this->rawLength);
+    this->raw = new uint8_t[this->rawLength];
 
     if (this->raw == nullptr)
     {
@@ -64,17 +68,35 @@ MousrData::MousrData(const char *data)
     for (int i = 0, di = start; i < this->rawLength; i++, di += 2)
     {
         char hs[2] = { data[di], data[di+1] };
-        raw[i] = (uint8_t)std::stoul(hs, nullptr, 16);
+        raw[i] = (uint8_t)std::strtoul(hs, nullptr, 16);
         s_printf("%d = %x\n", i, raw[i]);
     }
+}
+
+MousrData& MousrData::operator=(const MousrData &m)
+{
+    if (this == &m)
+    {
+        return *this;
+    }
+
+    uint8_t* newRaw = new uint8_t[this->rawLength];
+    memcpy(newRaw, this->raw, this->rawLength);
+    delete[] this->raw;
+    this->raw = newRaw;
+    return *this;
+}
+
+MousrData::operator const uint8_t*() const
+{
+    return this->raw;
 }
 
 MousrData::~MousrData()
 {
     if (raw != NULL)
     {
-        free(raw);
-        raw = NULL;
+        delete[] raw;
     }
 }
 
@@ -97,7 +119,7 @@ std::string MousrData::toString()
 void MousrData::getRawMessageData(uint8_t **data, size_t &length)
 {
     length = rawLength;
-    *data = (uint8_t *)malloc(length);
+    *data = new uint8_t[length];
     memcpy(*data, raw, length);
 }
 

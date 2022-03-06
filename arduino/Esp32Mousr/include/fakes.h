@@ -1,4 +1,13 @@
-// Fakes for mocking out functionality when not using an embedded device
+/**
+ * @file fakes.h
+ * @author Adam Meltzer (11638244+theficus@users.noreply.github.com)
+ * @brief Fakes for mocking out embedded functionality
+ * @version 0.1
+ * @date 2022-03-05
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #pragma once
 #ifndef MOUSR_FAKES_H
 #define MOUSR_FAKES_H

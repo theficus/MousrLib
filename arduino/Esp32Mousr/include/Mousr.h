@@ -14,6 +14,7 @@
 
 #include "logging.h"
 #include "utility.h"
+#include <string>
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
@@ -219,6 +220,10 @@ public:
      */
     ~MousrData();
 
+    operator const uint8_t*() const;
+
+    MousrData& operator=(const MousrData &m);
+
     /**
      * @brief Get the raw internal message data
      *
@@ -340,8 +345,8 @@ public:
 
 private:
     void initializeData(const MousrMessage msg, const MousrCommand cmd, const uint8_t* data, const size_t length, const size_t padding = 3);
-    uint8_t* raw;
-    size_t rawLength;
+    uint8_t* raw = NULL;
+    size_t rawLength = 0;
 };
 
 #endif // MOUSR_MOUSR_H

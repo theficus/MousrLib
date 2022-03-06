@@ -7,14 +7,47 @@
 
 #ifdef ARDUINO
 #include <Arduino.h>
+/**
+ * @brief printf to Serial
+ * 
+ */
 #define s_printf(fmt, ...) Serial.printf(fmt, __VA_ARGS__);
+
+/**
+ * @brief print to Serial with carriage return
+ * 
+ */
 #define s_println(str) Serial.println(str);
+
+/**
+ * @brief print to Serial
+ * 
+ */
 #define s_print(str) Serial.print(str);
+
+/**
+ * @brief print to Serial with base value and carriage return
+ * 
+ */
 #define s_printlnb(str, base) Serial.println(str, base);
 #else
-//#include <ArduinoFake.h>
+#include <ArduinoFake.h>
+/**
+ * @brief printf to stdout
+ * 
+ */
 #define s_printf(fmt, ...) printf(fmt, __VA_ARGS__);
+
+/**
+ * @brief print to stdout with carriage return
+ * 
+ */
 #define s_println(str) { printf(str); printf("\n"); }
+
+/**
+ * @brief print to stdout
+ * 
+ */
 #define s_print(str) printf(str);
 #endif // ARDUINO
 

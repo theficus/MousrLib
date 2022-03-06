@@ -14,11 +14,15 @@
 #include <Wire.h>
 // seesaw includes
 #include <Adafruit_seesaw.h>
-#endif 
+#endif
 
 class ControllerButtons;
 class ControllerAnalogStick;
 
+/**
+ * @brief Controller device class singleton
+ *
+ */
 class Controller
 {
     friend class ControllerButtons;

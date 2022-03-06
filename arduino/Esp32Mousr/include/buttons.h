@@ -46,16 +46,42 @@ struct ButtonPressEvent
     uint32_t cur;
 };
 
+/**
+ * @brief Controller buttons
+ *
+ */
 class ControllerButtons
 {
     friend class Controller;
 
 public:
+    /**
+     * @brief Queued button presses
+     *
+     */
     QueueHandle_t buttonPressQueue;
+
+    /**
+     * @brief Get the State Change object
+     *
+     * @param event
+     * @return ButtonStateChange
+     */
     static ButtonStateChange getStateChange(ButtonPressEvent &event);
 
 private:
+    /**
+     * @brief Construct a new Controller Buttons object
+     *
+     */
     ControllerButtons();
+
+    /**
+     * @brief Starts buttons
+     * 
+     * @return true 
+     * @return false 
+     */
     bool begin();
     bool end();
     uint8_t irqPin = 0;
