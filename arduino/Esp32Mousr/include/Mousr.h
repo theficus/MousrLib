@@ -8,12 +8,14 @@
  * @copyright Copyright (c) 2022
  *
  */
+
 #pragma once
 #ifndef MOUSR_MOUSR_H
 #define MOUSR_MOUSR_H
 
 #include "logging.h"
 #include "utility.h"
+#include <string>
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
@@ -219,6 +221,10 @@ public:
      */
     ~MousrData();
 
+    operator const uint8_t*() const;
+
+    MousrData& operator=(const MousrData &m);
+
     /**
      * @brief Get the raw internal message data
      *
@@ -230,8 +236,7 @@ public:
     /**
      * @brief Get a copy of the raw message data
      *
-     * @return MousrMessageData*
-     * @note Must be free'd by the calle
+     * @note Must be free'd by the caller
      */
     void getRawMessageData(uint8_t **data, size_t &length);
 
@@ -259,9 +264,9 @@ public:
     /**
      * @brief Simple conversion from T -> array of bytes
      * 
-     * @tparam T 
-     * @param v value
-     * @return uint8_t* 
+     * @tparam T type to convert from
+     * @param v value value to convert
+     * @return uint8_t* value as bytes
      */
     template <typename T>
     static uint8_t *toBytes(T v)
@@ -275,10 +280,10 @@ public:
     /**
      * @brief Simple conversion of array of bytes -> T
      * 
-     * @tparam T 
-     * @param data 
-     * @param v 
-     * @param sz 
+     * @tparam T type to convert to
+     * @param data source pointer of the data
+     * @param v destination of the converted data
+     * @param sz source data size
      */
     template <typename T>
     static void fromBytes(const uint8_t *data, T &v, size_t sz = sizeof(T))
@@ -290,7 +295,7 @@ public:
     /**
      * @brief Converts T to bytes and appends a vector
      * 
-     * @tparam T 
+     * @tparam T Source data
      * @param vec Destination vector
      * @param v Value
      * @param length Data length
@@ -309,7 +314,7 @@ public:
     /**
      * @brief Converts a vector of bytes to a hex string
      * 
-     * @param data 
+     * @param data Data to convert
      * @param addSignifier If true, adds 0x
      * @return std::string 
      */
@@ -338,6 +343,11 @@ public:
 
         return ss.str();
     }
+
+private:
+    void initializeData(const MousrMessage msg, const MousrCommand cmd, const uint8_t* data, const size_t length, const size_t padding = 3);
+    uint8_t* raw = NULL;
+    size_t rawLength = 0;
 };
 
 #endif // MOUSR_MOUSR_H

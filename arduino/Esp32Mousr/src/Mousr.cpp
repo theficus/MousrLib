@@ -2,53 +2,101 @@
 #include <cstring>
 #include <vector>
 
-uint8_t *raw;
-size_t rawLength;
-
-void init(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length, const size_t padding = 3)
+void MousrData::initializeData(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length, const size_t padding)
 {
     // Default padding is 3, one for msg, one for cmd, one for trailing byte
-    rawLength = length + padding;
-    raw = (uint8_t*)malloc(rawLength);
-    clearmem(raw, rawLength);
-    memcpy(&raw[0], &msg, 1);
-    memcpy(&raw[1], data, length);
-    memcpy(&raw[length+1], &cmd, 1);
+    this->rawLength = length + padding;
+    this->raw = new uint8_t[this->rawLength];
+    clearmem(this->raw, this->rawLength);
+    memcpy(&this->raw[0], &msg, 1);
+    memcpy(&this->raw[1], data, length);
+    memcpy(&this->raw[length+1], &cmd, 1);
 }
 
 MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, const size_t length)
 {
-    uint8_t* data = (uint8_t*)malloc(length);
+    uint8_t* data = new uint8_t[length];
     clearmem(data, length);
-    init(msg, cmd, data, length);
-
+    this->initializeData(msg, cmd, data, length);
 }
 
 MousrData::MousrData(const MousrMessage msg, const MousrCommand cmd, const uint8_t *data, const size_t length)
 {
-    init(msg, cmd, data, length);
+    this->initializeData(msg, cmd, data, length);
 }
 
 MousrData::MousrData(const uint8_t *data, size_t length)
 {
-    raw = (uint8_t*)malloc(length);
+    raw = new uint8_t[length];
+    if (raw == NULL)
+    {
+        s_printf("ERROR: Unable to allocate %zu bytes\n", length);
+    }
     rawLength = length;
     memcpy(raw, data, length);
 }
 
-// TODO: Convert to binary 
 MousrData::MousrData(const char *data)
 {
-    rawLength = strlen(data);
-    raw = (uint8_t*)malloc(rawLength);
-    memcpy(raw, data, rawLength);
+    if (data == NULL)
+    {
+        return;
+    }
+
+    size_t length = strlen(data) + 1;
+    int start = 0;
+    if (length < 2)
+    {
+        s_println("ERROR: Invalid input data.");
+        return;
+    }
+
+    if (data[0] == '0' && data[1] == 'x')
+    {
+        length -= 2;
+        start = 2;
+    }
+
+    this->rawLength = length / 2;
+    this->raw = new uint8_t[this->rawLength];
+
+    if (this->raw == nullptr)
+    {
+        s_println("ERROR: Could not allocate memory");
+    }
+
+    for (int i = 0, di = start; i < this->rawLength; i++, di += 2)
+    {
+        char hs[2] = { data[di], data[di+1] };
+        raw[i] = (uint8_t)std::strtoul(hs, nullptr, 16);
+        s_printf("%d = %x\n", i, raw[i]);
+    }
+}
+
+MousrData& MousrData::operator=(const MousrData &m)
+{
+    if (this == &m)
+    {
+        return *this;
+    }
+
+    uint8_t* newRaw = new uint8_t[this->rawLength];
+    memcpy(newRaw, this->raw, this->rawLength);
+    delete[] this->raw;
+    this->raw = newRaw;
+    return *this;
+}
+
+MousrData::operator const uint8_t*() const
+{
+    return this->raw;
 }
 
 MousrData::~MousrData()
 {
-    if (raw != nullptr)
+    if (raw != NULL)
     {
-        free(raw);
+        delete[] raw;
     }
 }
 
@@ -70,7 +118,8 @@ std::string MousrData::toString()
 
 void MousrData::getRawMessageData(uint8_t **data, size_t &length)
 {
-    *data = (uint8_t *)malloc(rawLength);
+    length = rawLength;
+    *data = new uint8_t[length];
     memcpy(*data, raw, length);
 }
 
