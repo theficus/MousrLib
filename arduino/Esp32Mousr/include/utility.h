@@ -76,6 +76,7 @@ bool i2cSemTake(TickType_t timeout);
 /**
  * @brief Global i2c semaphore give
  *
+ * @remark Does nothing when not on ESP32
  * @return true
  * @return false
  */
@@ -83,7 +84,7 @@ bool i2cSemGive();
 
 /**
  * @brief Global i2c semaphore init
- *
+ * @remark Does nothing when not on ESP32
  * @return true
  * @return false
  */
@@ -93,33 +94,61 @@ void logMemory();
 
 /**
  * @brief Start Wire library debug task
- *
- * @param delayMs
+ * @remark Does nothing when not on ESP32
+ * @param delayMs Delay period for the task timer in milliseconds
  */
 void startWireDebugTask(uint32_t delayMs);
 
 /**
  * @brief Stop Wire library debug task
- *
+ * @remark Does nothing when not on ESP32
  */
 void stopWireDebugTask();
 
 /**
  * @brief Print Wire status
- *
+ * @remark Does nothing when not on ESP32
  */
 void printWireStatus();
 
-// Implementation of shortcut for normal semaphore operations
+/**
+ * @brief Takes a semaphore with a timeout
+ * @remark Does nothing when not on ESP32
+ * @return true Semaphore take successful
+ * @return false Semaphore take unsuccessful (timeout)
+ */
 #define semTakeWithTimeout(__sem, __timeout) xSemaphoreTake(__sem, __timeout)
+
+/**
+ * @brief Takes a semaphore with no timeout
+ * @remark Does nothing when not on ESP32
+ * @returns boolean in theory, but will block so using a return value isn't really beneficial
+ */
 #define semTake(__sem) semTakeWithTimeout(__sem, portMAX_DELAY)
+
+/**
+ * @brief Gives a semaphore
+ * @remark Does nothing when not on ESP32
+ * @return true if successful
+ * @return false if unsuccessful
+ */
 #define semGive(__sem) xSemaphoreGive(__sem)
+
+/**
+ * @brief Waits and immediately gives a semaphore
+ * @remark Does nothing when not on ESP32
+ */
 #define semWait(__sem)  \
     {                   \
         semTake(__sem); \
         semGive(__sem); \
     }
 
+/**
+ * @brief Runs a function gated by a semaphore
+ * @remark Does nothing when not on ESP32
+ * 
+ */
 #define semCritSec(__sem, __func) \
     {                             \
         semTake(__sem);           \
@@ -157,7 +186,7 @@ void printWireStatus();
 
 /**
  * @brief Runs an i2c function within a critical section to block other i2c operations from occurring
- * 
+ * @remark Does nothing when not on ESP32
  */
 #define i2cSemCritSec(__func)      \
     {                              \
@@ -168,7 +197,7 @@ void printWireStatus();
 
 /**
  * @brief Runs an i2c function within a critical section to block other i2c operations from occurring and assign the function value to a variable
- * 
+ * @remark Does nothing when not on ESP32
  */
 #define i2cSemCritSecGetValue(__func, __val) \
     {                                        \
@@ -177,5 +206,9 @@ void printWireStatus();
         i2cSemGive();                        \
     }
 
+/**
+ * @brief Debug logging for memory usage
+ * 
+ */
 void logMemory();
 #endif // MOUSR_UTILITY_H

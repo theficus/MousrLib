@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
+
 #pragma once
 #ifndef MOUSR_MOUSR_H
 #define MOUSR_MOUSR_H

@@ -79,10 +79,17 @@ private:
     /**
      * @brief Starts buttons
      * 
-     * @return true 
-     * @return false 
+     * @return true Start successful
+     * @return false Start unsuccessful
      */
     bool begin();
+
+    /**
+     * @brief Ends buttons
+     * 
+     * @return true End successful
+     * @return false End unsucessful
+     */
     bool end();
     uint8_t irqPin = 0;
     bool hasBegun = false;

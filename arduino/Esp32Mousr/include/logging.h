@@ -1,3 +1,14 @@
+/**
+ * @file logging.h
+ * @author Adam Meltzer (11638244+theficus@users.noreply.github.com)
+ * @brief Simple logging helpers
+ * @version 0.1
+ * @date 2022-03-12
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #pragma once
 #ifndef MOUSR_COMMON_H
 #define MOUSR_COMMON_H
