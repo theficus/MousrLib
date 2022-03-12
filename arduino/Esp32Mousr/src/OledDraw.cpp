@@ -12,6 +12,10 @@
 
 void dumpBuffer(U8G2 u8g2)
 {
+#ifndef OLED_DEBUG_DUMP
+    return;
+#endif
+
     s_println(F("Dumping OLED buffer:"));
     s_println(F("-----------------------------------------------------------"));
     u8g2.writeBufferXBM(OLED_DEBUG_DUMP_OUTPUT_DESTINATION);
