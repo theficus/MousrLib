@@ -68,9 +68,9 @@ jobs:
       uses: karniv00l/platformio-run-action@0.1.0
       with:
         # Process specified environments (comma separated).
-        environments: featheresp32, native # optional
+        #environments: featheresp32, native # optional
         # Process specified targets (comma separated).
-        targets: build # optional
+        #targets: build # optional
         # Specify the path to project directory. By default, project-dir is equal to current working directory (CWD).
         project-dir: arduino/Esp32Mousr
         # Process project with a custom platformio.ini
