@@ -13,6 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: "Import Certificate: Development"
+      uses: devbotsxyz/import-signing-certificate@main
+      with:
+        certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
+        certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
+        keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
     
     - name: Xcode Build
       uses: devbotsxyz/xcode-build@v1.0.0
