@@ -43,7 +43,7 @@ jobs:
           # Process specified targets (comma separated).
           targets: build,test # optional
           # Specify the path to project directory. By default, project-dir is equal to current working directory (CWD).
-          project-dir: arduino/Esp32Mousr # optional
+          project-dir: ./arduino/Esp32Mousr # optional
           # Process project with a custom platformio.ini
           #project-conf: # optional
           # Control a number of parallel build jobs. Default is a number of CPUs in a system.
