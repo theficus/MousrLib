@@ -1,0 +1,29 @@
+name: Continuous Integration (Xcode)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Xcode Build
+      uses: devbotsxyz/xcode-build@v1.0.0
+      with:
+        # Workspace
+        workspace: # optional
+        # Project
+        project: # optional
+        # Scheme
+        scheme: # optional
+        # Configuration
+        configuration: # optional
+        # Code sign identity
+        code-sign-identity: # optional, default is -
