@@ -37,4 +37,5 @@ jobs:
         uses: karniv00l/platformio-run-action@0.1.0
         with:
           project-dir: "$GITHUB_WORKSPACE/arduino/Esp32Mousr"
-          verbose: true # optional
+	  targets: "build,test"
+          #verbose: true # optional
