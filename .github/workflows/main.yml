@@ -45,8 +45,7 @@ jobs:
         # uses: karniv00l/platformio-remote-test-action@f0ca2113bb68a21e9fd6604533a643d0a037a17e
         uses: karniv00l/platformio-remote-test-action@0.1.0
         with:
-          # Process specified environments (comma separated).
-          environments: "native"
+          #environments: "native"
           project-dir: "$GITHUB_WORKSPACE/arduino/Esp32Mousr"
           without-building: true
           without-uploading: true
