@@ -18,7 +18,7 @@ jobs:
       uses: devbotsxyz/xcode-build@v1.0.0
       with:
         # Workspace
-        workspace: # optional
+        workspace: "$GITHUB_WORKSPACE/ReMousr" # optional
         # Project
         project: # optional
         # Scheme
