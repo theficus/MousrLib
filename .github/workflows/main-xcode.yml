@@ -1,0 +1,32 @@
+name: Continuous Integration (Xcode)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: "Import Certificate: Development"
+      uses: devbotsxyz/import-signing-certificate@main
+      with:
+        certificate-data: ${{ secrets.xcode_certificate_data }}
+        certificate-passphrase: ${{ secrets.xcode_certificate_passphrase }}
+        keychain-password: ${{ secrets.xcode_keychain_password }}
+    
+    - name: Xcode Build
+      uses: devbotsxyz/xcode-build@v1.0.0
+      with:
+        #workspace: "$GITHUB_WORKSPACE/ReMousr"
+        project: "Xcode/ReMousr/ReMousr.xcodeproj"
+        scheme: "ReMousr"
+        configuration: "Debug,Release"
+        # Code sign identity
+        #code-sign-identity: # optional, default is -
