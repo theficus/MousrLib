@@ -34,23 +34,7 @@ jobs:
           platformio-version: newest # optional, default is newest
 
       - name: PlatformIO Run
-        # You may pin to the exact commit or the version.
-        # uses: karniv00l/platformio-run-action@23076222f75c4c491037e54dd204dac8953a8b9d
         uses: karniv00l/platformio-run-action@0.1.0
         with:
-          # Process specified environments (comma separated).
-          environments: "featheresp32,native" # optional
-          # Process specified targets (comma separated).
-          targets: "build,test" # optional
-          # Specify the path to project directory. By default, project-dir is equal to current working directory (CWD).
-          project-dir: "./arduino/Esp32Mousr" # optional
-          # Process project with a custom platformio.ini
-          project-conf: "./arduino/Esp32Mousr/platformio.ini" # optional
-          # Control a number of parallel build jobs. Default is a number of CPUs in a system.
-          #jobs: # optional
-          # Suppress progress reporting.
-          #silent: # optional
-          # Shows detailed information when processing environments.
+          project-dir: "$GITHUB_WORKSPACE/arduino/Esp32Mousr"
           verbose: true # optional
-          # Disable auto-clean of build_dir when platformio.ini or src_dir (project structure) have been modified.
-          #disable-auto-clean: # optional
