@@ -1,0 +1,52 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Continuous Integration
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Setup PlatformIO
+        # You may pin to the exact commit or the version.
+        # uses: n-vr/setup-platformio-action@ef5952e6a4d30c219158b781a84d31b018549c20
+        uses: n-vr/setup-platformio-action@v1.0.1
+        with:
+          # PlatformIO version to use. (e.g. 5.2.5, 5.2 or 5
+          platformio-version: newest # optional, default is newest
+
+      - name: PlatformIO Run
+        uses: karniv00l/platformio-run-action@0.1.0
+        with:
+          project-dir: "$GITHUB_WORKSPACE/arduino/Esp32Mousr"
+          #targets: "build,test"
+          verbose: false
+          
+      #- name: PlatformIO Test
+      #  # You may pin to the exact commit or the version.
+      #  # uses: karniv00l/platformio-remote-test-action@f0ca2113bb68a21e9fd6604533a643d0a037a17e
+      #  uses: karniv00l/platformio-remote-test-action@0.1.0
+      #  with:
+      #    #environments: "native"
+      #    project-dir: "$GITHUB_WORKSPACE/arduino/Esp32Mousr"
+      #    without-building: true
+      #    without-uploading: true
+      #    verbose: true # optional

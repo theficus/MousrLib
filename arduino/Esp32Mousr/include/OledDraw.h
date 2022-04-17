@@ -11,7 +11,7 @@
 #ifndef _MOUSR_OLED_DRAW_H
 #define _MOUSR_OLED_DRAW_H
 
-#include "oled.h"
+#include "Oled.h"
 
 #define OLED_DEBUG_DUMP_OUTPUT_DESTINATION Serial
 //#define OLED_DEBUG_DUMP
