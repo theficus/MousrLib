@@ -18,7 +18,7 @@ jobs:
       uses: devbotsxyz/xcode-build@v1.0.0
       with:
         #workspace: "$GITHUB_WORKSPACE/ReMousr"
-        project: "$GITHUB_WORKSPACE/Xcode/ReMousr/ReMousr.xcodeproj"
+        project: "Xcode/ReMousr/ReMousr.xcodeproj"
         scheme: "ReMousr"
         configuration: "Debug,Release"
         # Code sign identity
