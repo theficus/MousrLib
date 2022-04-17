@@ -17,9 +17,9 @@ jobs:
     - name: "Import Certificate: Development"
       uses: devbotsxyz/import-signing-certificate@main
       with:
-        certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
-        certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
-        keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+        certificate-data: ${{ secrets.xcode_certificate_data }}
+        certificate-passphrase: ${{ secrets.xcode_certificate_passphrase }}
+        keychain-password: ${{ secrets.xcode_keychain_password }}
     
     - name: Xcode Build
       uses: devbotsxyz/xcode-build@v1.0.0
