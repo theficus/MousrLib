@@ -39,3 +39,4 @@ jobs:
           project-dir: "$GITHUB_WORKSPACE/arduino/Esp32Mousr"
 	  targets: "build,test"
           #verbose: true # optional
+
